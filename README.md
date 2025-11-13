@@ -9,12 +9,6 @@ This turns a simple VR experience into a **fun and engaging way to learn**, usef
 
 ---
 
-## 🏗️ Project Overview
-**EduVerse** transforms the way students learn by merging AI-powered object recognition with an immersive VR environment.  
-The goal is to create an **interactive learning experience** where knowledge is gained naturally through exploration and curiosity.
-
----
-
 ## ⚙️ Tech Stack
 - 🧩 **Unity** (game engine)
 - 🤖 **Artificial Intelligence (Computer Vision / Object Recognition)**
