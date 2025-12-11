@@ -9,7 +9,7 @@ using TMPro; // Nécessaire pour l'affichage du texte
 public class GeminiVisionTester : MonoBehaviour
 {
     [Header("Configuration API")]
-    [SerializeField] private string apiKey = "AIzaSyD9K8r-ISeVW5FfDPYPmxhYWAyE1nqiHwc"; // Remplissez votre clé ici
+    [SerializeField] private string apiKey = "zzzz"; // Remplissez votre clé ici
     private string apiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent";
 
     [Header("Interface")]
