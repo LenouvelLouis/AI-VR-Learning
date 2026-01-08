@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 14981fea0afbfed4a9ca5ffef9d608d4
+timeCreated: 1525252890
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Prefab/Museum_Displaytable_Props_04.prefab
+  uploadId: 268236

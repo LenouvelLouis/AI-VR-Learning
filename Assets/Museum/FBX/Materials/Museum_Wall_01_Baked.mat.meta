@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a47538491daa9af4fad3c43d8f86fb4d
+timeCreated: 1524859981
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Materials/Museum_Wall_01_Baked.mat
+  uploadId: 268236

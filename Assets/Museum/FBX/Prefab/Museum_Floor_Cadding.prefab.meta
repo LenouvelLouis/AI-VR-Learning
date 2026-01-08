@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8cbdbeeb2f5950a41acc233e4aef00a8
+timeCreated: 1525252939
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Prefab/Museum_Floor_Cadding.prefab
+  uploadId: 268236

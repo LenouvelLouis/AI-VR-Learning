@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 24a7303d4e696014398ada4ed166c6bf
+timeCreated: 1525253007
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Prefab/Museum_Spot_Light.prefab
+  uploadId: 268236

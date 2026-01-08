@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: da02dad7d9a491e4d9446ae03347d473
+timeCreated: 1524859982
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Materials/Museum_Wall_POP03_Baked.mat
+  uploadId: 268236

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 699d114dda1f92f45821c0809fd22f36
+timeCreated: 1524859981
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Materials/Museum_Floor_Baked.mat
+  uploadId: 268236

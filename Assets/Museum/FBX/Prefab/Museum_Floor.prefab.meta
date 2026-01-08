@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1ecfb3e1178c7564eada2946e14c0415
+timeCreated: 1525252920
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Prefab/Museum_Floor.prefab
+  uploadId: 268236

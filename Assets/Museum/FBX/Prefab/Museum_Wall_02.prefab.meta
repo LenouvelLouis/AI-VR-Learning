@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3cbf061336f93864fa846d54ef346112
+timeCreated: 1525253025
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Prefab/Museum_Wall_02.prefab
+  uploadId: 268236
