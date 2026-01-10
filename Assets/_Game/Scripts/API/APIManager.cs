@@ -51,18 +51,19 @@ namespace MuseumAI.API
         #region Private Fields
 
         private bool isRequestInProgress = false;
-        private const string QUIZ_PROMPT_TEMPLATE = @"Tu es un expert en histoire de l'art. Genere un quiz educatif base sur cette oeuvre:
+        private const string QUIZ_PROMPT_TEMPLATE = @"Tu es un expert en histoire de l'art. Tu dois générer un quiz sur l'œuvre suivante :
 
 {0}
 
-INSTRUCTIONS STRICTES:
-1. Cree UNE question de type ""Quelle affirmation est vraie?"" ou ""Quel fait est correct?""
-2. La question doit etre interessante et educative
-3. Fournis exactement 1 reponse vraie et 3 reponses fausses mais plausibles
-4. Les reponses fausses doivent etre credibles mais incorrectes
-
-REPONDS UNIQUEMENT avec ce JSON exact, sans markdown, sans explication:
-{{""question"":""[Ta question ici]"",""trueAnswer"":""[La bonne reponse]"",""falseAnswers"":[""[Fausse 1]"",""[Fausse 2]"",""[Fausse 3]""]}}";
+INSTRUCTIONS TRÈS STRICTES :
+1.  **Format des réponses** : Chaque réponse (vraie ou fausse) doit faire **UN ou DEUX mots MAXIMUM**.
+2.  **Format de la question** : La question doit être adaptée pour des réponses aussi courtes. Par exemple : ""Qui est l'artiste ?"" ou ""Quel est le mouvement artistique ?"".
+3.  **Contenu du quiz** :
+    *   Crée UNE SEULE question.
+    *   Fournis EXACTEMENT 1 réponse vraie et 3 réponses fausses.
+    *   Les réponses fausses doivent être plausibles mais incorrectes.
+4.  **Format de sortie** : Réponds OBLIGATOIREMENT avec le JSON suivant, sans aucun texte avant ou après, et sans utiliser de markdown :
+{{""question"":""[Ta question ici]"",""trueAnswer"":""[La bonne réponse]"",""falseAnswers"":[""[Fausse 1]"",""[Fausse 2]"",""[Fausse 3]""]}}";
 
         #endregion
 

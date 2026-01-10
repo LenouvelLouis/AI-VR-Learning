@@ -57,8 +57,21 @@ namespace MuseumAI.Core
         [Tooltip("Delai avant le demarrage automatique (secondes)")]
         [SerializeField] private float autoStartDelay = 1f;
 
-        [Header("References")]
+        [Header("References UI")]
         [SerializeField] private GameObject quizPanelPrefab;
+
+        [Tooltip("Reference au HUD place dans la scene (sur la main gauche)")]
+        [SerializeField] private HUDController sceneHUD;
+
+        [Tooltip("Prefab de l'ecran Game Over")]
+        [SerializeField] private GameObject gameOverPrefab;
+
+        [Header("References Joueur")]
+        [Tooltip("Script PlayerInteraction a desactiver en Game Over")]
+        [SerializeField] private MonoBehaviour playerInteraction;
+
+        [Tooltip("CharacterController ou LocomotionSystem a desactiver")]
+        [SerializeField] private MonoBehaviour playerMovement;
 
         #endregion
 
@@ -129,6 +142,7 @@ namespace MuseumAI.Core
 
         private bool isTimerRunning;
         private PaintingController currentPainting;
+        private GameObject gameOverInstance;
 
         #endregion
 
@@ -183,6 +197,26 @@ namespace MuseumAI.Core
 
             SetGameState(GameState.Playing);
 
+            // Activer les controles du joueur
+            SetPlayerControlsEnabled(true);
+
+            // Activer le HUD (deja place dans la scene)
+            if (sceneHUD != null)
+            {
+                sceneHUD.Show();
+            }
+            else
+            {
+                Debug.LogError("[GameManager] sceneHUD non assigne! Glissez le WristHUD dans l'Inspector.");
+            }
+
+            // Detruire l'ecran Game Over s'il existe
+            if (gameOverInstance != null)
+            {
+                Destroy(gameOverInstance);
+                gameOverInstance = null;
+            }
+
             OnScoreUpdated?.Invoke(Score);
             OnTimerUpdated?.Invoke(TimeRemaining);
 
@@ -206,6 +240,18 @@ namespace MuseumAI.Core
             }
 
             SetGameState(GameState.GameOver);
+
+            // Desactiver les controles du joueur
+            SetPlayerControlsEnabled(false);
+
+            // Cacher le HUD
+            if (sceneHUD != null)
+            {
+                sceneHUD.Hide();
+            }
+
+            // Afficher l'ecran Game Over
+            SpawnGameOverUI();
 
             Debug.Log($"[GameManager] Partie terminee! Score final: {Score}, Tableaux completes: {PaintingsCompleted}");
         }
@@ -329,6 +375,70 @@ namespace MuseumAI.Core
             isTimerRunning = false;
 
             Debug.Log("[GameManager] Initialise");
+        }
+
+        private void SpawnGameOverUI()
+        {
+            if (gameOverPrefab == null)
+            {
+                Debug.LogWarning("[GameManager] GameOver Prefab non assigne!");
+                return;
+            }
+
+            // Detruire l'ancien s'il existe
+            if (gameOverInstance != null)
+            {
+                Destroy(gameOverInstance);
+            }
+
+            // Position devant la camera
+            Camera playerCamera = Camera.main;
+            if (playerCamera == null)
+            {
+                Debug.LogError("[GameManager] Camera.main introuvable!");
+                return;
+            }
+
+            Transform camTransform = playerCamera.transform;
+            float spawnDistance = 1.0f;
+            Vector3 spawnPosition = camTransform.position + camTransform.forward * spawnDistance;
+            spawnPosition.y = camTransform.position.y; // A hauteur des yeux
+
+            Vector3 lookDirection = spawnPosition - camTransform.position;
+            lookDirection.y = 0;
+            Quaternion spawnRotation = Quaternion.LookRotation(lookDirection);
+
+            gameOverInstance = Instantiate(gameOverPrefab, spawnPosition, spawnRotation);
+            gameOverInstance.name = "GameOver_Instance";
+
+            Debug.Log("[GameManager] Ecran Game Over affiche");
+        }
+
+        private void SetPlayerControlsEnabled(bool enabled)
+        {
+            // Desactiver/activer PlayerInteraction
+            if (playerInteraction != null)
+            {
+                playerInteraction.enabled = enabled;
+                Debug.Log($"[GameManager] PlayerInteraction: {(enabled ? "active" : "desactive")}");
+            }
+
+            // Desactiver/activer le mouvement (CharacterController ou autre)
+            if (playerMovement != null)
+            {
+                playerMovement.enabled = enabled;
+                Debug.Log($"[GameManager] PlayerMovement: {(enabled ? "active" : "desactive")}");
+            }
+
+            // Alternative: chercher les composants automatiquement si non assignes
+            if (playerInteraction == null)
+            {
+                var pi = FindObjectOfType<PlayerInteraction>();
+                if (pi != null)
+                {
+                    pi.enabled = enabled;
+                }
+            }
         }
 
         private void SetGameState(GameState newState)

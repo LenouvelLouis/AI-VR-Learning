@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using MuseumAI.Core;
 
 namespace MuseumAI.Gameplay
@@ -29,6 +30,7 @@ namespace MuseumAI.Gameplay
         [SerializeField] private LineRenderer lineRenderer;
         [SerializeField] private Color rayColorIdle = new Color(1f, 1f, 1f, 0.5f);
         [SerializeField] private Color rayColorTargeting = new Color(0f, 1f, 0.5f, 0.8f);
+        [SerializeField] private Color rayColorUI = new Color(0.3f, 0.7f, 1f, 0.9f);
 
         [Header("Feedback Haptique")]
         [SerializeField] private bool enableHapticFeedback = true;
@@ -38,6 +40,7 @@ namespace MuseumAI.Gameplay
         #region Private Fields
 
         private PaintingController currentTarget;
+        private Button currentButtonTarget;
         private bool isInteractionBlocked;
         private string lastLoggedTargetName = "";
         private int frameCount = 0;
@@ -141,6 +144,28 @@ namespace MuseumAI.Gameplay
 
             Debug.DrawRay(origin, direction * rayDistance, Color.red);
 
+            // === RAYCAST 1: Detection UI (tous les layers) ===
+            // On cherche d'abord les boutons UI car ils ont priorite
+            RaycastHit uiHit;
+            if (Physics.Raycast(origin, direction, out uiHit, rayDistance))
+            {
+                Button button = uiHit.collider.GetComponent<Button>();
+                if (button == null)
+                {
+                    button = uiHit.collider.GetComponentInParent<Button>();
+                }
+
+                if (button != null && button.interactable)
+                {
+                    // C'est un bouton UI cliquable
+                    SetCurrentButtonTarget(button);
+                    SetCurrentTarget(null);
+                    UpdateRayVisual(uiHit.point);
+                    return;
+                }
+            }
+
+            // === RAYCAST 2: Detection tableaux (layers specifiques) ===
             RaycastHit hit;
             if (Physics.Raycast(origin, direction, out hit, rayDistance, interactableLayers))
             {
@@ -150,13 +175,33 @@ namespace MuseumAI.Gameplay
                     painting = hit.collider.GetComponentInParent<PaintingController>();
                 }
 
+                SetCurrentButtonTarget(null);
                 SetCurrentTarget(painting);
                 UpdateRayVisual(hit.point);
             }
             else
             {
+                SetCurrentButtonTarget(null);
                 SetCurrentTarget(null);
                 UpdateRayVisual(origin + direction * rayDistance);
+            }
+        }
+
+        private void SetCurrentButtonTarget(Button newButton)
+        {
+            if (currentButtonTarget == newButton) return;
+
+            currentButtonTarget = newButton;
+
+            if (currentButtonTarget != null)
+            {
+                Debug.Log($"[CIBLE UI] >> Bouton: {currentButtonTarget.gameObject.name} <<");
+
+                if (enableHapticFeedback && useOVRInput)
+                {
+                    OVRInput.SetControllerVibration(0.05f, 0.05f, vrController);
+                    Invoke(nameof(StopHaptic), 0.05f);
+                }
             }
         }
 
@@ -231,6 +276,24 @@ namespace MuseumAI.Gameplay
             {
                 Debug.Log($"[INTERACTION] Input detecte: {inputSource}");
 
+                // Priorite 1: Bouton UI (Quiz)
+                if (currentButtonTarget != null)
+                {
+                    Debug.Log($"[ACTION] === CLIC sur bouton UI: {currentButtonTarget.gameObject.name} ===");
+
+                    // Invoquer le onClick du bouton
+                    currentButtonTarget.onClick.Invoke();
+
+                    // Feedback haptique pour le clic
+                    if (enableHapticFeedback && useOVRInput)
+                    {
+                        OVRInput.SetControllerVibration(0.2f, 0.3f, vrController);
+                        Invoke(nameof(StopHaptic), 0.15f);
+                    }
+                    return;
+                }
+
+                // Priorite 2: Tableau
                 if (currentTarget != null)
                 {
                     Debug.Log($"[ACTION] === INTERACTION avec: {currentTarget.PaintingTitle} ===");
@@ -252,11 +315,6 @@ namespace MuseumAI.Gameplay
                     Debug.Log("[ACTION] >>> OnPaintingSelected() <<<");
                     currentTarget.OnPaintingSelected();
                 }
-                else
-                {
-                    // Pas de cible - log silencieux (eviter le spam)
-                    // Debug.Log("[ACTION] Pas de cible");
-                }
             }
         }
 
@@ -271,7 +329,21 @@ namespace MuseumAI.Gameplay
             lineRenderer.SetPosition(0, rayOrigin.position);
             lineRenderer.SetPosition(1, endPoint);
 
-            Color color = (currentTarget != null) ? rayColorTargeting : rayColorIdle;
+            // Couleur selon la cible: UI (bleu) > Tableau (vert) > Rien (blanc)
+            Color color;
+            if (currentButtonTarget != null)
+            {
+                color = rayColorUI; // Bleu pour les elements UI cliquables
+            }
+            else if (currentTarget != null)
+            {
+                color = rayColorTargeting; // Vert pour les tableaux
+            }
+            else
+            {
+                color = rayColorIdle; // Blanc par defaut
+            }
+
             lineRenderer.startColor = color;
             lineRenderer.endColor = color * 0.5f;
         }

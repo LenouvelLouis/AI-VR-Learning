@@ -126,6 +126,9 @@ namespace MuseumAI.UI
         [Tooltip("Texte affiche en cas d'erreur")]
         [SerializeField] private TMP_Text errorText;
 
+        [Tooltip("Texte de feedback apres reponse (+100 pts! ou Rate...)")]
+        [SerializeField] private TMP_Text feedbackText;
+
         [Header("Boutons de Reponse")]
         [Tooltip("Les 4 boutons de reponse (dans l'ordre)")]
         [SerializeField] private Button[] answerButtons = new Button[4];
@@ -192,8 +195,8 @@ namespace MuseumAI.UI
         {
             CacheButtonComponents();
             SetupButtonListeners();
-            SetupButtonColliders(); // Ajouter des BoxColliders pour le Raycast VR
             ValidateReferences();
+            // Note: SetupButtonColliders() est appele dans Start() apres le layout
         }
 
         private void Start()
@@ -203,6 +206,21 @@ namespace MuseumAI.UI
             // Si on appelle Hide() dans Start(), ca ecrase ShowQuiz() car Start() s'execute apres.
             // L'etat initial est gere par le code qui instancie le prefab.
             Debug.Log("[QuizUI] Start() - Etat initial preserve (pas de Hide automatique)");
+
+            // Forcer le calcul du layout Canvas PUIS ajouter les colliders
+            StartCoroutine(SetupCollidersAfterLayout());
+        }
+
+        private System.Collections.IEnumerator SetupCollidersAfterLayout()
+        {
+            // Attendre la fin du frame pour que le layout soit calcule
+            yield return null;
+
+            // Forcer la mise a jour du Canvas
+            Canvas.ForceUpdateCanvases();
+
+            // Maintenant les RectTransform ont leurs vraies dimensions
+            SetupButtonColliders();
         }
 
         private void OnEnable()
@@ -274,6 +292,12 @@ namespace MuseumAI.UI
             loadingPanel?.SetActive(false);
             quizPanel?.SetActive(true);
             errorPanel?.SetActive(false);
+
+            // Cacher le texte de feedback du quiz precedent
+            if (feedbackText != null)
+            {
+                feedbackText.gameObject.SetActive(false);
+            }
 
             currentQuizData = data;
             currentChoices = data.GetShuffledChoices();
@@ -431,46 +455,52 @@ namespace MuseumAI.UI
         /// </summary>
         private void SetupButtonColliders()
         {
+            // Taille par defaut basee sur le design du prefab (Width=700, Height=80)
+            const float DEFAULT_WIDTH = 700f;
+            const float DEFAULT_HEIGHT = 80f;
+            const float COLLIDER_DEPTH = 20f;
+
             for (int i = 0; i < answerButtons.Length; i++)
             {
                 if (answerButtons[i] != null)
                 {
-                    // Verifier si un collider existe deja
-                    BoxCollider existingCollider = answerButtons[i].GetComponent<BoxCollider>();
-                    if (existingCollider == null)
-                    {
-                        // Ajouter un BoxCollider base sur le RectTransform
-                        BoxCollider collider = answerButtons[i].gameObject.AddComponent<BoxCollider>();
-
-                        RectTransform rect = answerButtons[i].GetComponent<RectTransform>();
-                        if (rect != null)
-                        {
-                            // Taille du collider basee sur le RectTransform
-                            collider.size = new Vector3(rect.rect.width, rect.rect.height, 10f);
-                            collider.center = Vector3.zero;
-                        }
-                        else
-                        {
-                            // Taille par defaut si pas de RectTransform
-                            collider.size = new Vector3(400f, 60f, 10f);
-                        }
-
-                        Debug.Log($"[QuizUI] BoxCollider ajoute au bouton {i}");
-                    }
+                    SetupSingleButtonCollider(answerButtons[i], $"AnswerButton_{i}", DEFAULT_WIDTH, DEFAULT_HEIGHT, COLLIDER_DEPTH);
                 }
             }
 
             // Ajouter aussi au bouton Retry si present
-            if (retryButton != null && retryButton.GetComponent<BoxCollider>() == null)
+            if (retryButton != null)
             {
-                BoxCollider collider = retryButton.gameObject.AddComponent<BoxCollider>();
-                RectTransform rect = retryButton.GetComponent<RectTransform>();
-                if (rect != null)
-                {
-                    collider.size = new Vector3(rect.rect.width, rect.rect.height, 10f);
-                }
-                Debug.Log("[QuizUI] BoxCollider ajoute au bouton Retry");
+                SetupSingleButtonCollider(retryButton, "RetryButton", 300f, 60f, COLLIDER_DEPTH);
             }
+        }
+
+        private void SetupSingleButtonCollider(Button button, string debugName, float defaultWidth, float defaultHeight, float depth)
+        {
+            // Supprimer l'ancien collider s'il existe (pour recalculer)
+            BoxCollider existingCollider = button.GetComponent<BoxCollider>();
+            if (existingCollider != null)
+            {
+                Destroy(existingCollider);
+            }
+
+            // Ajouter un nouveau BoxCollider
+            BoxCollider collider = button.gameObject.AddComponent<BoxCollider>();
+
+            RectTransform rect = button.GetComponent<RectTransform>();
+            float width = defaultWidth;
+            float height = defaultHeight;
+
+            if (rect != null && rect.rect.width > 0 && rect.rect.height > 0)
+            {
+                width = rect.rect.width;
+                height = rect.rect.height;
+            }
+
+            collider.size = new Vector3(width, height, depth);
+            collider.center = Vector3.zero;
+
+            Debug.Log($"[QuizUI] BoxCollider {debugName}: size=({width}, {height}, {depth}), layer={button.gameObject.layer}");
         }
 
         private void ValidateReferences()
@@ -631,20 +661,84 @@ namespace MuseumAI.UI
                 }
             }
 
-            // 3. Feedback audio/haptique (a implementer selon le SDK)
+            // 3. Afficher le texte de feedback avec les points
+            int pointsEarned = 0;
+            if (GameManager.Instance != null)
+            {
+                pointsEarned = isCorrect ? 100 : 0; // Valeur par defaut, sera ecrasee par GameManager
+            }
+            ShowFeedbackText(isCorrect, pointsEarned);
+
+            // 4. Feedback audio/haptique (a implementer selon le SDK)
             PlayFeedback(isCorrect);
 
-            // 4. Attendre la duree configuree
+            // 5. Attendre la duree configuree
             yield return new WaitForSeconds(feedbackDuration);
 
-            // 5. Notifier le GameManager
+            // 6. Notifier le GameManager
             NotifyGameManager(isCorrect);
 
-            // 6. Declencher l'evenement local
+            // 7. Declencher l'evenement local
             OnAnswerSelected?.Invoke(isCorrect, selectedIndex);
 
-            // 7. Fermer l'UI
+            // 8. Fermer l'UI
             Hide();
+        }
+
+        private void ShowFeedbackText(bool isCorrect, int points)
+        {
+            if (feedbackText == null) return;
+
+            feedbackText.gameObject.SetActive(true);
+
+            if (isCorrect)
+            {
+                feedbackText.text = $"+{points} pts!";
+                feedbackText.color = correctAnswerColor;
+            }
+            else
+            {
+                feedbackText.text = "Rate...";
+                feedbackText.color = wrongAnswerColor;
+            }
+
+            // Animation de scale (punch effect)
+            StartCoroutine(AnimateFeedbackText());
+        }
+
+        private IEnumerator AnimateFeedbackText()
+        {
+            if (feedbackText == null) yield break;
+
+            RectTransform rect = feedbackText.GetComponent<RectTransform>();
+            if (rect == null) yield break;
+
+            Vector3 originalScale = Vector3.one;
+            Vector3 punchScale = Vector3.one * 1.3f;
+
+            // Scale up
+            float duration = 0.15f;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / duration;
+                rect.localScale = Vector3.Lerp(originalScale, punchScale, t);
+                yield return null;
+            }
+
+            // Scale down
+            elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / duration;
+                rect.localScale = Vector3.Lerp(punchScale, originalScale, t);
+                yield return null;
+            }
+
+            rect.localScale = originalScale;
         }
 
         private IEnumerator AnimateSpinner()
