@@ -5075,8 +5075,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.5}
-  m_Center: {x: 0, y: 0, z: -0.3}
+  m_Size: {x: 1, y: 1, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &858445138
 GameObject:
   m_ObjectHideFlags: 0
@@ -5974,7 +5974,10 @@ MonoBehaviour:
   lineRenderer: {fileID: 0}
   rayColorIdle: {r: 1, g: 1, b: 1, a: 0.5}
   rayColorTargeting: {r: 0, g: 1, b: 0.5, a: 0.8}
+  rayColorBlocked: {r: 1, g: 0.3, b: 0.3, a: 0.5}
   enableHapticFeedback: 1
+  hapticFrequency: 0.1
+  hapticAmplitude: 0.1
 --- !u!1 &997596251
 GameObject:
   m_ObjectHideFlags: 0
@@ -8865,8 +8868,6 @@ MonoBehaviour:
   gameDuration: 300
   pointsPerCorrectAnswer: 100
   bonusTimePoints: 10
-  autoStartGame: 1
-  autoStartDelay: 1
   quizPanelPrefab: {fileID: 3307240588839569819, guid: 9f05e4e8d2f40a24e8f1f5fe1d7036a2, type: 3}
 --- !u!4 &1450385358
 Transform:
