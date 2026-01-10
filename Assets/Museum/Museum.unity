@@ -8988,7 +8988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408170fd035fcc9419bb3df690542167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Core.GameManager
-  gameDuration: 300
+  gameDuration: 20
   pointsPerCorrectAnswer: 100
   bonusTimePoints: 10
   autoStartGame: 1
@@ -8996,8 +8996,7 @@ MonoBehaviour:
   quizPanelPrefab: {fileID: 3307240588839569819, guid: 9f05e4e8d2f40a24e8f1f5fe1d7036a2, type: 3}
   sceneHUD: {fileID: 827807758}
   gameOverPrefab: {fileID: 957311189749586415, guid: 4d5a30b66376f6a40af7831da35c77f0, type: 3}
-  playerInteraction: {fileID: 0}
-  playerMovement: {fileID: 0}
+  playerMovement: {fileID: 1471090989}
 --- !u!4 &1450385358
 Transform:
   m_ObjectHideFlags: 0

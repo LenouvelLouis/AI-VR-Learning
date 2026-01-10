@@ -67,10 +67,7 @@ namespace MuseumAI.Core
         [SerializeField] private GameObject gameOverPrefab;
 
         [Header("References Joueur")]
-        [Tooltip("Script PlayerInteraction a desactiver en Game Over")]
-        [SerializeField] private MonoBehaviour playerInteraction;
-
-        [Tooltip("CharacterController ou LocomotionSystem a desactiver")]
+        [Tooltip("Script de mouvement a desactiver en Game Over (ex: CharacterController, OVRPlayerController, SimpleMovement...)")]
         [SerializeField] private MonoBehaviour playerMovement;
 
         #endregion
@@ -416,28 +413,19 @@ namespace MuseumAI.Core
 
         private void SetPlayerControlsEnabled(bool enabled)
         {
-            // Desactiver/activer PlayerInteraction
-            if (playerInteraction != null)
-            {
-                playerInteraction.enabled = enabled;
-                Debug.Log($"[GameManager] PlayerInteraction: {(enabled ? "active" : "desactive")}");
-            }
+            // NOTE: On ne desactive PAS PlayerInteraction!
+            // Le joueur doit garder son laser pour interagir avec l'UI (Game Over, etc.)
+            // Seul le deplacement est desactive.
 
-            // Desactiver/activer le mouvement (CharacterController ou autre)
+            // Desactiver/activer UNIQUEMENT le mouvement (CharacterController, OVRPlayerController, etc.)
             if (playerMovement != null)
             {
                 playerMovement.enabled = enabled;
                 Debug.Log($"[GameManager] PlayerMovement: {(enabled ? "active" : "desactive")}");
             }
-
-            // Alternative: chercher les composants automatiquement si non assignes
-            if (playerInteraction == null)
+            else
             {
-                var pi = FindObjectOfType<PlayerInteraction>();
-                if (pi != null)
-                {
-                    pi.enabled = enabled;
-                }
+                Debug.LogWarning("[GameManager] playerMovement non assigne - le joueur peut toujours se deplacer!");
             }
         }
 
