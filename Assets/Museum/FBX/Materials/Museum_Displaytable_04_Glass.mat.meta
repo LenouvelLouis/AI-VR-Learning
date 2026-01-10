@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 276001930764afc4cbabf202f3eee157
+timeCreated: 1524937908
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Materials/Museum_Displaytable_04_Glass.mat
+  uploadId: 268236

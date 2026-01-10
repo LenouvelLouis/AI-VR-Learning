@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 567799924367e924c8870c2ad82ab375
+timeCreated: 1524860537
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/Museum.unity
+  uploadId: 268236

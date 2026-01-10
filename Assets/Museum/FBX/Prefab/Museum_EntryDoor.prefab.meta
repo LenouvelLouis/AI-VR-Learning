@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6036402fa9b98194eac03a8e9c9c5254
+timeCreated: 1525252901
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Prefab/Museum_EntryDoor.prefab
+  uploadId: 268236

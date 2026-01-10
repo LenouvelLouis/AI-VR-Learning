@@ -6,10 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/camera Ai test.unity
-    guid: b2c438b6c8daf3947899edeab9b9a658
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f2bf97b3acdb64248a707c407c9fc54e, type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a971eac5e950046e586c5e153e32d05c, type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: f09ee345c314f544a8859aac14b9d508, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

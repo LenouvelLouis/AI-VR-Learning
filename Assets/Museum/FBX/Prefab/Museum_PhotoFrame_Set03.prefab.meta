@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d11fd990989edef4a86d2d7ad2ead7cc
+timeCreated: 1525252969
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Prefab/Museum_PhotoFrame_Set03.prefab
+  uploadId: 268236

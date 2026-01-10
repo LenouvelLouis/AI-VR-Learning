@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 918b39ac6d7c8f64480b627397e89fae
+timeCreated: 1524859986
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Materials/Museum_PhotoFrame_Set03_Baked.mat
+  uploadId: 268236

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8a9ef236ccba67f48a585053ac979f28
+timeCreated: 1524859986
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Materials/Museum_EntryDoor_Baked.mat
+  uploadId: 268236

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4cca0cf84328bd54aa6916ca5024f1fe
+timeCreated: 1524859986
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Materials/Museum_Displaytable_Props_04_Baked.mat
+  uploadId: 268236
