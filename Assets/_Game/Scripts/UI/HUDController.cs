@@ -63,6 +63,9 @@ namespace MuseumAI.UI
         [Tooltip("Texte affichant le score")]
         [SerializeField] private TMP_Text scoreText;
 
+        [Tooltip("Texte affichant la progression (ex: 2/5 tableaux)")]
+        [SerializeField] private TMP_Text progressText;
+
         [Header("Animation Timer")]
         [Tooltip("Couleur normale du timer")]
         [SerializeField] private Color normalTimerColor = Color.white;
@@ -92,6 +95,9 @@ namespace MuseumAI.UI
 
         private void Start()
         {
+            // Appliquer le style futuriste
+            ApplyFuturisticStyle();
+
             // S'abonner aux evenements du GameManager
             SubscribeToEvents();
 
@@ -100,15 +106,26 @@ namespace MuseumAI.UI
             {
                 UpdateTimerDisplay(GameManager.Instance.TimeRemaining);
                 UpdateScoreDisplay(GameManager.Instance.Score);
+                UpdateProgressDisplay(GameManager.Instance.PaintingsCompleted);
             }
             else
             {
                 // Valeurs par defaut si pas de GameManager
                 UpdateTimerDisplay(300f);
                 UpdateScoreDisplay(0);
+                UpdateProgressDisplay(0);
             }
 
-            Debug.Log("[HUD] Initialise (mode montre connectee)");
+            Debug.Log("[HUD] Initialise (mode montre connectee) avec style futuriste");
+        }
+
+        private void ApplyFuturisticStyle()
+        {
+            FuturisticHUDStyle style = GetComponent<FuturisticHUDStyle>();
+            if (style == null)
+            {
+                style = gameObject.AddComponent<FuturisticHUDStyle>();
+            }
         }
 
         private void OnDestroy()
@@ -153,7 +170,26 @@ namespace MuseumAI.UI
         {
             if (scoreText == null) return;
 
-            scoreText.text = score.ToString("N0"); // Format avec separateurs de milliers
+            // Afficher avec l'objectif si defini
+            if (GameManager.Instance != null && GameManager.Instance.TargetScore > 0)
+            {
+                int target = GameManager.Instance.TargetScore;
+                scoreText.text = $"{score}/{target}";
+
+                // Couleur verte si objectif atteint
+                if (score >= target)
+                {
+                    scoreText.color = new Color(0.3f, 1f, 0.5f, 1f); // Vert
+                }
+                else
+                {
+                    scoreText.color = new Color(0f, 1f, 0.6f, 1f); // Vert-cyan
+                }
+            }
+            else
+            {
+                scoreText.text = score.ToString("N0");
+            }
 
             // Animation si le score a augmente
             if (score > lastDisplayedScore && lastDisplayedScore >= 0)
@@ -162,6 +198,44 @@ namespace MuseumAI.UI
             }
 
             lastDisplayedScore = score;
+        }
+
+        /// <summary>
+        /// Met a jour l'affichage de la progression
+        /// </summary>
+        public void UpdateProgressDisplay(int paintingsCompleted)
+        {
+            int target = 0;
+
+            if (GameManager.Instance != null && GameManager.Instance.TargetPaintings > 0)
+            {
+                target = GameManager.Instance.TargetPaintings;
+
+                // Texte de progression
+                if (progressText != null)
+                {
+                    progressText.text = $"{paintingsCompleted}/{target}";
+
+                    // Couleur verte si objectif atteint
+                    if (paintingsCompleted >= target)
+                    {
+                        progressText.color = new Color(0.3f, 1f, 0.5f, 1f); // Vert
+                    }
+                    else
+                    {
+                        progressText.color = new Color(0f, 0.9f, 1f, 1f); // Cyan
+                    }
+                }
+            }
+            else
+            {
+                // Pas d'objectif de tableaux, afficher juste le compte
+                if (progressText != null)
+                {
+                    progressText.text = paintingsCompleted.ToString();
+                    progressText.color = new Color(0f, 0.9f, 1f, 1f);
+                }
+            }
         }
 
         /// <summary>
@@ -191,6 +265,7 @@ namespace MuseumAI.UI
                 GameManager.Instance.OnTimerUpdated += UpdateTimerDisplay;
                 GameManager.Instance.OnScoreUpdated += UpdateScoreDisplay;
                 GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+                GameManager.Instance.OnQuizCompleted += OnQuizCompleted;
             }
         }
 
@@ -201,6 +276,16 @@ namespace MuseumAI.UI
                 GameManager.Instance.OnTimerUpdated -= UpdateTimerDisplay;
                 GameManager.Instance.OnScoreUpdated -= UpdateScoreDisplay;
                 GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+                GameManager.Instance.OnQuizCompleted -= OnQuizCompleted;
+            }
+        }
+
+        private void OnQuizCompleted(bool success, int points)
+        {
+            // Mettre a jour la progression quand un quiz est complete
+            if (GameManager.Instance != null)
+            {
+                UpdateProgressDisplay(GameManager.Instance.PaintingsCompleted);
             }
         }
 

@@ -358,6 +358,11 @@ namespace MuseumAI.Gameplay
             lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
             lineRenderer.startColor = rayColorIdle;
             lineRenderer.endColor = rayColorIdle;
+
+            // Initialiser les positions pour eviter le point noir a (0,0,0)
+            Vector3 startPos = rayOrigin != null ? rayOrigin.position : transform.position;
+            lineRenderer.SetPosition(0, startPos);
+            lineRenderer.SetPosition(1, startPos + (rayOrigin != null ? rayOrigin.forward : transform.forward) * 0.1f);
         }
 
         private void StopHaptic()

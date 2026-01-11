@@ -107,6 +107,23 @@ namespace MuseumAI.UI
 
             SetupButtons();
             SetupButtonColliders();
+            ApplyFuturisticStyle();
+        }
+
+        private void ApplyFuturisticStyle()
+        {
+            FuturisticGameOverStyle style = GetComponent<FuturisticGameOverStyle>();
+            if (style == null)
+            {
+                style = gameObject.AddComponent<FuturisticGameOverStyle>();
+            }
+
+            // Mettre a jour les couleurs depuis le style
+            if (style != null)
+            {
+                timeUpTitleColor = style.GetTimeUpColor();
+                victoryTitleColor = style.GetVictoryColor();
+            }
         }
 
         private void Start()
@@ -147,9 +164,16 @@ namespace MuseumAI.UI
                 }
                 else
                 {
-                    titleText.text = "PARTIE TERMINEE!";
+                    titleText.text = "VICTOIRE!";
                     titleText.color = victoryTitleColor;
                 }
+            }
+
+            // Mettre a jour le style du titre
+            FuturisticGameOverStyle style = GetComponent<FuturisticGameOverStyle>();
+            if (style != null)
+            {
+                style.UpdateTitleStyle(!timeUp);
             }
 
             // Score
@@ -174,9 +198,44 @@ namespace MuseumAI.UI
         {
             Debug.Log("[GameOverUI] Retry clique");
 
-            // Recharger la scene actuelle
-            string currentScene = SceneManager.GetActiveScene().name;
-            SceneManager.LoadScene(currentScene);
+            // Desactiver les boutons pour eviter les double-clics
+            if (retryButton != null) retryButton.interactable = false;
+            if (quitButton != null) quitButton.interactable = false;
+
+            // Lancer la transition avec fade out
+            StartCoroutine(RestartWithTransition());
+        }
+
+        private System.Collections.IEnumerator RestartWithTransition()
+        {
+            // Fade out
+            float fadeDuration = 0.4f;
+            float elapsed = 0f;
+
+            while (elapsed < fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                if (canvasGroup != null)
+                {
+                    canvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
+                }
+                yield return null;
+            }
+
+            // Utiliser le restart rapide du GameManager (sans recharger la scene)
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.RestartGame();
+            }
+            else
+            {
+                // Fallback: recharger la scene si GameManager n'existe pas
+                Debug.LogWarning("[GameOverUI] GameManager introuvable, rechargement de la scene...");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+
+            // Detruire ce panel (le GameManager le fera aussi, mais au cas ou)
+            Destroy(gameObject);
         }
 
         /// <summary>
@@ -301,6 +360,13 @@ namespace MuseumAI.UI
             }
 
             finalScoreText.text = targetScore.ToString("N0");
+
+            // Effet pulse a la fin
+            FuturisticGameOverStyle style = GetComponent<FuturisticGameOverStyle>();
+            if (style != null)
+            {
+                style.PulseScore();
+            }
         }
 
         #endregion

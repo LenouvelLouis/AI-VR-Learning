@@ -1,7 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "mcp__UnityMCP__read_console"
+      "mcp__UnityMCP__manage_asset"
     ]
   }
 }

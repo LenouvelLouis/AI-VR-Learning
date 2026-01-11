@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cbf094efecad2c46a150b03cac45ba1, type: 3}
   m_Name: MyApiConfig
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.API.ApiConfig
-  apiKey: AIzaSyDWcDhrN-F-WqMozK5Z7nwBc1sMahOnso8
+  apiKey: AIzaSyA-WJWf_FQ7GvFfQTB72GiCHQ9qrHUP0Gc
   modelName: gemini-2.5-flash
   baseUrl: https://generativelanguage.googleapis.com/v1beta/models
   temperature: 0.7

@@ -143,11 +143,11 @@ namespace MuseumAI.UI
 
         #region Serialized Fields - Configuration
 
-        [Header("Couleurs de Feedback")]
-        [SerializeField] private Color normalButtonColor = new Color(0.24f, 0.24f, 0.31f, 1f);
-        [SerializeField] private Color correctAnswerColor = new Color(0.2f, 0.7f, 0.3f, 1f);
-        [SerializeField] private Color wrongAnswerColor = new Color(0.8f, 0.2f, 0.2f, 1f);
-        [SerializeField] private Color highlightedColor = new Color(0.31f, 0.31f, 0.39f, 1f);
+        [Header("Couleurs de Feedback (Style Futuriste VR)")]
+        [SerializeField] private Color normalButtonColor = new Color(0.05f, 0.12f, 0.18f, 0.95f);  // Bleu sombre
+        [SerializeField] private Color correctAnswerColor = new Color(0f, 1f, 0.5f, 1f);           // Vert neon
+        [SerializeField] private Color wrongAnswerColor = new Color(1f, 0.2f, 0.3f, 1f);           // Rouge neon
+        [SerializeField] private Color highlightedColor = new Color(0f, 0.25f, 0.35f, 1f);         // Cyan highlight
 
         [Header("Timing")]
         [Tooltip("Duree d'affichage du feedback avant fermeture (secondes)")]
@@ -196,7 +196,30 @@ namespace MuseumAI.UI
             CacheButtonComponents();
             SetupButtonListeners();
             ValidateReferences();
+            ApplyFuturisticStyle();
             // Note: SetupButtonColliders() est appele dans Start() apres le layout
+        }
+
+        /// <summary>
+        /// Applique automatiquement le style futuriste VR
+        /// </summary>
+        private void ApplyFuturisticStyle()
+        {
+            // Ajouter le composant de style s'il n'existe pas
+            FuturisticQuizStyle style = GetComponent<FuturisticQuizStyle>();
+            if (style == null)
+            {
+                style = gameObject.AddComponent<FuturisticQuizStyle>();
+                Debug.Log("[QuizUI] Style futuriste VR ajoute automatiquement");
+            }
+
+            // Mettre a jour les couleurs de feedback avec le style futuriste
+            if (style != null)
+            {
+                correctAnswerColor = style.GetCorrectColor();
+                wrongAnswerColor = style.GetWrongColor();
+                highlightedColor = new Color(0f, 0.25f, 0.35f, 1f); // Cyan highlight
+            }
         }
 
         private void Start()

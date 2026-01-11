@@ -50,6 +50,16 @@ namespace MuseumAI.Core
         [SerializeField] private int pointsPerCorrectAnswer = 100;
         [SerializeField] private int bonusTimePoints = 10; // Points bonus par seconde restante
 
+        [Header("Conditions de Victoire")]
+        [Tooltip("Score a atteindre pour gagner (0 = desactive)")]
+        [SerializeField] private int targetScore = 500;
+
+        [Tooltip("Nombre de tableaux a completer pour gagner (0 = desactive)")]
+        [SerializeField] private int targetPaintings = 5;
+
+        [Tooltip("Mode de victoire: atteindre l'un OU l'autre objectif")]
+        [SerializeField] private bool eitherConditionWins = true;
+
         [Header("Demarrage Automatique")]
         [Tooltip("Demarre automatiquement le jeu au lancement de la scene")]
         [SerializeField] private bool autoStartGame = true;
@@ -93,6 +103,16 @@ namespace MuseumAI.Core
         /// Nombre de tableaux completes
         /// </summary>
         public int PaintingsCompleted { get; private set; }
+
+        /// <summary>
+        /// Score cible pour gagner
+        /// </summary>
+        public int TargetScore => targetScore;
+
+        /// <summary>
+        /// Nombre de tableaux cible pour gagner
+        /// </summary>
+        public int TargetPaintings => targetPaintings;
 
         #endregion
 
@@ -345,6 +365,35 @@ namespace MuseumAI.Core
             currentPainting = null;
 
             Debug.Log($"[GameManager] Quiz termine - Correct: {isCorrect}, Points: {pointsEarned}");
+
+            // Verifier les conditions de victoire apres une bonne reponse
+            if (isCorrect && CheckVictoryConditions())
+            {
+                Debug.Log("[GameManager] CONDITIONS DE VICTOIRE ATTEINTES!");
+                EndGame(timeUp: false);
+            }
+        }
+
+        /// <summary>
+        /// Verifie si les conditions de victoire sont atteintes
+        /// </summary>
+        private bool CheckVictoryConditions()
+        {
+            bool scoreReached = targetScore > 0 && Score >= targetScore;
+            bool paintingsReached = targetPaintings > 0 && PaintingsCompleted >= targetPaintings;
+
+            if (eitherConditionWins)
+            {
+                // Mode "OU": l'une ou l'autre condition suffit
+                return scoreReached || paintingsReached;
+            }
+            else
+            {
+                // Mode "ET": les deux conditions doivent etre remplies
+                bool scoreOk = targetScore <= 0 || scoreReached;
+                bool paintingsOk = targetPaintings <= 0 || paintingsReached;
+                return scoreOk && paintingsOk;
+            }
         }
 
         /// <summary>
@@ -358,6 +407,64 @@ namespace MuseumAI.Core
             SetGameState(GameState.MainMenu);
 
             Debug.Log("[GameManager] Retour au menu principal");
+        }
+
+        /// <summary>
+        /// Redémarre la partie sans recharger la scène (plus rapide, meilleur pour VR)
+        /// </summary>
+        public void RestartGame()
+        {
+            Debug.Log("[GameManager] Redemarrage rapide...");
+
+            // Detruire l'ecran Game Over
+            if (gameOverInstance != null)
+            {
+                Destroy(gameOverInstance);
+                gameOverInstance = null;
+            }
+
+            // Reinitialiser tous les tableaux
+            ResetAllPaintings();
+
+            // Reinitialiser les stats
+            Score = 0;
+            PaintingsCompleted = 0;
+            TimeRemaining = gameDuration;
+            currentPainting = null;
+
+            // Redemarrer le timer
+            isTimerRunning = true;
+
+            // Reactiver les controles joueur
+            SetPlayerControlsEnabled(true);
+
+            // Afficher le HUD
+            if (sceneHUD != null)
+            {
+                sceneHUD.Show();
+            }
+
+            // Changer l'etat
+            SetGameState(GameState.Playing);
+
+            // Notifier les listeners
+            OnScoreUpdated?.Invoke(Score);
+            OnTimerUpdated?.Invoke(TimeRemaining);
+
+            Debug.Log("[GameManager] Partie redemarree!");
+        }
+
+        /// <summary>
+        /// Reinitialise tous les tableaux de la scene
+        /// </summary>
+        private void ResetAllPaintings()
+        {
+            PaintingController[] allPaintings = FindObjectsByType<PaintingController>(FindObjectsSortMode.None);
+            foreach (PaintingController painting in allPaintings)
+            {
+                painting.ResetState();
+            }
+            Debug.Log($"[GameManager] {allPaintings.Length} tableau(x) reinitialise(s)");
         }
 
         #endregion
