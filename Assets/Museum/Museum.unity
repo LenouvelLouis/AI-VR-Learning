@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Effeil (1)
+      value: Tableau_Pantheon
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -240,13 +240,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Panth\xE9on"
+  artistName: Rome, Italie
+  year: 125
+  paintingContext: "Le Panth\xE9on de Rome est un temple antique d\xE9di\xE9 \xE0
+    tous les dieux. Sa coupole de 43 m\xE8tres est rest\xE9e la plus grande du monde
+    pendant 1300 ans. Son oculus central \xE9claire l'int\xE9rieur."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &8617997
@@ -438,7 +437,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: 2c4861bf05a5d784188940b3d892a810, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -686,6 +685,135 @@ Transform:
   m_Children: []
   m_Father: {fileID: 682056708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &65944045
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 682056708}
+    m_Modifications:
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Name
+      value: Tableau_Louvre
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_TagString
+      value: Tableau
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.634
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.221
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 23906796820398656, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6debec096e367ba4ea0c7631dcfadfc3, type: 2}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.z
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 1996628762}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1392897141}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 65944048}
+  m_SourcePrefab: {fileID: 100100000, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+--- !u!4 &65944046 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 65944045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &65944047 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 65944045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &65944048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65944047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
+  paintingTitle: "Mus\xE9e du Louvre"
+  artistName: Paris, France
+  year: 1793
+  paintingContext: "Le Louvre est le plus grand mus\xE9e d'art du monde avec 380
+    000 objets. Ancienne r\xE9sidence royale, il abrite la Joconde et la V\xE9nus
+    de Milo. Sa pyramide de verre est devenue embl\xE9matique."
+  completedMaterial: {fileID: 0}
+  completionEffect: {fileID: 0}
 --- !u!1 &67115780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,7 +1216,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (7)
+      value: Tableau_Cathedrale_Strasbourg
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -1199,13 +1327,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Cath\xE9drale de Strasbourg"
+  artistName: "Cath\xE9drale gothique"
+  year: 1439
+  paintingContext: "La cath\xE9drale Notre-Dame de Strasbourg est une cath\xE9drale
+    gothique. Avec ses 142 m\xE8tres, elle a \xE9t\xE9 le plus haut b\xE2timent du
+    monde pendant 227 ans. Son horloge astronomique est c\xE9l\xE8bre."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &97366649
@@ -1378,7 +1505,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (12)
+      value: Tableau_Chateau_Chenonceau
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -1489,13 +1616,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Ch\xE2teau de Chenonceau"
+  artistName: Val de Loire, France
+  year: 1522
+  paintingContext: "Le ch\xE2teau de Chenonceau enjambe le Cher. Surnomm\xE9 le 'ch\xE2teau
+    des Dames', il fut embelli par Diane de Poitiers et Catherine de M\xE9dicis.
+    C'est le ch\xE2teau priv\xE9 le plus visit\xE9 de France."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &113990044
@@ -2056,7 +2182,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (16)
+      value: Tableau_Grande_Muraille
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -2068,7 +2194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.5
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_LocalScale.z
@@ -2167,13 +2293,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: Grande Muraille de Chine
+  artistName: Chine
+  year: -221
+  paintingContext: "La Grande Muraille de Chine s'\xE9tend sur plus de 20 000 km.
+    Construite pour prot\xE9ger l'empire des invasions, elle est le plus grand ouvrage
+    de construction humaine. C'est une des sept nouvelles merveilles du monde."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &176667816
@@ -2358,6 +2483,135 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &198619101
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 682056708}
+    m_Modifications:
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Name
+      value: Tableau_Opera_Sydney
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_TagString
+      value: Tableau
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.436
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.635
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.708
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 23906796820398656, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6debec096e367ba4ea0c7631dcfadfc3, type: 2}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.z
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 1996628762}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1682741835}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 198619104}
+  m_SourcePrefab: {fileID: 100100000, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+--- !u!4 &198619102 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 198619101}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &198619103 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 198619101}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &198619104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198619103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
+  paintingTitle: "Op\xE9ra de Sydney"
+  artistName: Sydney, Australie
+  year: 1973
+  paintingContext: "L'Op\xE9ra de Sydney est un b\xE2timent c\xE9l\xE8bre pour son
+    architecture en forme de voiles. Con\xE7u par J\xF8rn Utzon, il est devenu le
+    symbole de l'Australie et du patrimoine mondial de l'UNESCO."
+  completedMaterial: {fileID: 0}
+  completionEffect: {fileID: 0}
 --- !u!1 &210028188
 GameObject:
   m_ObjectHideFlags: 0
@@ -2430,7 +2684,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Effeil (2)
+      value: Tableau_Pont_Gard
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -2541,13 +2795,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: Pont du Gard
+  artistName: Gard, France
+  year: 50
+  paintingContext: "Le Pont du Gard est un aqueduc romain \xE0 trois niveaux d'arches.
+    Haut de 49 m\xE8tres, il permettait d'acheminer l'eau vers la ville de N\xEEmes
+    sur 50 km. C'est un chef-d'\u0153uvre de l'ing\xE9nierie romaine."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &238225717
@@ -2771,7 +3024,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: 5293f5a80f24f5d42afada3761a30389, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3686,7 +3939,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (13)
+      value: Tableau_Cite_Carcassonne
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -3797,13 +4050,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Cit\xE9 de Carcassonne"
+  artistName: Languedoc, France
+  year: 1130
+  paintingContext: "La cit\xE9 de Carcassonne est une ville fortifi\xE9e m\xE9di\xE9vale.
+    Ses 52 tours et 3 km de remparts en font le plus grand ensemble fortifi\xE9 d'Europe.
+    Elle a \xE9t\xE9 restaur\xE9e par Viollet-le-Duc au XIXe si\xE8cle."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &379766759
@@ -3895,7 +4147,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: ae256f8a1a5d54647885da8a9139a9a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4506,7 +4758,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Effeil (4)
+      value: Tableau_Sacre_Coeur
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -4617,13 +4869,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Basilique du Sacr\xE9-C\u0153ur"
+  artistName: Paris, France
+  year: 1914
+  paintingContext: "Le Sacr\xE9-C\u0153ur est une basilique de style romano-byzantin
+    situ\xE9e au sommet de la butte Montmartre. Sa pierre blanche et sa vue panoramique
+    sur Paris en font l'un des monuments les plus visit\xE9s."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &508485358
@@ -4721,6 +4972,135 @@ Transform:
   - {fileID: 1132004150}
   m_Father: {fileID: 1641098949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &519149095
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 682056708}
+    m_Modifications:
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Name
+      value: Tableau_Palais_Papes
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_TagString
+      value: Tableau
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.731
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.623
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.708
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 23906796820398656, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6debec096e367ba4ea0c7631dcfadfc3, type: 2}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.z
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 1996628762}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1325723641}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 519149098}
+  m_SourcePrefab: {fileID: 100100000, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+--- !u!4 &519149096 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 519149095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &519149097 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 519149095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &519149098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519149097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
+  paintingTitle: Palais des Papes
+  artistName: Avignon, France
+  year: 1370
+  paintingContext: "Le Palais des Papes d'Avignon est la plus grande construction
+    gothique du Moyen \xC2ge. Il fut la r\xE9sidence des papes au XIVe si\xE8cle
+    pendant la p\xE9riode dite de la 'papaut\xE9 d'Avignon'."
+  completedMaterial: {fileID: 0}
+  completionEffect: {fileID: 0}
 --- !u!1 &529378637
 GameObject:
   m_ObjectHideFlags: 0
@@ -5313,6 +5693,95 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 484986, guid: 24a7303d4e696014398ada4ed166c6bf, type: 3}
   m_PrefabInstance: {fileID: 600903906}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &616085891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 616085892}
+  - component: {fileID: 616085894}
+  - component: {fileID: 616085893}
+  m_Layer: 0
+  m_Name: PaintingImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &616085892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616085891}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.02, z: 0.25}
+  m_LocalScale: {x: 0.38, y: 0.38, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 711338010}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!23 &616085893
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616085891}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ed7eded40b110624da0d50467d8ff298, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &616085894
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616085891}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &618841602
 GameObject:
   m_ObjectHideFlags: 0
@@ -5873,6 +6342,12 @@ Transform:
   - {fileID: 975290138}
   - {fileID: 1242399047}
   - {fileID: 175003713}
+  - {fileID: 65944046}
+  - {fileID: 711338010}
+  - {fileID: 1412085859}
+  - {fileID: 1736870826}
+  - {fileID: 198619102}
+  - {fileID: 519149096}
   - {fileID: 1877051388}
   - {fileID: 7400586}
   - {fileID: 218544560}
@@ -5941,7 +6416,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: 196605d16ed0c904e93e679aaefab5cb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6101,6 +6576,135 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.6778891, y: -3.0013652, z: -1.9480774}
     m_Extent: {x: 3.368389, y: 4.3300548, z: 5.2953033}
   m_DirtyAABB: 0
+--- !u!1001 &711338009
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 682056708}
+    m_Modifications:
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Name
+      value: Tableau_Machu_Picchu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_TagString
+      value: Tableau
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.819
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.632
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.221
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 23906796820398656, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6debec096e367ba4ea0c7631dcfadfc3, type: 2}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.z
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 1996628762}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 616085892}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 711338012}
+  m_SourcePrefab: {fileID: 100100000, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+--- !u!4 &711338010 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 711338009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &711338011 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 711338009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &711338012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711338011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
+  paintingTitle: Machu Picchu
+  artistName: "Civilisation Inca, P\xE9rou"
+  year: 1450
+  paintingContext: "Machu Picchu est une ancienne cit\xE9 inca perch\xE9e \xE0 2430
+    m d'altitude dans les Andes. D\xE9couverte en 1911, elle est consid\xE9r\xE9e
+    comme l'une des sept nouvelles merveilles du monde."
+  completedMaterial: {fileID: 0}
+  completionEffect: {fileID: 0}
 --- !u!1 &715570324
 GameObject:
   m_ObjectHideFlags: 0
@@ -6598,7 +7202,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (5)
+      value: Tableau_Arenes_Nimes
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -6709,13 +7313,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Ar\xE8nes de N\xEEmes"
+  artistName: "Amphith\xE9\xE2tre romain"
+  year: 90
+  paintingContext: "Les ar\xE8nes de N\xEEmes sont un amphith\xE9\xE2tre romain construit
+    vers la fin du Ier si\xE8cle. C'est l'un des mieux conserv\xE9s au monde. Il
+    pouvait accueillir 24 000 spectateurs pour des combats de gladiateurs."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &762171046
@@ -6776,7 +7379,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 38521eb02fcc72a41827c65263e77c7c, type: 2}
+  - {fileID: 2100000, guid: 6e3f7377b98ff9647a3183679087a23d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6865,7 +7468,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 38521eb02fcc72a41827c65263e77c7c, type: 2}
+  - {fileID: 2100000, guid: 3f5e63c1d2f01a943a86b46cbdacd50d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7084,7 +7687,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: e9d7b27243982a14caad5a601daae54b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7218,7 +7821,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (6)
+      value: Tableau_Capitol
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -7329,13 +7932,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Capitole des \xC9tats-Unis"
+  artistName: Washington D.C.
+  year: 1800
+  paintingContext: "Le Capitole des \xC9tats-Unis est le b\xE2timent qui sert de
+    si\xE8ge au Congr\xE8s am\xE9ricain. Sa construction a commenc\xE9 en 1793 et
+    il est devenu le symbole de la d\xE9mocratie am\xE9ricaine."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &829617650
@@ -7931,7 +8533,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Effeil (5)
+      value: Tableau_Sagrada_Familia
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -8042,13 +8644,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Sagrada Fam\xEDlia"
+  artistName: "Antoni Gaud\xED, Barcelone"
+  year: 1882
+  paintingContext: "La Sagrada Fam\xEDlia est une basilique con\xE7ue par Gaud\xED,
+    toujours en construction depuis 1882. Son architecture unique m\xEAle gothique
+    et Art nouveau. Elle devrait \xEAtre achev\xE9e en 2026."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &943524987
@@ -8354,7 +8955,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (14)
+      value: Tableau_Colisee_Rome
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -8465,13 +9066,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Colis\xE9e de Rome"
+  artistName: Rome, Italie
+  year: 80
+  paintingContext: "Le Colis\xE9e est le plus grand amphith\xE9\xE2tre jamais construit.
+    Il pouvait accueillir 50 000 spectateurs pour des combats de gladiateurs et des
+    spectacles publics. C'est le symbole de la Rome antique."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &976781388
@@ -9205,7 +9805,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: 8d81f1025c1b9184b9ab0f45f7ec20bd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9294,7 +9894,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: 8a608203e3b1a654695670e46e25d783, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10060,7 +10660,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: 5999bb8429ff9c343a8302137693a034, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10367,7 +10967,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: 29fd8db389fab37459300b479eb370e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10630,7 +11230,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (3)
+      value: Tableau_Ben
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -10741,15 +11341,103 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: Big Ben
+  artistName: Londres, Royaume-Uni
+  year: 1859
+  paintingContext: "Big Ben est le surnom de la grande cloche de l'horloge du Palais
+    de Westminster. La tour Elizabeth mesure 96 m\xE8tres. C'est l'un des symboles
+    les plus reconnaissables de Londres."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
+--- !u!1 &1217694032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1217694033}
+  - component: {fileID: 1217694035}
+  - component: {fileID: 1217694034}
+  m_Layer: 0
+  m_Name: PaintingImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1217694033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217694032}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.02, z: 0.25}
+  m_LocalScale: {x: 0.38, y: 0.38, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1412085859}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!23 &1217694034
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217694032}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: f9ea7f1cde2739c4696054b11b2333a1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1217694035
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217694032}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1222054813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10760,7 +11448,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (4)
+      value: Tableau_Notre_Dame
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -10871,13 +11559,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: Notre-Dame de Paris
+  artistName: Paris, France
+  year: 1345
+  paintingContext: "Notre-Dame est une cath\xE9drale gothique sur l'\xEEle de la
+    Cit\xE9. C\xE9l\xE8bre pour ses gargouilles et ses rosaces, elle a \xE9t\xE9
+    ravag\xE9e par un incendie en 2019 et est en cours de restauration."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &1231063010
@@ -11063,7 +11750,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (15)
+      value: Tableau_Gizeh
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -11174,13 +11861,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: Pyramides de Gizeh
+  artistName: "\xC9gypte ancienne"
+  year: -2560
+  paintingContext: "Les pyramides de Gizeh sont les seules des sept merveilles du
+    monde antique encore existantes. La grande pyramide de Kh\xE9ops mesure 146 m\xE8tres
+    et a \xE9t\xE9 le plus haut b\xE2timent du monde pendant 3800 ans."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1001 &1253920738
@@ -11193,7 +11879,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Effeil (3)
+      value: Tableau_Petra
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -11304,13 +11990,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "P\xE9tra"
+  artistName: Jordanie
+  year: -312
+  paintingContext: "P\xE9tra est une cit\xE9 nab\xE9tenne taill\xE9e dans la roche
+    rose. Le 'Tr\xE9sor' (Al-Khazneh) est son monument le plus c\xE9l\xE8bre. C'est
+    l'une des sept nouvelles merveilles du monde."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1001 &1260135264
@@ -11568,7 +12253,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: 66d83e2a8c1e9124eacd77c85e0e835a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11787,6 +12472,95 @@ Transform:
   m_Children: []
   m_Father: {fileID: 645546095}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1325723640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1325723641}
+  - component: {fileID: 1325723643}
+  - component: {fileID: 1325723642}
+  m_Layer: 0
+  m_Name: PaintingImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1325723641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325723640}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.02, z: 0.25}
+  m_LocalScale: {x: 0.38, y: 0.38, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 519149096}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!23 &1325723642
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325723640}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 51e3c4eff24731b4a87f1bbb81f1a4d3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1325723643
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325723640}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1326447172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12155,7 +12929,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (2)
+      value: Tableau_Mahal
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -12266,13 +13040,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: Taj Mahal
+  artistName: Agra, Inde
+  year: 1653
+  paintingContext: "Le Taj Mahal est un mausol\xE9e de marbre blanc construit par
+    l'empereur Shah Jahan pour son \xE9pouse. Consid\xE9r\xE9 comme le joyau de l'architecture
+    moghole, c'est l'une des sept nouvelles merveilles du monde."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &1349500145
@@ -12691,6 +13464,95 @@ Transform:
   - {fileID: 1700118694}
   m_Father: {fileID: 600588178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1392897140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1392897141}
+  - component: {fileID: 1392897143}
+  - component: {fileID: 1392897142}
+  m_Layer: 0
+  m_Name: PaintingImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1392897141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392897140}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.02, z: 0.25}
+  m_LocalScale: {x: 0.38, y: 0.38, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 65944046}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!23 &1392897142
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392897140}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 5e2fe5056f0b5c04298460dbaec6909c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1392897143
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392897140}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1395299548
 GameObject:
   m_ObjectHideFlags: 0
@@ -12723,6 +13585,135 @@ Transform:
   - {fileID: 308141678}
   m_Father: {fileID: 1299002090}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1412085858
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 682056708}
+    m_Modifications:
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Name
+      value: Tableau_Mont_Saint_Michel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_TagString
+      value: Tableau
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.926
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.643
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.878
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 23906796820398656, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6debec096e367ba4ea0c7631dcfadfc3, type: 2}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.z
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 1996628762}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1217694033}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1412085861}
+  m_SourcePrefab: {fileID: 100100000, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+--- !u!4 &1412085859 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 1412085858}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1412085860 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 1412085858}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1412085861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412085860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
+  paintingTitle: Mont-Saint-Michel
+  artistName: Normandie, France
+  year: 1523
+  paintingContext: "Le Mont-Saint-Michel est une \xEEle rocheuse surmont\xE9e d'une
+    abbaye gothique. Accessible \xE0 mar\xE9e basse, il re\xE7oit plus de 2,5 millions
+    de visiteurs par an. C'est l'un des sites les plus visit\xE9s de France."
+  completedMaterial: {fileID: 0}
+  completionEffect: {fileID: 0}
 --- !u!1 &1412422182
 GameObject:
   m_ObjectHideFlags: 0
@@ -12812,7 +13803,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: fdd5dc82d8460374da5563c6771f689a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12853,7 +13844,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (8)
+      value: Tableau_Champs_Elysees
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -12964,13 +13955,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Avenue des Champs-\xC9lys\xE9es"
+  artistName: Paris, France
+  year: 1670
+  paintingContext: "Les Champs-\xC9lys\xE9es sont une avenue de Paris longue de pr\xE8s
+    de 2 km. Elle relie la place de la Concorde \xE0 l'Arc de Triomphe. C'est l'une
+    des avenues les plus c\xE9l\xE8bres au monde."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1001 &1430726398
@@ -13087,10 +14077,12 @@ MonoBehaviour:
   targetScore: 200
   targetPaintings: 5
   eitherConditionWins: 1
-  autoStartGame: 1
+  mainMenuPrefab: {fileID: 1175361790100243996, guid: c545bd4ba0f7d544da8264e56e5bad45, type: 3}
+  mainMenuDistance: 0.8
+  autoStartGame: 0
   autoStartDelay: 1
   quizPanelPrefab: {fileID: 3307240588839569819, guid: 9f05e4e8d2f40a24e8f1f5fe1d7036a2, type: 3}
-  sceneHUD: {fileID: 0}
+  sceneHUD: {fileID: 1378104949897891162}
   gameOverPrefab: {fileID: 957311189749586415, guid: 4d5a30b66376f6a40af7831da35c77f0, type: 3}
   playerMovement: {fileID: 1471090989}
 --- !u!4 &1450385358
@@ -13276,7 +14268,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 38521eb02fcc72a41827c65263e77c7c, type: 2}
+  - {fileID: 2100000, guid: be2e3757dce9590458781970da1ef3ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13365,7 +14357,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 38521eb02fcc72a41827c65263e77c7c, type: 2}
+  - {fileID: 2100000, guid: 872e6a8d7773bb64db44d2044c7e8a2c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13898,7 +14890,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 38521eb02fcc72a41827c65263e77c7c, type: 2}
+  - {fileID: 2100000, guid: 260b7de1c1980764ca6cbc68c713ce8d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13987,7 +14979,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: bb2a189c410b58f4bb27b58b3e1eb34d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14178,7 +15170,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Effeil (6)
+      value: Tableau_Sainte_Chapelle
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -14289,13 +15281,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: Sainte-Chapelle
+  artistName: Paris, France
+  year: 1248
+  paintingContext: "La Sainte-Chapelle est un joyau de l'architecture gothique rayonnant.
+    Construite par Saint Louis pour abriter les reliques du Christ, elle est c\xE9l\xE8bre
+    pour ses 15 verri\xE8res de 15 m\xE8tres de haut."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &1512241978
@@ -14507,7 +15498,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 38521eb02fcc72a41827c65263e77c7c, type: 2}
+  - {fileID: 2100000, guid: 9d725cfe11a801e4fb63e1540c805c92, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15075,7 +16066,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 38521eb02fcc72a41827c65263e77c7c, type: 2}
+  - {fileID: 2100000, guid: e4d169fcc764ed34fb1b88391785acc8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15105,6 +16096,95 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1673172080}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1682741834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1682741835}
+  - component: {fileID: 1682741837}
+  - component: {fileID: 1682741836}
+  m_Layer: 0
+  m_Name: PaintingImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1682741835
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682741834}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.02, z: 0.25}
+  m_LocalScale: {x: 0.38, y: 0.38, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 198619102}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!23 &1682741836
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682741834}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 53390b71954a4544391ee7db68202393, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1682741837
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682741834}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1698561193
 GameObject:
@@ -15494,6 +16574,135 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.6778891, y: -3.017043, z: -1.9610169}
     m_Extent: {x: 3.368389, y: 4.314377, z: 5.282364}
   m_DirtyAABB: 0
+--- !u!1001 &1736870825
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 682056708}
+    m_Modifications:
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Name
+      value: Tableau_Opera_Garnier
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_TagString
+      value: Tableau
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.926
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.638
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 23906796820398656, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6debec096e367ba4ea0c7631dcfadfc3, type: 2}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Size.z
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 1996628762}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2085357717}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1736870828}
+  m_SourcePrefab: {fileID: 100100000, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+--- !u!4 &1736870826 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4029276965778842, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 1736870825}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1736870827 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
+  m_PrefabInstance: {fileID: 1736870825}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1736870828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736870827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
+  paintingTitle: "Op\xE9ra Garnier"
+  artistName: Paris, France
+  year: 1875
+  paintingContext: "Le Palais Garnier est un op\xE9ra de style Second Empire construit
+    par Charles Garnier. Son grand escalier et son plafond peint par Chagall sont
+    c\xE9l\xE8bres. Il a inspir\xE9 le roman 'Le Fant\xF4me de l'Op\xE9ra'."
+  completedMaterial: {fileID: 0}
+  completionEffect: {fileID: 0}
 --- !u!1 &1737535897
 GameObject:
   m_ObjectHideFlags: 0
@@ -15882,7 +17091,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Effeil (7)
+      value: Tableau_Sainte_Sophie
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -15993,13 +17202,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: Sainte-Sophie
+  artistName: Istanbul, Turquie
+  year: 537
+  paintingContext: "Sainte-Sophie fut d'abord une basilique chr\xE9tienne, puis une
+    mosqu\xE9e, aujourd'hui un mus\xE9e. Sa coupole de 31 m\xE8tres de diam\xE8tre
+    \xE9tait une prouesse architecturale pour l'\xE9poque."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &1793833155
@@ -16416,7 +17624,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: 4341372c1e2ab164f80dcdd432c238bc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17219,7 +18427,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (11)
+      value: Tableau_Chateau_Chambord
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -17330,13 +18538,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Ch\xE2teau de Chambord"
+  artistName: Val de Loire, France
+  year: 1547
+  paintingContext: "Le ch\xE2teau de Chambord est le plus grand ch\xE2teau de la
+    Loire. Construit pour Fran\xE7ois Ier, il est c\xE9l\xE8bre pour son escalier
+    \xE0 double r\xE9volution attribu\xE9 \xE0 L\xE9onard de Vinci."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1001 &1938048639
@@ -17349,7 +18556,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (10)
+      value: Tableau_Christ_Redempter
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -17460,13 +18667,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Christ R\xE9dempteur"
+  artistName: "Rio de Janeiro, Br\xE9sil"
+  year: 1931
+  paintingContext: "Le Christ R\xE9dempteur est une statue monumentale de 38 m\xE8tres
+    de haut situ\xE9e au sommet du mont Corcovado \xE0 Rio. C'est l'une des sept
+    nouvelles merveilles du monde et un symbole du Br\xE9sil."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &1944586842
@@ -17682,7 +18888,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: b988e73075c89684b9634f376dad84b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18250,7 +19456,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: 601490159a05f9541b6a61a8c16b78bc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18611,7 +19817,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3e8411cb68fd0e4ebd355a5a43049bf, type: 2}
+  - {fileID: 2100000, guid: c44e6525657a4a945949b74a8bc5a903, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18652,7 +19858,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (9)
+      value: Tableau_Chichen
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -18763,15 +19969,103 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: "Chich\xE9n Itz\xE1"
+  artistName: Civilisation Maya
+  year: 600
+  paintingContext: "Chich\xE9n Itz\xE1 est une ancienne cit\xE9 maya situ\xE9e au
+    Mexique. La pyramide de Kukulc\xE1n est son monument le plus embl\xE9matique.
+    C'est l'une des sept nouvelles merveilles du monde."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
+--- !u!1 &2085357716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2085357717}
+  - component: {fileID: 2085357719}
+  - component: {fileID: 2085357718}
+  m_Layer: 0
+  m_Name: PaintingImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2085357717
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085357716}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.02, z: 0.25}
+  m_LocalScale: {x: 0.38, y: 0.38, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1736870826}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!23 &2085357718
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085357716}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ec68860f42edfe44c89dfe048487545f, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &2085357719
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085357716}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2090760747
 GameObject:
   m_ObjectHideFlags: 0
@@ -18914,7 +20208,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Name
-      value: Tableau_Versailles (1)
+      value: Tableau_Pise
       objectReference: {fileID: 0}
     - target: {fileID: 1627497564551428, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_TagString
@@ -19025,13 +20319,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: Tour de Pise
+  artistName: Pise, Italie
+  year: 1372
+  paintingContext: "La Tour de Pise est le campanile de la cath\xE9drale de Pise.
+    C\xE9l\xE8bre pour son inclinaison de 4\xB0, elle mesure 56 m\xE8tres de haut.
+    Sa construction a dur\xE9 199 ans \xE0 cause de l'affaissement du sol."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &2109300130
@@ -19258,6 +20551,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4358369735324995382, guid: 27620410dbbf1984ab8d685e28c3dc45, type: 3}
   m_PrefabInstance: {fileID: 3299071354365747144}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1378104949897891162 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5460645213675450564, guid: 27620410dbbf1984ab8d685e28c3dc45, type: 3}
+  m_PrefabInstance: {fileID: 3299071354365747144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066cce564e1798c4b8d0ed7df04f7dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.UI.HUDController
 --- !u!1001 &3299071354365747144
 PrefabInstance:
   m_ObjectHideFlags: 0

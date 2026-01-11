@@ -60,9 +60,16 @@ namespace MuseumAI.Core
         [Tooltip("Mode de victoire: atteindre l'un OU l'autre objectif")]
         [SerializeField] private bool eitherConditionWins = true;
 
+        [Header("Menu Principal")]
+        [Tooltip("Prefab du menu principal")]
+        [SerializeField] private GameObject mainMenuPrefab;
+
+        [Tooltip("Distance du menu devant le joueur (en metres)")]
+        [SerializeField] private float mainMenuDistance = 0.8f;
+
         [Header("Demarrage Automatique")]
-        [Tooltip("Demarre automatiquement le jeu au lancement de la scene")]
-        [SerializeField] private bool autoStartGame = true;
+        [Tooltip("Demarre automatiquement le jeu au lancement de la scene (sans menu)")]
+        [SerializeField] private bool autoStartGame = false;
 
         [Tooltip("Delai avant le demarrage automatique (secondes)")]
         [SerializeField] private float autoStartDelay = 1f;
@@ -160,6 +167,7 @@ namespace MuseumAI.Core
         private bool isTimerRunning;
         private PaintingController currentPainting;
         private GameObject gameOverInstance;
+        private GameObject mainMenuInstance;
 
         #endregion
 
@@ -179,6 +187,11 @@ namespace MuseumAI.Core
                 {
                     StartGame();
                 }
+            }
+            else
+            {
+                // Afficher le menu principal
+                SpawnMainMenu();
             }
         }
 
@@ -225,6 +238,13 @@ namespace MuseumAI.Core
             else
             {
                 Debug.LogError("[GameManager] sceneHUD non assigne! Glissez le WristHUD dans l'Inspector.");
+            }
+
+            // Detruire le menu principal s'il existe
+            if (mainMenuInstance != null)
+            {
+                Destroy(mainMenuInstance);
+                mainMenuInstance = null;
             }
 
             // Detruire l'ecran Game Over s'il existe
@@ -406,7 +426,29 @@ namespace MuseumAI.Core
             TimeRemaining = gameDuration;
             SetGameState(GameState.MainMenu);
 
+            // Bloquer le mouvement
+            SetPlayerControlsEnabled(false);
+
+            // Afficher le menu
+            SpawnMainMenu();
+
             Debug.Log("[GameManager] Retour au menu principal");
+        }
+
+        /// <summary>
+        /// Configure les parametres du jeu (appele par le menu principal)
+        /// </summary>
+        /// <param name="newTargetScore">Score cible pour gagner</param>
+        /// <param name="newTargetPaintings">Nombre de tableaux cible</param>
+        /// <param name="newDuration">Duree du jeu en secondes</param>
+        public void SetGameSettings(int newTargetScore, int newTargetPaintings, float newDuration)
+        {
+            targetScore = newTargetScore;
+            targetPaintings = newTargetPaintings;
+            gameDuration = newDuration;
+            TimeRemaining = gameDuration;
+
+            Debug.Log($"[GameManager] Parametres mis a jour - Score: {targetScore}, Tableaux: {targetPaintings}, Duree: {gameDuration}s");
         }
 
         /// <summary>
@@ -478,7 +520,56 @@ namespace MuseumAI.Core
             TimeRemaining = gameDuration;
             isTimerRunning = false;
 
+            // Bloquer le mouvement au demarrage (en MainMenu)
+            SetPlayerControlsEnabled(false);
+
             Debug.Log("[GameManager] Initialise");
+        }
+
+        private void SpawnMainMenu()
+        {
+            if (mainMenuPrefab == null)
+            {
+                Debug.LogWarning("[GameManager] MainMenu Prefab non assigne! Le jeu va demarrer directement.");
+                StartGame();
+                return;
+            }
+
+            // Detruire l'ancien menu s'il existe
+            if (mainMenuInstance != null)
+            {
+                Destroy(mainMenuInstance);
+            }
+
+            // Position devant la camera
+            Camera playerCamera = Camera.main;
+            if (playerCamera == null)
+            {
+                Debug.LogError("[GameManager] Camera.main introuvable!");
+                StartGame();
+                return;
+            }
+
+            Transform camTransform = playerCamera.transform;
+
+            // Position: devant la camera a la distance specifiee, a hauteur des yeux
+            Vector3 spawnPosition = camTransform.position + camTransform.forward * mainMenuDistance;
+            spawnPosition.y = camTransform.position.y;
+
+            // Rotation: face au joueur
+            Vector3 lookDirection = spawnPosition - camTransform.position;
+            lookDirection.y = 0;
+            Quaternion spawnRotation = Quaternion.LookRotation(lookDirection);
+
+            mainMenuInstance = Instantiate(mainMenuPrefab, spawnPosition, spawnRotation);
+            mainMenuInstance.name = "MainMenu_Instance";
+
+            // S'assurer que le mouvement est bloque
+            SetPlayerControlsEnabled(false);
+
+            SetGameState(GameState.MainMenu);
+
+            Debug.Log("[GameManager] Menu principal affiche");
         }
 
         private void SpawnGameOverUI()
@@ -579,11 +670,13 @@ namespace MuseumAI.Core
                 return;
             }
 
+            string monumentName = painting.PaintingTitle;
             string context = painting.GetFullContext();
-            Debug.Log($"[GameManager] Demande de quiz a l'API pour: {context.Substring(0, Mathf.Min(50, context.Length))}...");
+            Debug.Log($"[GameManager] Demande de quiz a l'API pour: {monumentName}");
 
-            // Appeler l'APIManager avec callbacks
+            // Appeler l'APIManager avec callbacks (nom du monument + contexte)
             APIManager.Instance.GenerateQuiz(
+                monumentName,
                 context,
                 onSuccess: (quizData) => OnQuizGenerated(quizData, painting),
                 onError: (error) => OnQuizGenerationFailed(error)

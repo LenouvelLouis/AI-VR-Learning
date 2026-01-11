@@ -51,19 +51,20 @@ namespace MuseumAI.API
         #region Private Fields
 
         private bool isRequestInProgress = false;
-        private const string QUIZ_PROMPT_TEMPLATE = @"Tu es un expert en histoire de l'art. Tu dois générer un quiz sur l'œuvre suivante :
+        private const string QUIZ_PROMPT_TEMPLATE = @"Tu es un expert en histoire et monuments. Tu dois générer un quiz sur le monument suivant :
 
-{0}
+Nom du monument : {0}
+Informations : {1}
 
 INSTRUCTIONS TRÈS STRICTES :
 1.  **Format des réponses** : Chaque réponse (vraie ou fausse) doit faire **UN ou DEUX mots MAXIMUM**.
-2.  **Format de la question** : La question doit être adaptée pour des réponses aussi courtes. Par exemple : ""Qui est l'artiste ?"" ou ""Quel est le mouvement artistique ?"".
+2.  **Format de la question** : La question DOIT INCLURE le nom du monument ""{0}"". Par exemple : ""En quelle année {0} a-t-il été construit ?"" ou ""Dans quel pays se trouve {0} ?"".
 3.  **Contenu du quiz** :
-    *   Crée UNE SEULE question.
+    *   Crée UNE SEULE question qui mentionne explicitement ""{0}"".
     *   Fournis EXACTEMENT 1 réponse vraie et 3 réponses fausses.
     *   Les réponses fausses doivent être plausibles mais incorrectes.
 4.  **Format de sortie** : Réponds OBLIGATOIREMENT avec le JSON suivant, sans aucun texte avant ou après, et sans utiliser de markdown :
-{{""question"":""[Ta question ici]"",""trueAnswer"":""[La bonne réponse]"",""falseAnswers"":[""[Fausse 1]"",""[Fausse 2]"",""[Fausse 3]""]}}";
+{{""question"":""[Ta question incluant {0}]"",""trueAnswer"":""[La bonne réponse]"",""falseAnswers"":[""[Fausse 1]"",""[Fausse 2]"",""[Fausse 3]""]}}";
 
         #endregion
 
@@ -100,23 +101,24 @@ INSTRUCTIONS TRÈS STRICTES :
         /// <summary>
         /// Genere un quiz a partir du contexte d'un tableau
         /// </summary>
+        /// <param name="monumentName">Nom du monument</param>
         /// <param name="paintingContext">Description/contexte du tableau</param>
         /// <param name="onSuccess">Callback appele en cas de succes avec les donnees du quiz</param>
         /// <param name="onError">Callback appele en cas d'erreur avec le message</param>
-        public void GenerateQuiz(string paintingContext, Action<QuizData> onSuccess, Action<string> onError)
+        public void GenerateQuiz(string monumentName, string paintingContext, Action<QuizData> onSuccess, Action<string> onError)
         {
             if (!ValidateRequest(paintingContext, onError))
             {
                 return;
             }
 
-            StartCoroutine(GenerateQuizCoroutine(paintingContext, onSuccess, onError));
+            StartCoroutine(GenerateQuizCoroutine(monumentName, paintingContext, onSuccess, onError));
         }
 
         /// <summary>
         /// Version async/await pour les contextes qui le supportent
         /// </summary>
-        public async System.Threading.Tasks.Task<QuizData> GenerateQuizAsync(string paintingContext)
+        public async System.Threading.Tasks.Task<QuizData> GenerateQuizAsync(string monumentName, string paintingContext)
         {
             if (!IsConfigured)
             {
@@ -134,6 +136,7 @@ INSTRUCTIONS TRÈS STRICTES :
             var tcs = new System.Threading.Tasks.TaskCompletionSource<QuizData>();
 
             GenerateQuiz(
+                monumentName,
                 paintingContext,
                 onSuccess: (quiz) => tcs.SetResult(quiz),
                 onError: (error) =>
@@ -178,14 +181,14 @@ INSTRUCTIONS TRÈS STRICTES :
 
         #region Private Methods - Core
 
-        private IEnumerator GenerateQuizCoroutine(string paintingContext, Action<QuizData> onSuccess, Action<string> onError)
+        private IEnumerator GenerateQuizCoroutine(string monumentName, string paintingContext, Action<QuizData> onSuccess, Action<string> onError)
         {
             isRequestInProgress = true;
             OnRequestStarted?.Invoke();
 
-            // Construire le prompt
-            string prompt = string.Format(QUIZ_PROMPT_TEMPLATE, paintingContext);
-            Log($"[APIManager] Envoi du prompt ({prompt.Length} caracteres)");
+            // Construire le prompt avec le nom du monument et le contexte
+            string prompt = string.Format(QUIZ_PROMPT_TEMPLATE, monumentName, paintingContext);
+            Log($"[APIManager] Envoi du prompt pour '{monumentName}' ({prompt.Length} caracteres)");
 
             // Construire la requete AVEC les parametres de configuration
             GeminiRequest geminiRequest = new GeminiRequest(
