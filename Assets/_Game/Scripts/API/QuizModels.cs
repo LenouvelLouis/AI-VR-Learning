@@ -4,9 +4,7 @@ using UnityEngine;
 
 namespace MuseumAI.API
 {
-    // ============================================
     // MODELES DE DONNEES POUR LE QUIZ
-    // ============================================
 
     /// <summary>
     /// Donnees du quiz generees par l'IA
@@ -26,14 +24,12 @@ namespace MuseumAI.API
         {
             List<QuizChoice> choices = new List<QuizChoice>();
 
-            // Ajouter la bonne reponse
             choices.Add(new QuizChoice
             {
                 text = trueAnswer,
                 isCorrect = true
             });
 
-            // Ajouter les mauvaises reponses
             if (falseAnswers != null)
             {
                 foreach (string falseAnswer in falseAnswers)
@@ -46,10 +42,8 @@ namespace MuseumAI.API
                 }
             }
 
-            // Seed avec une valeur unique pour chaque quiz
             UnityEngine.Random.InitState((int)(System.DateTime.Now.Ticks % int.MaxValue));
 
-            // Melanger avec Fisher-Yates
             for (int i = choices.Count - 1; i > 0; i--)
             {
                 int randomIndex = UnityEngine.Random.Range(0, i + 1);
@@ -58,7 +52,6 @@ namespace MuseumAI.API
                 choices[randomIndex] = temp;
             }
 
-            Debug.Log($"[QuizData] Reponses melangees - Position reponse correcte: {choices.FindIndex(c => c.isCorrect)}");
 
             return choices;
         }
@@ -85,10 +78,7 @@ namespace MuseumAI.API
         public bool isCorrect;
     }
 
-    // ============================================
     // WRAPPERS POUR L'API GOOGLE GEMINI
-    // Structure: Request -> Contents[] -> Parts[] -> Text
-    // ============================================
 
     #region Gemini Request Models
 
@@ -127,7 +117,6 @@ namespace MuseumAI.API
                 }
             };
 
-            // Configuration de generation avec les valeurs fournies
             generationConfig = new GeminiGenerationConfig
             {
                 temperature = temperature,

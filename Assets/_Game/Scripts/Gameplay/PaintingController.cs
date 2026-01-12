@@ -85,10 +85,8 @@ namespace MuseumAI.Gameplay
 
         private void Start()
         {
-            // Validation des donnees
             if (string.IsNullOrEmpty(paintingContext))
             {
-                Debug.LogWarning($"[PaintingController] '{gameObject.name}' n'a pas de contexte defini!");
             }
         }
 
@@ -104,7 +102,6 @@ namespace MuseumAI.Gameplay
         {
             if (isCompleted)
             {
-                Debug.Log($"[PaintingController] '{paintingTitle}' deja complete.");
                 return;
             }
 
@@ -116,11 +113,9 @@ namespace MuseumAI.Gameplay
 
             if (GameManager.Instance.CurrentState != GameState.Playing)
             {
-                Debug.Log("[PaintingController] Le jeu n'est pas en cours.");
                 return;
             }
 
-            Debug.Log($"[PaintingController] Tableau selectionne: {paintingTitle}");
             GameManager.Instance.StartQuizForPainting(this);
         }
 
@@ -133,10 +128,8 @@ namespace MuseumAI.Gameplay
 
             isCompleted = true;
 
-            // Feedback visuel
             ApplyCompletedVisual();
 
-            Debug.Log($"[PaintingController] '{paintingTitle}' marque comme complete!");
         }
 
         /// <summary>
@@ -146,13 +139,11 @@ namespace MuseumAI.Gameplay
         {
             isCompleted = false;
 
-            // Restaurer le materiau original
             if (paintingRenderer != null && originalMaterial != null)
             {
                 paintingRenderer.material = originalMaterial;
             }
 
-            Debug.Log($"[PaintingController] '{paintingTitle}' reinitialise.");
         }
 
         /// <summary>
@@ -166,7 +157,6 @@ namespace MuseumAI.Gameplay
                 return paintingContext;
             }
 
-            // Fallback: generer un contexte basique a partir des metadonnees
             return $"Oeuvre: {paintingTitle} par {artistName}, creee en {year}.";
         }
 
@@ -176,13 +166,11 @@ namespace MuseumAI.Gameplay
 
         private void ApplyCompletedVisual()
         {
-            // Appliquer le materiau de completion si disponible
             if (completedMaterial != null && paintingRenderer != null)
             {
                 paintingRenderer.material = completedMaterial;
             }
 
-            // Jouer l'effet de particules si disponible
             if (completionEffect != null)
             {
                 completionEffect.Play();
@@ -196,7 +184,6 @@ namespace MuseumAI.Gameplay
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            // Auto-remplir le nom si vide
             if (string.IsNullOrEmpty(paintingTitle))
             {
                 paintingTitle = gameObject.name;
@@ -205,7 +192,6 @@ namespace MuseumAI.Gameplay
 
         private void OnDrawGizmosSelected()
         {
-            // Afficher une indication visuelle dans l'editeur
             Gizmos.color = isCompleted ? Color.green : Color.yellow;
             Gizmos.DrawWireCube(transform.position, Vector3.one * 0.5f);
         }

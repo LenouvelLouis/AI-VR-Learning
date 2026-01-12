@@ -54,20 +54,16 @@ namespace MuseumAI.UI
 
         private void FindReferences()
         {
-            // Background - chercher l'image de fond
             backgroundImage = transform.Find("Background")?.GetComponent<Image>();
             if (backgroundImage == null)
             {
-                // Peut-etre sur le panel lui-meme
                 backgroundImage = GetComponentInChildren<Image>();
             }
 
-            // Titre
             Transform titleT = transform.Find("TitleText");
             if (titleT != null)
                 titleText = titleT.GetComponent<TMP_Text>();
 
-            // Score final - chercher dans StatsPanel ou directement
             Transform statsPanel = transform.Find("StatsPanel");
             if (statsPanel != null)
             {
@@ -75,13 +71,11 @@ namespace MuseumAI.UI
                 paintingsCountText = statsPanel.Find("PaintingsCountText")?.GetComponent<TMP_Text>();
             }
 
-            // Si pas trouve, chercher directement
             if (finalScoreText == null)
                 finalScoreText = transform.Find("FinalScoreText")?.GetComponent<TMP_Text>();
             if (paintingsCountText == null)
                 paintingsCountText = transform.Find("PaintingsCountText")?.GetComponent<TMP_Text>();
 
-            // Boutons - chercher dans ButtonsPanel ou directement
             Transform buttonsPanel = transform.Find("ButtonsPanel");
             if (buttonsPanel != null)
             {
@@ -89,13 +83,11 @@ namespace MuseumAI.UI
                 quitButton = buttonsPanel.Find("QuitButton")?.GetComponent<Button>();
             }
 
-            // Si pas trouve, chercher directement
             if (retryButton == null)
                 retryButton = transform.Find("RetryButton")?.GetComponent<Button>();
             if (quitButton == null)
                 quitButton = transform.Find("QuitButton")?.GetComponent<Button>();
 
-            // Collecter tous les labels
             labelTexts = GetComponentsInChildren<TMP_Text>();
         }
 
@@ -107,7 +99,6 @@ namespace MuseumAI.UI
             StyleButtons();
             StyleLabels();
 
-            Debug.Log("[FuturisticGameOver] Style futuriste applique!");
         }
 
         private void StyleBackground()
@@ -116,14 +107,12 @@ namespace MuseumAI.UI
 
             backgroundImage.color = darkBackground;
 
-            // Bordure glow principale
             Outline outline = backgroundImage.gameObject.GetComponent<Outline>();
             if (outline == null)
                 outline = backgroundImage.gameObject.AddComponent<Outline>();
             outline.effectColor = primaryCyan;
             outline.effectDistance = new Vector2(outlineWidth, outlineWidth);
 
-            // Deuxieme outline pour effet glow diffus
             Outline glowOutline = backgroundImage.gameObject.AddComponent<Outline>();
             glowOutline.effectColor = new Color(primaryCyan.r, primaryCyan.g, primaryCyan.b, 0.25f);
             glowOutline.effectDistance = new Vector2(outlineWidth * 2.5f, outlineWidth * 2.5f);
@@ -136,14 +125,12 @@ namespace MuseumAI.UI
             titleText.fontSize = 72;
             titleText.fontStyle = FontStyles.Bold;
 
-            // Outline pour lisibilite
             Outline outline = titleText.gameObject.GetComponent<Outline>();
             if (outline == null)
                 outline = titleText.gameObject.AddComponent<Outline>();
             outline.effectColor = new Color(0, 0, 0, 0.9f);
             outline.effectDistance = new Vector2(3, -3);
 
-            // Glow colore (sera mis a jour selon victoire/defaite)
             Outline glow = titleText.gameObject.AddComponent<Outline>();
             glow.effectColor = new Color(primaryCyan.r, primaryCyan.g, primaryCyan.b, 0.4f);
             glow.effectDistance = new Vector2(5, 5);
@@ -151,27 +138,23 @@ namespace MuseumAI.UI
 
         private void StyleScoreDisplay()
         {
-            // Score final - grand et lumineux
             if (finalScoreText != null)
             {
                 finalScoreText.color = scoreGlow;
                 finalScoreText.fontSize = 96;
                 finalScoreText.fontStyle = FontStyles.Bold;
 
-                // Glow effect
                 Outline glow = finalScoreText.gameObject.GetComponent<Outline>();
                 if (glow == null)
                     glow = finalScoreText.gameObject.AddComponent<Outline>();
                 glow.effectColor = new Color(scoreGlow.r, scoreGlow.g, scoreGlow.b, 0.5f);
                 glow.effectDistance = new Vector2(4, 4);
 
-                // Shadow pour profondeur
                 Outline shadow = finalScoreText.gameObject.AddComponent<Outline>();
                 shadow.effectColor = new Color(0, 0, 0, 0.8f);
                 shadow.effectDistance = new Vector2(2, -2);
             }
 
-            // Nombre de tableaux
             if (paintingsCountText != null)
             {
                 paintingsCountText.color = primaryCyan;
@@ -201,7 +184,6 @@ namespace MuseumAI.UI
             {
                 buttonImage.color = isPrimary ? buttonNormal : new Color(0.15f, 0.08f, 0.1f, 0.95f);
 
-                // Bordure coloree
                 Outline btnOutline = buttonImage.gameObject.GetComponent<Outline>();
                 if (btnOutline == null)
                     btnOutline = buttonImage.gameObject.AddComponent<Outline>();
@@ -209,7 +191,6 @@ namespace MuseumAI.UI
                 btnOutline.effectDistance = new Vector2(3, 3);
             }
 
-            // Couleurs d'interaction
             ColorBlock colors = button.colors;
             colors.normalColor = isPrimary ? buttonNormal : new Color(0.15f, 0.08f, 0.1f, 0.95f);
             colors.highlightedColor = isPrimary ? buttonHighlight : new Color(0.25f, 0.1f, 0.15f, 1f);
@@ -219,7 +200,6 @@ namespace MuseumAI.UI
             colors.fadeDuration = 0.12f;
             button.colors = colors;
 
-            // Texte du bouton
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
             if (buttonText != null)
             {
@@ -277,7 +257,6 @@ namespace MuseumAI.UI
             Color targetColor = isVictory ? victoryGold : timeUpRed;
             titleText.color = targetColor;
 
-            // Mettre a jour le glow
             Outline[] outlines = titleText.GetComponents<Outline>();
             foreach (Outline o in outlines)
             {
@@ -306,7 +285,6 @@ namespace MuseumAI.UI
             float duration = 0.3f;
             float elapsed = 0f;
 
-            // Scale up
             while (elapsed < duration / 2f)
             {
                 elapsed += Time.deltaTime;
@@ -315,7 +293,6 @@ namespace MuseumAI.UI
                 yield return null;
             }
 
-            // Scale down
             elapsed = 0f;
             while (elapsed < duration / 2f)
             {

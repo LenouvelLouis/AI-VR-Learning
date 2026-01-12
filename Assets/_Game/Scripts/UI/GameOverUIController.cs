@@ -124,7 +124,6 @@ namespace MuseumAI.UI
                 style = gameObject.AddComponent<FuturisticGameOverStyle>();
             }
 
-            // Mettre a jour les couleurs depuis le style
             if (style != null)
             {
                 timeUpTitleColor = style.GetTimeUpColor();
@@ -134,10 +133,8 @@ namespace MuseumAI.UI
 
         private void Start()
         {
-            // Creer le texte pour la liste des monuments s'il n'existe pas
             CreateMonumentsListTextIfNeeded();
 
-            // Recuperer les stats du GameManager
             if (GameManager.Instance != null)
             {
                 DisplayResults(
@@ -146,11 +143,9 @@ namespace MuseumAI.UI
                     GameManager.Instance.TimeRemaining <= 0
                 );
 
-                // Calculer le temps joue
                 gameDuration = 300f; // Valeur par defaut, idealement recuperer du GameManager
             }
 
-            // Animation d'entree
             StartCoroutine(FadeInAnimation());
         }
 
@@ -159,7 +154,6 @@ namespace MuseumAI.UI
         /// </summary>
         private void CreateMonumentsListTextIfNeeded()
         {
-            // Chercher d'abord si un texte existe deja
             TMP_Text[] texts = GetComponentsInChildren<TMP_Text>(true);
             foreach (var text in texts)
             {
@@ -171,7 +165,6 @@ namespace MuseumAI.UI
                 }
             }
 
-            // Creer un nouveau texte pour la liste des monuments
             GameObject monumentsTextGO = new GameObject("MonumentsListText");
             monumentsTextGO.transform.SetParent(transform, false);
 
@@ -182,14 +175,12 @@ namespace MuseumAI.UI
             monumentsListText.enableWordWrapping = true;
             monumentsListText.richText = true;
 
-            // Positionner en bas du panel (sous les boutons)
             RectTransform rect = monumentsListText.GetComponent<RectTransform>();
             rect.anchorMin = new Vector2(0.1f, 0.05f);
             rect.anchorMax = new Vector2(0.9f, 0.28f);
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
 
-            Debug.Log("[GameOverUI] MonumentsListText cree automatiquement");
         }
 
         #endregion
@@ -201,7 +192,6 @@ namespace MuseumAI.UI
         /// </summary>
         public void DisplayResults(int finalScore, int paintingsCompleted, bool timeUp)
         {
-            // Titre
             if (titleText != null)
             {
                 if (timeUp)
@@ -216,32 +206,26 @@ namespace MuseumAI.UI
                 }
             }
 
-            // Mettre a jour le style du titre
             FuturisticGameOverStyle style = GetComponent<FuturisticGameOverStyle>();
             if (style != null)
             {
                 style.UpdateTitleStyle(!timeUp);
             }
 
-            // Score
             if (finalScoreText != null)
             {
                 finalScoreText.text = finalScore.ToString("N0");
             }
 
-            // Tableaux
             if (paintingsCountText != null)
             {
                 paintingsCountText.text = paintingsCompleted.ToString();
             }
 
-            // Afficher le detail du score (base + bonus temps)
             DisplayScoreBreakdown(finalScore, paintingsCompleted, timeUp);
 
-            // Liste des monuments visites
             DisplayMonumentsList();
 
-            Debug.Log($"[GameOverUI] Resultats affiches - Score: {finalScore}, Tableaux: {paintingsCompleted}");
         }
 
         /// <summary>
@@ -249,7 +233,6 @@ namespace MuseumAI.UI
         /// </summary>
         private void DisplayScoreBreakdown(int finalScore, int paintingsCompleted, bool timeUp)
         {
-            // Creer le texte automatiquement s'il n'existe pas
             if (scoreBreakdownText == null)
             {
                 CreateScoreBreakdownText();
@@ -257,11 +240,9 @@ namespace MuseumAI.UI
 
             if (scoreBreakdownText == null) return;
 
-            // Calculer le score de base (100 points par tableau)
             int baseScore = paintingsCompleted * 100;
             int timeBonus = finalScore - baseScore;
 
-            // Si le temps est ecoule, pas de bonus
             if (timeUp || timeBonus <= 0)
             {
                 scoreBreakdownText.text = $"<color=#AAAAAA>Quiz: {baseScore} pts</color>";
@@ -289,14 +270,12 @@ namespace MuseumAI.UI
             scoreBreakdownText.enableWordWrapping = true;
             scoreBreakdownText.richText = true;
 
-            // Positionner juste en dessous du score final
             RectTransform rect = scoreBreakdownText.GetComponent<RectTransform>();
             rect.anchorMin = new Vector2(0.1f, 0.55f);
             rect.anchorMax = new Vector2(0.9f, 0.65f);
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
 
-            Debug.Log("[GameOverUI] ScoreBreakdownText cree automatiquement");
         }
 
         /// <summary>
@@ -304,19 +283,15 @@ namespace MuseumAI.UI
         /// </summary>
         public void OnRetryClicked()
         {
-            Debug.Log("[GameOverUI] Retry clique");
 
-            // Desactiver les boutons pour eviter les double-clics
             if (retryButton != null) retryButton.interactable = false;
             if (quitButton != null) quitButton.interactable = false;
 
-            // Lancer la transition avec fade out
             StartCoroutine(RestartWithTransition());
         }
 
         private System.Collections.IEnumerator RestartWithTransition()
         {
-            // Fade out
             float fadeDuration = 0.4f;
             float elapsed = 0f;
 
@@ -330,19 +305,15 @@ namespace MuseumAI.UI
                 yield return null;
             }
 
-            // Utiliser le restart rapide du GameManager (sans recharger la scene)
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.RestartGame();
             }
             else
             {
-                // Fallback: recharger la scene si GameManager n'existe pas
-                Debug.LogWarning("[GameOverUI] GameManager introuvable, rechargement de la scene...");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
 
-            // Detruire ce panel (le GameManager le fera aussi, mais au cas ou)
             Destroy(gameObject);
         }
 
@@ -351,19 +322,15 @@ namespace MuseumAI.UI
         /// </summary>
         public void OnQuitClicked()
         {
-            Debug.Log("[GameOverUI] Quit clique - retour au menu principal");
 
-            // Desactiver les boutons pour eviter les double-clics
             if (retryButton != null) retryButton.interactable = false;
             if (quitButton != null) quitButton.interactable = false;
 
-            // Retourner au menu principal
             StartCoroutine(ReturnToMenuWithTransition());
         }
 
         private System.Collections.IEnumerator ReturnToMenuWithTransition()
         {
-            // Fade out
             float fadeDuration = 0.4f;
             float elapsed = 0f;
 
@@ -377,13 +344,11 @@ namespace MuseumAI.UI
                 yield return null;
             }
 
-            // Retourner au menu principal via GameManager
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.ReturnToMainMenu();
             }
 
-            // Detruire ce panel
             Destroy(gameObject);
         }
 
@@ -392,7 +357,6 @@ namespace MuseumAI.UI
         /// </summary>
         private void DisplayMonumentsList()
         {
-            // Chercher automatiquement le texte si non assigne
             if (monumentsListText == null)
             {
                 TMP_Text[] texts = GetComponentsInChildren<TMP_Text>(true);
@@ -402,7 +366,6 @@ namespace MuseumAI.UI
                     if (nameLower.Contains("monument") || nameLower.Contains("list") || nameLower.Contains("visite"))
                     {
                         monumentsListText = text;
-                        Debug.Log($"[GameOverUI] monumentsListText AUTO-ASSIGNE: {text.name}");
                         break;
                     }
                 }
@@ -410,7 +373,6 @@ namespace MuseumAI.UI
 
             if (monumentsListText == null)
             {
-                Debug.Log("[GameOverUI] Pas de texte pour la liste des monuments (normal si non configure)");
                 return;
             }
 
@@ -421,7 +383,6 @@ namespace MuseumAI.UI
                 return;
             }
 
-            // Construire la liste des monuments
             var monuments = GameManager.Instance.CompletedMonumentNames;
             string listText = "<color=#00E5FF>Monuments decouverts:</color>\n";
 
@@ -437,7 +398,6 @@ namespace MuseumAI.UI
             monumentsListText.text = listText;
             monumentsListText.color = Color.white;
 
-            Debug.Log($"[GameOverUI] {monuments.Count} monument(s) affiches");
         }
 
         #endregion
@@ -461,7 +421,6 @@ namespace MuseumAI.UI
 
         private void SetupButtonColliders()
         {
-            // Ajouter des BoxColliders pour la detection par raycast VR
             SetupSingleButtonCollider(retryButton, "RetryButton");
             SetupSingleButtonCollider(quitButton, "QuitButton");
         }
@@ -491,7 +450,6 @@ namespace MuseumAI.UI
             collider.size = new Vector3(width, height, 20f);
             collider.center = Vector3.zero;
 
-            Debug.Log($"[GameOverUI] BoxCollider {debugName}: size=({width}, {height}, 20)");
         }
 
         #endregion
@@ -504,7 +462,6 @@ namespace MuseumAI.UI
 
             canvasGroup.alpha = 0f;
 
-            // Fade in
             float elapsed = 0f;
             while (elapsed < fadeInDuration)
             {
@@ -515,10 +472,8 @@ namespace MuseumAI.UI
 
             canvasGroup.alpha = 1f;
 
-            // Reveler les stats avec animation
             yield return new WaitForSeconds(statsRevealDelay);
 
-            // Animation du score (compteur)
             if (finalScoreText != null && GameManager.Instance != null)
             {
                 yield return StartCoroutine(AnimateScoreCounter(GameManager.Instance.Score));
@@ -538,7 +493,6 @@ namespace MuseumAI.UI
                 elapsed += Time.deltaTime;
                 float t = elapsed / duration;
 
-                // Courbe d'acceleration/deceleration
                 t = t * t * (3f - 2f * t);
 
                 int currentScore = Mathf.FloorToInt(Mathf.Lerp(startScore, targetScore, t));
@@ -549,7 +503,6 @@ namespace MuseumAI.UI
 
             finalScoreText.text = targetScore.ToString("N0");
 
-            // Effet pulse a la fin
             FuturisticGameOverStyle style = GetComponent<FuturisticGameOverStyle>();
             if (style != null)
             {

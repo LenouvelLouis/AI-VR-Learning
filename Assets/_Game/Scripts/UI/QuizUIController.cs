@@ -200,7 +200,6 @@ namespace MuseumAI.UI
             SetupButtonListeners();
             ValidateReferences();
             ApplyFuturisticStyle();
-            // Note: SetupButtonColliders() est appele dans Start() apres le layout
         }
 
         /// <summary>
@@ -208,15 +207,12 @@ namespace MuseumAI.UI
         /// </summary>
         private void ApplyFuturisticStyle()
         {
-            // Ajouter le composant de style s'il n'existe pas
             FuturisticQuizStyle style = GetComponent<FuturisticQuizStyle>();
             if (style == null)
             {
                 style = gameObject.AddComponent<FuturisticQuizStyle>();
-                Debug.Log("[QuizUI] Style futuriste VR ajoute automatiquement");
             }
 
-            // Mettre a jour les couleurs de feedback avec le style futuriste
             if (style != null)
             {
                 correctAnswerColor = style.GetCorrectColor();
@@ -229,23 +225,17 @@ namespace MuseumAI.UI
         {
             // NOTE: Ne PAS appeler Hide() ici!
             // L'UI est instanciee dynamiquement par GameManager qui appelle ShowQuiz() immediatement.
-            // Si on appelle Hide() dans Start(), ca ecrase ShowQuiz() car Start() s'execute apres.
             // L'etat initial est gere par le code qui instancie le prefab.
-            Debug.Log("[QuizUI] Start() - Etat initial preserve (pas de Hide automatique)");
 
-            // Forcer le calcul du layout Canvas PUIS ajouter les colliders
             StartCoroutine(SetupCollidersAfterLayout());
         }
 
         private System.Collections.IEnumerator SetupCollidersAfterLayout()
         {
-            // Attendre la fin du frame pour que le layout soit calcule
             yield return null;
 
-            // Forcer la mise a jour du Canvas
             Canvas.ForceUpdateCanvases();
 
-            // Maintenant les RectTransform ont leurs vraies dimensions
             SetupButtonColliders();
         }
 
@@ -262,7 +252,6 @@ namespace MuseumAI.UI
 
         private void OnDisable()
         {
-            // Se desabonner
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.OnQuizDataReady -= OnQuizDataReceived;
@@ -291,13 +280,11 @@ namespace MuseumAI.UI
                 loadingText.text = "Analyse du tableau...";
             }
 
-            // Demarrer l'animation du spinner
             if (loadingSpinner != null)
             {
                 spinnerCoroutine = StartCoroutine(AnimateSpinner());
             }
 
-            Debug.Log("[QuizUI] Affichage du chargement");
         }
 
         /// <summary>
@@ -319,7 +306,6 @@ namespace MuseumAI.UI
             quizPanel?.SetActive(true);
             errorPanel?.SetActive(false);
 
-            // Cacher le texte de feedback du quiz precedent
             if (feedbackText != null)
             {
                 feedbackText.gameObject.SetActive(false);
@@ -328,13 +314,11 @@ namespace MuseumAI.UI
             currentQuizData = data;
             currentChoices = data.GetShuffledChoices();
 
-            // Remplir la question
             if (questionText != null)
             {
                 questionText.text = data.question;
             }
 
-            // Remplir les boutons avec les choix melanges
             for (int i = 0; i < answerButtons.Length && i < currentChoices.Count; i++)
             {
                 if (answerTexts[i] != null)
@@ -342,10 +326,8 @@ namespace MuseumAI.UI
                     answerTexts[i].text = currentChoices[i].text;
                 }
 
-                // Reinitialiser la couleur du bouton
                 SetButtonColor(i, normalButtonColor);
 
-                // Activer l'interactivite
                 if (answerButtons[i] != null)
                 {
                     answerButtons[i].interactable = true;
@@ -354,7 +336,6 @@ namespace MuseumAI.UI
 
             isInteractable = true;
 
-            Debug.Log($"[QuizUI] Quiz affiche: {data.question}");
         }
 
         /// <summary>
@@ -384,14 +365,12 @@ namespace MuseumAI.UI
                 errorText.text = message;
             }
 
-            // Configurer le bouton retry si present
             if (retryButton != null)
             {
                 retryButton.onClick.RemoveAllListeners();
                 retryButton.onClick.AddListener(OnRetryClicked);
             }
 
-            Debug.LogWarning($"[QuizUI] Erreur affichee: {message}");
         }
 
         /// <summary>
@@ -410,7 +389,6 @@ namespace MuseumAI.UI
             quizPanel?.SetActive(false);
             errorPanel?.SetActive(false);
 
-            // Reset des donnees
             currentQuizData = null;
             currentPainting = null;
             currentChoices = null;
@@ -418,7 +396,6 @@ namespace MuseumAI.UI
 
             OnUIClosed?.Invoke();
 
-            Debug.Log("[QuizUI] UI masquee");
         }
 
         /// <summary>
@@ -430,18 +407,15 @@ namespace MuseumAI.UI
 
             Transform paintingTransform = painting.transform;
 
-            // Position: devant le tableau
             Vector3 position = paintingTransform.position
                              + paintingTransform.forward * distance
                              + Vector3.up * 0.3f;
 
-            // Rotation: face au joueur (oppose a la normale du tableau)
             Quaternion rotation = Quaternion.LookRotation(-paintingTransform.forward, Vector3.up);
 
             transform.position = position;
             transform.rotation = rotation;
 
-            Debug.Log($"[QuizUI] Positionne devant {painting.PaintingTitle}");
         }
 
         #endregion
@@ -481,7 +455,6 @@ namespace MuseumAI.UI
         /// </summary>
         private void SetupButtonColliders()
         {
-            // Taille par defaut basee sur le design du prefab (Width=700, Height=80)
             const float DEFAULT_WIDTH = 700f;
             const float DEFAULT_HEIGHT = 80f;
             const float COLLIDER_DEPTH = 20f;
@@ -494,7 +467,6 @@ namespace MuseumAI.UI
                 }
             }
 
-            // Ajouter aussi au bouton Retry si present
             if (retryButton != null)
             {
                 SetupSingleButtonCollider(retryButton, "RetryButton", 300f, 60f, COLLIDER_DEPTH);
@@ -503,14 +475,12 @@ namespace MuseumAI.UI
 
         private void SetupSingleButtonCollider(Button button, string debugName, float defaultWidth, float defaultHeight, float depth)
         {
-            // Supprimer l'ancien collider s'il existe (pour recalculer)
             BoxCollider existingCollider = button.GetComponent<BoxCollider>();
             if (existingCollider != null)
             {
                 Destroy(existingCollider);
             }
 
-            // Ajouter un nouveau BoxCollider
             BoxCollider collider = button.gameObject.AddComponent<BoxCollider>();
 
             RectTransform rect = button.GetComponent<RectTransform>();
@@ -526,7 +496,6 @@ namespace MuseumAI.UI
             collider.size = new Vector3(width, height, depth);
             collider.center = Vector3.zero;
 
-            Debug.Log($"[QuizUI] BoxCollider {debugName}: size=({width}, {height}, {depth}), layer={button.gameObject.layer}");
         }
 
         private void ValidateReferences()
@@ -543,14 +512,12 @@ namespace MuseumAI.UI
 
             if (questionText == null)
             {
-                Debug.LogWarning("[QuizUI] questionText non assigne!");
             }
 
             for (int i = 0; i < answerButtons.Length; i++)
             {
                 if (answerButtons[i] == null)
                 {
-                    Debug.LogWarning($"[QuizUI] answerButtons[{i}] non assigne!");
                 }
             }
         }
@@ -576,7 +543,6 @@ namespace MuseumAI.UI
                 buttonImages[buttonIndex].color = color;
             }
 
-            // Aussi mettre a jour le ColorBlock du bouton pour la coherence
             if (answerButtons[buttonIndex] != null)
             {
                 ColorBlock colors = answerButtons[buttonIndex].colors;
@@ -625,15 +591,11 @@ namespace MuseumAI.UI
                 return;
             }
 
-            Debug.Log($"[QuizUI] Reponse selectionnee: index {buttonIndex}");
 
-            // Desactiver l'interactivite immediatement
             SetAllButtonsInteractable(false);
 
-            // Verifier si la reponse est correcte
             bool isCorrect = currentChoices[buttonIndex].isCorrect;
 
-            // Lancer le feedback
             StartCoroutine(ShowFeedbackAndClose(buttonIndex, isCorrect));
         }
 
@@ -641,7 +603,6 @@ namespace MuseumAI.UI
         {
             Hide();
 
-            // Relancer le quiz pour le meme tableau
             if (currentPainting != null && GameManager.Instance != null)
             {
                 GameManager.Instance.StartQuizForPainting(currentPainting);
@@ -674,10 +635,8 @@ namespace MuseumAI.UI
 
         private IEnumerator ShowFeedbackAndClose(int selectedIndex, bool isCorrect)
         {
-            // 1. Feedback visuel immediat sur le bouton clique
             SetButtonColor(selectedIndex, isCorrect ? correctAnswerColor : wrongAnswerColor);
 
-            // 2. Si faux, montrer aussi la bonne reponse en vert
             if (!isCorrect)
             {
                 int correctIndex = FindCorrectAnswerIndex();
@@ -687,7 +646,6 @@ namespace MuseumAI.UI
                 }
             }
 
-            // 3. Afficher le texte de feedback avec les points
             int pointsEarned = 0;
             if (GameManager.Instance != null)
             {
@@ -695,22 +653,16 @@ namespace MuseumAI.UI
             }
             ShowFeedbackText(isCorrect, pointsEarned);
 
-            // 4. Afficher le fait historique
             ShowHistoricalFact();
 
-            // 5. Feedback audio/haptique (a implementer selon le SDK)
             PlayFeedback(isCorrect);
 
-            // 6. Attendre la duree configuree
             yield return new WaitForSeconds(feedbackDuration);
 
-            // 7. Notifier le GameManager
             NotifyGameManager(isCorrect);
 
-            // 8. Declencher l'evenement local
             OnAnswerSelected?.Invoke(isCorrect, selectedIndex);
 
-            // 9. Fermer l'UI
             Hide();
         }
 
@@ -719,7 +671,6 @@ namespace MuseumAI.UI
         /// </summary>
         private void ShowHistoricalFact()
         {
-            // Chercher automatiquement le texte si non assigne
             if (historicalFactText == null)
             {
                 TMP_Text[] texts = GetComponentsInChildren<TMP_Text>(true);
@@ -734,7 +685,6 @@ namespace MuseumAI.UI
                 }
             }
 
-            // Creer le texte automatiquement s'il n'existe pas
             if (historicalFactText == null)
             {
                 CreateHistoricalFactText();
@@ -745,20 +695,16 @@ namespace MuseumAI.UI
                 return;
             }
 
-            // Afficher le fait historique s'il existe
             if (!string.IsNullOrEmpty(currentQuizData.historicalFact))
             {
                 historicalFactText.gameObject.SetActive(true);
                 historicalFactText.text = $"<color=#00E5FF>Le saviez-vous?</color>\n{currentQuizData.historicalFact}";
-                Debug.Log($"[QuizUI] Fait historique affiche: {currentQuizData.historicalFact}");
 
-                // Animation de fade in
                 StartCoroutine(AnimateHistoricalFact());
             }
             else
             {
                 historicalFactText.gameObject.SetActive(false);
-                Debug.Log("[QuizUI] Pas de fait historique disponible");
             }
         }
 
@@ -779,21 +725,18 @@ namespace MuseumAI.UI
             historicalFactText.enableWordWrapping = true;
             historicalFactText.richText = true;
 
-            // Positionner en bas du panel quiz
             RectTransform rect = historicalFactText.GetComponent<RectTransform>();
             rect.anchorMin = new Vector2(0.05f, 0.02f);
             rect.anchorMax = new Vector2(0.95f, 0.25f);
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
 
-            Debug.Log("[QuizUI] HistoricalFactText cree automatiquement");
         }
 
         private IEnumerator AnimateHistoricalFact()
         {
             if (historicalFactText == null) yield break;
 
-            // Fade in du texte
             Color startColor = historicalFactText.color;
             startColor.a = 0f;
             historicalFactText.color = startColor;
@@ -833,7 +776,6 @@ namespace MuseumAI.UI
                 feedbackText.color = wrongAnswerColor;
             }
 
-            // Animation de scale (punch effect)
             StartCoroutine(AnimateFeedbackText());
         }
 
@@ -847,7 +789,6 @@ namespace MuseumAI.UI
             Vector3 originalScale = Vector3.one;
             Vector3 punchScale = Vector3.one * 1.3f;
 
-            // Scale up
             float duration = 0.15f;
             float elapsed = 0f;
 
@@ -859,7 +800,6 @@ namespace MuseumAI.UI
                 yield return null;
             }
 
-            // Scale down
             elapsed = 0f;
             while (elapsed < duration)
             {
@@ -902,29 +842,22 @@ namespace MuseumAI.UI
             }
             else
             {
-                Debug.LogWarning("[QuizUI] GameManager.Instance est null, impossible de notifier");
             }
         }
 
         private void PlayFeedback(bool isCorrect)
         {
-            // Feedback haptique pour les controleurs VR (Meta XR)
             // OVRInput.SetControllerVibration(frequency, amplitude, controller);
 
             if (isCorrect)
             {
-                // Vibration courte et douce pour succes
                 // OVRInput.SetControllerVibration(0.5f, 0.3f, OVRInput.Controller.RTouch);
-                Debug.Log("[QuizUI] Feedback: CORRECT!");
             }
             else
             {
-                // Vibration plus longue pour echec
                 // OVRInput.SetControllerVibration(0.8f, 0.5f, OVRInput.Controller.RTouch);
-                Debug.Log("[QuizUI] Feedback: INCORRECT");
             }
 
-            // TODO: Ajouter des sons (AudioSource.PlayOneShot)
         }
 
         #endregion
@@ -935,7 +868,6 @@ namespace MuseumAI.UI
         [ContextMenu("Auto-Find UI References")]
         private void AutoFindReferences()
         {
-            // Tenter de trouver automatiquement les references
             if (mainCanvas == null)
                 mainCanvas = GetComponent<Canvas>();
 
@@ -951,12 +883,10 @@ namespace MuseumAI.UI
             if (questionText == null)
                 questionText = GetComponentInChildren<TMP_Text>();
 
-            Debug.Log("[QuizUI] Auto-recherche des references terminee. Verifiez l'inspecteur.");
         }
 
         private void OnValidate()
         {
-            // Validation dans l'editeur
             if (answerButtons.Length != 4)
             {
                 System.Array.Resize(ref answerButtons, 4);

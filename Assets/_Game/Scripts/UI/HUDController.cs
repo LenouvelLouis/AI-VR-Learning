@@ -95,19 +95,15 @@ namespace MuseumAI.UI
 
         private void Start()
         {
-            // Appliquer le style futuriste
             ApplyFuturisticStyle();
 
-            // Trouver automatiquement les references manquantes AVANT de s'abonner
             FindMissingTextReferences();
 
             // S'abonner aux evenements du GameManager
             SubscribeToEvents();
 
-            // Cacher le HUD au demarrage - il ne s'affichera que quand le jeu commence
             if (GameManager.Instance != null)
             {
-                // Si on est deja en jeu, initialiser et afficher
                 if (GameManager.Instance.CurrentState == GameState.Playing)
                 {
                     UpdateTimerDisplay(GameManager.Instance.TimeRemaining);
@@ -117,17 +113,14 @@ namespace MuseumAI.UI
                 }
                 else
                 {
-                    // Sinon cacher (menu principal, etc.)
                     Hide();
                 }
             }
             else
             {
-                // Pas de GameManager = cacher par defaut
                 Hide();
             }
 
-            Debug.Log("[HUD] Initialise - visible seulement en mode Playing");
         }
 
         /// <summary>
@@ -136,36 +129,27 @@ namespace MuseumAI.UI
         private void FindMissingTextReferences()
         {
             TMP_Text[] allTexts = GetComponentsInChildren<TMP_Text>(true);
-            Debug.Log($"[HUD] FindMissingTextReferences: {allTexts.Length} textes trouves");
 
             foreach (var text in allTexts)
             {
                 string nameLower = text.name.ToLower();
-                Debug.Log($"[HUD] Texte trouve: '{text.name}'");
 
-                // Chercher progressText
                 if (progressText == null && (nameLower.Contains("progress") || nameLower.Contains("tableau")))
                 {
                     progressText = text;
-                    Debug.Log($"[HUD] progressText AUTO-ASSIGNE: {text.name}");
                 }
 
-                // Chercher timerText
                 if (timerText == null && (nameLower.Contains("timer") || nameLower.Contains("time") || nameLower.Contains("temps")))
                 {
                     timerText = text;
-                    Debug.Log($"[HUD] timerText AUTO-ASSIGNE: {text.name}");
                 }
 
-                // Chercher scoreText
                 if (scoreText == null && nameLower.Contains("score"))
                 {
                     scoreText = text;
-                    Debug.Log($"[HUD] scoreText AUTO-ASSIGNE: {text.name}");
                 }
             }
 
-            // Verifier les resultats
             if (progressText == null)
             {
                 Debug.LogError("[HUD] ERREUR: progressText toujours NULL apres recherche auto!");
@@ -205,12 +189,10 @@ namespace MuseumAI.UI
         {
             if (timerText == null) return;
 
-            // Formatter en MM:SS
             int minutes = Mathf.FloorToInt(timeRemaining / 60f);
             int seconds = Mathf.FloorToInt(timeRemaining % 60f);
             timerText.text = $"{minutes:00}:{seconds:00}";
 
-            // Mode temps bas
             if (timeRemaining <= lowTimeThreshold && !isLowTimeMode)
             {
                 isLowTimeMode = true;
@@ -231,13 +213,11 @@ namespace MuseumAI.UI
         {
             if (scoreText == null) return;
 
-            // Afficher avec l'objectif si defini
             if (GameManager.Instance != null && GameManager.Instance.TargetScore > 0)
             {
                 int target = GameManager.Instance.TargetScore;
                 scoreText.text = $"{score}/{target}";
 
-                // Couleur verte si objectif atteint
                 if (score >= target)
                 {
                     scoreText.color = new Color(0.3f, 1f, 0.5f, 1f); // Vert
@@ -252,7 +232,6 @@ namespace MuseumAI.UI
                 scoreText.text = score.ToString("N0");
             }
 
-            // Animation si le score a augmente
             if (score > lastDisplayedScore && lastDisplayedScore >= 0)
             {
                 AnimateScoreIncrease();
@@ -266,7 +245,6 @@ namespace MuseumAI.UI
         /// </summary>
         public void UpdateProgressDisplay(int paintingsCompleted)
         {
-            Debug.Log($"[HUD] === UpdateProgressDisplay APPELE === Valeur: {paintingsCompleted}");
 
             if (progressText == null)
             {
@@ -282,7 +260,6 @@ namespace MuseumAI.UI
                 target = GameManager.Instance.TargetPaintings;
                 newText = $"{paintingsCompleted}/{target}";
 
-                // Couleur verte si objectif atteint
                 if (paintingsCompleted >= target)
                 {
                     progressText.color = new Color(0.3f, 1f, 0.5f, 1f); // Vert
@@ -294,13 +271,11 @@ namespace MuseumAI.UI
             }
             else
             {
-                // Pas d'objectif de tableaux, afficher juste le compte
                 newText = paintingsCompleted.ToString();
                 progressText.color = new Color(0f, 0.9f, 1f, 1f);
             }
 
             progressText.text = newText;
-            Debug.Log($"[HUD] Progression MISE A JOUR: '{newText}' (ancienne valeur: '{progressText.text}')");
         }
 
         /// <summary>
@@ -332,11 +307,9 @@ namespace MuseumAI.UI
                 GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
                 GameManager.Instance.OnQuizCompleted += OnQuizCompleted;
                 GameManager.Instance.OnPaintingsProgressUpdated += UpdateProgressDisplay;
-                Debug.Log("[HUD] Abonne a tous les evenements GameManager (y compris OnPaintingsProgressUpdated)");
             }
             else
             {
-                Debug.LogWarning("[HUD] GameManager.Instance est NULL - impossible de s'abonner aux evenements!");
             }
         }
 
@@ -354,7 +327,6 @@ namespace MuseumAI.UI
 
         private void OnQuizCompleted(bool success, int points)
         {
-            // Mettre a jour la progression quand un quiz est complete
             if (GameManager.Instance != null)
             {
                 UpdateProgressDisplay(GameManager.Instance.PaintingsCompleted);
@@ -363,10 +335,8 @@ namespace MuseumAI.UI
 
         private void OnGameStateChanged(GameState newState)
         {
-            // Afficher le HUD seulement en mode Playing
             if (newState == GameState.Playing)
             {
-                // Initialiser les valeurs avant d'afficher
                 if (GameManager.Instance != null)
                 {
                     UpdateTimerDisplay(GameManager.Instance.TimeRemaining);
@@ -374,13 +344,10 @@ namespace MuseumAI.UI
                     UpdateProgressDisplay(GameManager.Instance.PaintingsCompleted);
                 }
                 Show();
-                Debug.Log("[HUD] Affiche - Jeu demarre");
             }
             else
             {
-                // Cacher dans tous les autres etats (MainMenu, Paused, GameOver)
                 Hide();
-                Debug.Log($"[HUD] Cache - Etat: {newState}");
             }
         }
 
@@ -405,7 +372,6 @@ namespace MuseumAI.UI
             RectTransform rect = scoreText.GetComponent<RectTransform>();
             Vector3 originalScale = Vector3.one;
 
-            // Flash color + scale up
             scoreText.color = scoreFlashColor;
             if (rect != null)
             {
@@ -414,7 +380,6 @@ namespace MuseumAI.UI
 
             yield return new WaitForSeconds(0.1f);
 
-            // Retour progressif
             float duration = 0.3f;
             float elapsed = 0f;
 
@@ -463,7 +428,6 @@ namespace MuseumAI.UI
 
             while (isLowTimeMode)
             {
-                // Pulse vers rouge
                 float pulseDuration = 0.5f;
                 float elapsed = 0f;
 

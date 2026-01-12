@@ -54,24 +54,20 @@ namespace MuseumAI.UI
         
         private void FindReferences()
         {
-            // Trouver le QuizPanel (fond principal)
             Transform quizPanel = transform.Find("QuizPanel");
             if (quizPanel != null)
             {
                 backgroundImage = quizPanel.GetComponent<Image>();
                 
-                // Trouver le texte de question
                 Transform questionT = quizPanel.Find("QuestionText");
                 if (questionT != null)
                     questionText = questionT.GetComponent<TMP_Text>();
                 
-                // Trouver le feedback text
                 Transform feedbackT = quizPanel.Find("FeedbackText");
                 if (feedbackT != null)
                     feedbackText = feedbackT.GetComponent<TMP_Text>();
             }
             
-            // Trouver tous les boutons de reponse
             answerButtons = new Button[4];
             buttonImages = new Image[4];
             buttonTexts = new TMP_Text[4];
@@ -91,29 +87,22 @@ namespace MuseumAI.UI
         
         private void ApplyFuturisticStyle()
         {
-            // === BACKGROUND ===
             StyleBackground();
             
-            // === QUESTION TEXT ===
             StyleQuestionText();
             
-            // === ANSWER BUTTONS ===
             StyleAnswerButtons();
             
-            // === FEEDBACK TEXT ===
             StyleFeedbackText();
             
-            Debug.Log("[FuturisticStyle] Style futuriste VR applique!");
         }
         
         private void StyleBackground()
         {
             if (backgroundImage == null) return;
             
-            // Fond sombre semi-transparent
             backgroundImage.color = darkBackground;
             
-            // Ajouter une bordure glow (Outline component)
             Outline outline = backgroundImage.gameObject.GetComponent<Outline>();
             if (outline == null)
             {
@@ -122,7 +111,6 @@ namespace MuseumAI.UI
             outline.effectColor = primaryCyan;
             outline.effectDistance = new Vector2(outlineWidth, outlineWidth);
             
-            // Ajouter un deuxieme outline pour effet glow plus large
             Outline glowOutline = backgroundImage.gameObject.AddComponent<Outline>();
             glowOutline.effectColor = new Color(primaryCyan.r, primaryCyan.g, primaryCyan.b, 0.3f);
             glowOutline.effectDistance = new Vector2(outlineWidth * 2, outlineWidth * 2);
@@ -132,15 +120,12 @@ namespace MuseumAI.UI
         {
             if (questionText == null) return;
             
-            // Texte cyan lumineux
             questionText.color = primaryCyan;
             questionText.fontSize = 42;
             questionText.fontStyle = FontStyles.Bold;
             
-            // Activer le glow TMP (si le material le supporte)
             if (questionText.fontSharedMaterial != null)
             {
-                // Creer une instance du material pour ne pas affecter les autres
                 Material glowMat = new Material(questionText.fontSharedMaterial);
                 glowMat.EnableKeyword("GLOW_ON");
                 glowMat.SetColor("_GlowColor", primaryCyan);
@@ -151,7 +136,6 @@ namespace MuseumAI.UI
                 questionText.fontMaterial = glowMat;
             }
             
-            // Outline sur le texte pour plus de lisibilite
             Outline textOutline = questionText.gameObject.GetComponent<Outline>();
             if (textOutline == null)
             {
@@ -167,12 +151,10 @@ namespace MuseumAI.UI
             {
                 if (answerButtons[i] == null) continue;
                 
-                // === BUTTON IMAGE ===
                 if (buttonImages[i] != null)
                 {
                     buttonImages[i].color = buttonNormal;
                     
-                    // Bordure cyan sur le bouton
                     Outline btnOutline = buttonImages[i].gameObject.GetComponent<Outline>();
                     if (btnOutline == null)
                     {
@@ -182,7 +164,6 @@ namespace MuseumAI.UI
                     btnOutline.effectDistance = new Vector2(2, 2);
                 }
                 
-                // === BUTTON COLORS ===
                 ColorBlock colors = answerButtons[i].colors;
                 colors.normalColor = buttonNormal;
                 colors.highlightedColor = buttonHighlight;
@@ -193,13 +174,11 @@ namespace MuseumAI.UI
                 colors.fadeDuration = 0.15f;
                 answerButtons[i].colors = colors;
                 
-                // === BUTTON TEXT ===
                 if (buttonTexts[i] != null)
                 {
                     buttonTexts[i].color = Color.white;
                     buttonTexts[i].fontSize = 32;
                     
-                    // Legere lueur sur le texte des boutons
                     Outline txtOutline = buttonTexts[i].gameObject.GetComponent<Outline>();
                     if (txtOutline == null)
                     {
@@ -218,8 +197,6 @@ namespace MuseumAI.UI
             feedbackText.fontSize = 48;
             feedbackText.fontStyle = FontStyles.Bold;
             
-            // Le texte de feedback changera de couleur selon le resultat
-            // On prepare juste le style de base
             Outline fbOutline = feedbackText.gameObject.GetComponent<Outline>();
             if (fbOutline == null)
             {

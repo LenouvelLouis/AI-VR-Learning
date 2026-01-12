@@ -135,7 +135,6 @@ INSTRUCTIONS TRÈS STRICTES :
                 return null;
             }
 
-            // Utiliser TaskCompletionSource pour convertir le callback en Task
             var tcs = new System.Threading.Tasks.TaskCompletionSource<QuizData>();
 
             GenerateQuiz(
@@ -189,11 +188,9 @@ INSTRUCTIONS TRÈS STRICTES :
             isRequestInProgress = true;
             OnRequestStarted?.Invoke();
 
-            // Construire le prompt avec le nom du monument et le contexte
             string prompt = string.Format(QUIZ_PROMPT_TEMPLATE, monumentName, paintingContext);
             Log($"[APIManager] Envoi du prompt pour '{monumentName}' ({prompt.Length} caracteres)");
 
-            // Construire la requete AVEC les parametres de configuration
             GeminiRequest geminiRequest = new GeminiRequest(
                 prompt,
                 apiConfig.Temperature,
@@ -205,10 +202,8 @@ INSTRUCTIONS TRÈS STRICTES :
 
             if (logFullResponses)
             {
-                Debug.Log($"[APIManager] Request JSON:\n{jsonBody}");
             }
 
-            // Systeme de retry pour les erreurs temporaires (503, 429, etc.)
             int attempts = 0;
             bool success = false;
             string lastError = "";
@@ -223,14 +218,12 @@ INSTRUCTIONS TRÈS STRICTES :
                     yield return new WaitForSeconds(retryDelaySeconds);
                 }
 
-                // Envoyer la requete
                 using (UnityWebRequest request = CreateWebRequest(jsonBody))
                 {
                     request.timeout = requestTimeoutSeconds;
 
                     yield return request.SendWebRequest();
 
-                    // Traiter la reponse
                     if (request.result == UnityWebRequest.Result.Success)
                     {
                         success = true;
@@ -240,7 +233,6 @@ INSTRUCTIONS TRÈS STRICTES :
                     }
                     else
                     {
-                        // Verifier si c'est une erreur qui merite un retry
                         long responseCode = request.responseCode;
                         bool shouldRetry = (responseCode == 503 || responseCode == 429 || responseCode == 500 || responseCode == 502);
 
@@ -251,7 +243,6 @@ INSTRUCTIONS TRÈS STRICTES :
                         }
                         else
                         {
-                            // Erreur finale ou pas de retry possible
                             isRequestInProgress = false;
                             OnRequestCompleted?.Invoke();
                             ProcessErrorResponse(request, onError);
@@ -278,12 +269,10 @@ INSTRUCTIONS TRÈS STRICTES :
         {
             if (logFullResponses)
             {
-                Debug.Log($"[APIManager] Response JSON:\n{responseText}");
             }
 
             try
             {
-                // Parser la reponse Gemini
                 GeminiResponse geminiResponse = JsonUtility.FromJson<GeminiResponse>(responseText);
 
                 if (geminiResponse == null)
@@ -298,7 +287,6 @@ INSTRUCTIONS TRÈS STRICTES :
                     return;
                 }
 
-                // Extraire le texte de la reponse
                 string quizJson = geminiResponse.GetResponseText();
 
                 if (string.IsNullOrEmpty(quizJson))
@@ -307,7 +295,6 @@ INSTRUCTIONS TRÈS STRICTES :
                     return;
                 }
 
-                // Nettoyer et parser le JSON du quiz
                 QuizData quizData = ParseQuizJson(quizJson, onError);
 
                 if (quizData != null)
@@ -376,7 +363,6 @@ INSTRUCTIONS TRÈS STRICTES :
                     return $"Erreur serveur Google ({responseCode}). Reessayez plus tard.";
 
                 default:
-                    // Essayer d'extraire le message d'erreur du corps
                     if (!string.IsNullOrEmpty(responseBody))
                     {
                         try
@@ -399,7 +385,6 @@ INSTRUCTIONS TRÈS STRICTES :
 
         private QuizData ParseQuizJson(string rawJson, Action<string> onError)
         {
-            // Nettoyer le JSON
             string cleanedJson = CleanJsonResponse(rawJson);
 
             if (string.IsNullOrEmpty(cleanedJson))
@@ -443,15 +428,12 @@ INSTRUCTIONS TRÈS STRICTES :
 
             string cleaned = rawResponse.Trim();
 
-            // Supprimer les blocs markdown ```json ... ```
             cleaned = Regex.Replace(cleaned, @"^```json\s*", "", RegexOptions.Multiline);
             cleaned = Regex.Replace(cleaned, @"^```\s*$", "", RegexOptions.Multiline);
             cleaned = Regex.Replace(cleaned, @"```$", "");
 
-            // Supprimer les espaces/newlines au debut et a la fin
             cleaned = cleaned.Trim();
 
-            // Trouver le debut et la fin du JSON object
             int startIndex = cleaned.IndexOf('{');
             int endIndex = cleaned.LastIndexOf('}');
 
@@ -460,10 +442,8 @@ INSTRUCTIONS TRÈS STRICTES :
                 cleaned = cleaned.Substring(startIndex, endIndex - startIndex + 1);
             }
 
-            // Remplacer les caracteres problematiques
             cleaned = cleaned.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ");
 
-            // Supprimer les espaces multiples
             cleaned = Regex.Replace(cleaned, @"\s+", " ");
 
             return cleaned;
@@ -494,7 +474,6 @@ INSTRUCTIONS TRÈS STRICTES :
             if (isRequestInProgress)
             {
                 string error = "Une requete est deja en cours.";
-                Debug.LogWarning($"[APIManager] {error}");
                 onError?.Invoke(error);
                 return false;
             }
@@ -506,11 +485,9 @@ INSTRUCTIONS TRÈS STRICTES :
         {
             if (apiConfig == null)
             {
-                Debug.LogWarning("[APIManager] ApiConfig non assigne! Creez un asset via Create > Museum AI > Api Config");
             }
             else if (!apiConfig.IsValid)
             {
-                Debug.LogWarning("[APIManager] ApiConfig invalide. Verifiez la cle API.");
             }
             else
             {
@@ -546,7 +523,6 @@ INSTRUCTIONS TRÈS STRICTES :
         {
             if (enableDebugLogs)
             {
-                Debug.Log(message);
             }
         }
 

@@ -56,13 +56,11 @@ namespace MuseumAI.API
         {
             if (string.IsNullOrEmpty(apiKey))
             {
-                Debug.LogWarning("[ApiConfig] La cle API n'est pas configuree!");
             }
 
             if (apiKey != null && apiKey.StartsWith("AIza"))
             {
                 // C'est probablement une vraie cle, rappeler la securite
-                Debug.Log("[ApiConfig] Rappel: N'oubliez pas d'ajouter ce fichier .asset a votre .gitignore!");
             }
         }
 #endif
