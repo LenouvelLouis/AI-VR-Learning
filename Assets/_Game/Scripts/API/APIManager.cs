@@ -43,8 +43,10 @@ namespace MuseumAI.API
         [SerializeField] private bool enableDebugLogs = true;
         [SerializeField] private bool logFullResponses = false;
 
-        [Header("Timeout")]
+        [Header("Timeout et Retry")]
         [SerializeField] private int requestTimeoutSeconds = 30;
+        [SerializeField] private int maxRetryAttempts = 2;
+        [SerializeField] private float retryDelaySeconds = 2f;
 
         #endregion
 
@@ -63,8 +65,9 @@ INSTRUCTIONS TRÈS STRICTES :
     *   Crée UNE SEULE question qui mentionne explicitement ""{0}"".
     *   Fournis EXACTEMENT 1 réponse vraie et 3 réponses fausses.
     *   Les réponses fausses doivent être plausibles mais incorrectes.
-4.  **Format de sortie** : Réponds OBLIGATOIREMENT avec le JSON suivant, sans aucun texte avant ou après, et sans utiliser de markdown :
-{{""question"":""[Ta question incluant {0}]"",""trueAnswer"":""[La bonne réponse]"",""falseAnswers"":[""[Fausse 1]"",""[Fausse 2]"",""[Fausse 3]""]}}";
+4.  **Fait historique** : Ajoute un fait historique interessant et peu connu sur ""{0}"" (1-2 phrases maximum).
+5.  **Format de sortie** : Réponds OBLIGATOIREMENT avec le JSON suivant, sans aucun texte avant ou après, et sans utiliser de markdown :
+{{""question"":""[Ta question incluant {0}]"",""trueAnswer"":""[La bonne réponse]"",""falseAnswers"":[""[Fausse 1]"",""[Fausse 2]"",""[Fausse 3]""],""historicalFact"":""[Fait historique interessant]""}}";
 
         #endregion
 
@@ -205,24 +208,56 @@ INSTRUCTIONS TRÈS STRICTES :
                 Debug.Log($"[APIManager] Request JSON:\n{jsonBody}");
             }
 
-            // Envoyer la requete
-            using (UnityWebRequest request = CreateWebRequest(jsonBody))
+            // Systeme de retry pour les erreurs temporaires (503, 429, etc.)
+            int attempts = 0;
+            bool success = false;
+            string lastError = "";
+
+            while (attempts <= maxRetryAttempts && !success)
             {
-                request.timeout = requestTimeoutSeconds;
+                attempts++;
 
-                yield return request.SendWebRequest();
-
-                isRequestInProgress = false;
-                OnRequestCompleted?.Invoke();
-
-                // Traiter la reponse
-                if (request.result == UnityWebRequest.Result.Success)
+                if (attempts > 1)
                 {
-                    ProcessSuccessResponse(request.downloadHandler.text, onSuccess, onError);
+                    Log($"[APIManager] Tentative {attempts}/{maxRetryAttempts + 1} apres erreur...");
+                    yield return new WaitForSeconds(retryDelaySeconds);
                 }
-                else
+
+                // Envoyer la requete
+                using (UnityWebRequest request = CreateWebRequest(jsonBody))
                 {
-                    ProcessErrorResponse(request, onError);
+                    request.timeout = requestTimeoutSeconds;
+
+                    yield return request.SendWebRequest();
+
+                    // Traiter la reponse
+                    if (request.result == UnityWebRequest.Result.Success)
+                    {
+                        success = true;
+                        isRequestInProgress = false;
+                        OnRequestCompleted?.Invoke();
+                        ProcessSuccessResponse(request.downloadHandler.text, onSuccess, onError);
+                    }
+                    else
+                    {
+                        // Verifier si c'est une erreur qui merite un retry
+                        long responseCode = request.responseCode;
+                        bool shouldRetry = (responseCode == 503 || responseCode == 429 || responseCode == 500 || responseCode == 502);
+
+                        if (shouldRetry && attempts <= maxRetryAttempts)
+                        {
+                            lastError = $"Erreur {responseCode} - nouvelle tentative...";
+                            Log($"[APIManager] {lastError}");
+                        }
+                        else
+                        {
+                            // Erreur finale ou pas de retry possible
+                            isRequestInProgress = false;
+                            OnRequestCompleted?.Invoke();
+                            ProcessErrorResponse(request, onError);
+                            yield break;
+                        }
+                    }
                 }
             }
         }

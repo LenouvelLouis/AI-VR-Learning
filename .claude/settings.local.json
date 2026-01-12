@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "mcp__UnityMCP__manage_asset"
+      "mcp__UnityMCP__manage_asset",
+      "mcp__UnityMCP__refresh_unity",
+      "mcp__UnityMCP__read_console",
+      "mcp__UnityMCP__manage_scene",
+      "mcp__UnityMCP__find_gameobjects",
+      "mcp__UnityMCP__manage_components",
+      "mcp__UnityMCP__manage_editor",
+      "Bash(timeout:*)"
     ]
   }
 }

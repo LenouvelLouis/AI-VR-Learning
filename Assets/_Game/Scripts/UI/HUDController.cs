@@ -98,25 +98,86 @@ namespace MuseumAI.UI
             // Appliquer le style futuriste
             ApplyFuturisticStyle();
 
+            // Trouver automatiquement les references manquantes AVANT de s'abonner
+            FindMissingTextReferences();
+
             // S'abonner aux evenements du GameManager
             SubscribeToEvents();
 
-            // Initialiser l'affichage
+            // Cacher le HUD au demarrage - il ne s'affichera que quand le jeu commence
             if (GameManager.Instance != null)
             {
-                UpdateTimerDisplay(GameManager.Instance.TimeRemaining);
-                UpdateScoreDisplay(GameManager.Instance.Score);
-                UpdateProgressDisplay(GameManager.Instance.PaintingsCompleted);
+                // Si on est deja en jeu, initialiser et afficher
+                if (GameManager.Instance.CurrentState == GameState.Playing)
+                {
+                    UpdateTimerDisplay(GameManager.Instance.TimeRemaining);
+                    UpdateScoreDisplay(GameManager.Instance.Score);
+                    UpdateProgressDisplay(GameManager.Instance.PaintingsCompleted);
+                    Show();
+                }
+                else
+                {
+                    // Sinon cacher (menu principal, etc.)
+                    Hide();
+                }
             }
             else
             {
-                // Valeurs par defaut si pas de GameManager
-                UpdateTimerDisplay(300f);
-                UpdateScoreDisplay(0);
-                UpdateProgressDisplay(0);
+                // Pas de GameManager = cacher par defaut
+                Hide();
             }
 
-            Debug.Log("[HUD] Initialise (mode montre connectee) avec style futuriste");
+            Debug.Log("[HUD] Initialise - visible seulement en mode Playing");
+        }
+
+        /// <summary>
+        /// Trouve automatiquement les references TMP_Text manquantes
+        /// </summary>
+        private void FindMissingTextReferences()
+        {
+            TMP_Text[] allTexts = GetComponentsInChildren<TMP_Text>(true);
+            Debug.Log($"[HUD] FindMissingTextReferences: {allTexts.Length} textes trouves");
+
+            foreach (var text in allTexts)
+            {
+                string nameLower = text.name.ToLower();
+                Debug.Log($"[HUD] Texte trouve: '{text.name}'");
+
+                // Chercher progressText
+                if (progressText == null && (nameLower.Contains("progress") || nameLower.Contains("tableau")))
+                {
+                    progressText = text;
+                    Debug.Log($"[HUD] progressText AUTO-ASSIGNE: {text.name}");
+                }
+
+                // Chercher timerText
+                if (timerText == null && (nameLower.Contains("timer") || nameLower.Contains("time") || nameLower.Contains("temps")))
+                {
+                    timerText = text;
+                    Debug.Log($"[HUD] timerText AUTO-ASSIGNE: {text.name}");
+                }
+
+                // Chercher scoreText
+                if (scoreText == null && nameLower.Contains("score"))
+                {
+                    scoreText = text;
+                    Debug.Log($"[HUD] scoreText AUTO-ASSIGNE: {text.name}");
+                }
+            }
+
+            // Verifier les resultats
+            if (progressText == null)
+            {
+                Debug.LogError("[HUD] ERREUR: progressText toujours NULL apres recherche auto!");
+            }
+            if (timerText == null)
+            {
+                Debug.LogError("[HUD] ERREUR: timerText toujours NULL apres recherche auto!");
+            }
+            if (scoreText == null)
+            {
+                Debug.LogError("[HUD] ERREUR: scoreText toujours NULL apres recherche auto!");
+            }
         }
 
         private void ApplyFuturisticStyle()
@@ -205,37 +266,41 @@ namespace MuseumAI.UI
         /// </summary>
         public void UpdateProgressDisplay(int paintingsCompleted)
         {
+            Debug.Log($"[HUD] === UpdateProgressDisplay APPELE === Valeur: {paintingsCompleted}");
+
+            if (progressText == null)
+            {
+                Debug.LogError("[HUD] progressText est NULL! Impossible d'afficher la progression.");
+                return;
+            }
+
             int target = 0;
+            string newText = "";
 
             if (GameManager.Instance != null && GameManager.Instance.TargetPaintings > 0)
             {
                 target = GameManager.Instance.TargetPaintings;
+                newText = $"{paintingsCompleted}/{target}";
 
-                // Texte de progression
-                if (progressText != null)
+                // Couleur verte si objectif atteint
+                if (paintingsCompleted >= target)
                 {
-                    progressText.text = $"{paintingsCompleted}/{target}";
-
-                    // Couleur verte si objectif atteint
-                    if (paintingsCompleted >= target)
-                    {
-                        progressText.color = new Color(0.3f, 1f, 0.5f, 1f); // Vert
-                    }
-                    else
-                    {
-                        progressText.color = new Color(0f, 0.9f, 1f, 1f); // Cyan
-                    }
+                    progressText.color = new Color(0.3f, 1f, 0.5f, 1f); // Vert
+                }
+                else
+                {
+                    progressText.color = new Color(0f, 0.9f, 1f, 1f); // Cyan
                 }
             }
             else
             {
                 // Pas d'objectif de tableaux, afficher juste le compte
-                if (progressText != null)
-                {
-                    progressText.text = paintingsCompleted.ToString();
-                    progressText.color = new Color(0f, 0.9f, 1f, 1f);
-                }
+                newText = paintingsCompleted.ToString();
+                progressText.color = new Color(0f, 0.9f, 1f, 1f);
             }
+
+            progressText.text = newText;
+            Debug.Log($"[HUD] Progression MISE A JOUR: '{newText}' (ancienne valeur: '{progressText.text}')");
         }
 
         /// <summary>
@@ -266,6 +331,12 @@ namespace MuseumAI.UI
                 GameManager.Instance.OnScoreUpdated += UpdateScoreDisplay;
                 GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
                 GameManager.Instance.OnQuizCompleted += OnQuizCompleted;
+                GameManager.Instance.OnPaintingsProgressUpdated += UpdateProgressDisplay;
+                Debug.Log("[HUD] Abonne a tous les evenements GameManager (y compris OnPaintingsProgressUpdated)");
+            }
+            else
+            {
+                Debug.LogWarning("[HUD] GameManager.Instance est NULL - impossible de s'abonner aux evenements!");
             }
         }
 
@@ -277,6 +348,7 @@ namespace MuseumAI.UI
                 GameManager.Instance.OnScoreUpdated -= UpdateScoreDisplay;
                 GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
                 GameManager.Instance.OnQuizCompleted -= OnQuizCompleted;
+                GameManager.Instance.OnPaintingsProgressUpdated -= UpdateProgressDisplay;
             }
         }
 
@@ -291,14 +363,24 @@ namespace MuseumAI.UI
 
         private void OnGameStateChanged(GameState newState)
         {
-            // Cacher le HUD si on n'est pas en jeu
+            // Afficher le HUD seulement en mode Playing
             if (newState == GameState.Playing)
             {
+                // Initialiser les valeurs avant d'afficher
+                if (GameManager.Instance != null)
+                {
+                    UpdateTimerDisplay(GameManager.Instance.TimeRemaining);
+                    UpdateScoreDisplay(GameManager.Instance.Score);
+                    UpdateProgressDisplay(GameManager.Instance.PaintingsCompleted);
+                }
                 Show();
+                Debug.Log("[HUD] Affiche - Jeu demarre");
             }
-            else if (newState == GameState.GameOver || newState == GameState.MainMenu)
+            else
             {
+                // Cacher dans tous les autres etats (MainMenu, Paused, GameOver)
                 Hide();
+                Debug.Log($"[HUD] Cache - Etat: {newState}");
             }
         }
 

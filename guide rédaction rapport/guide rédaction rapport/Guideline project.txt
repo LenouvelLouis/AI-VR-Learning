@@ -1,0 +1,194 @@
+Contexte : Rédige un rapport de projet XR (Unity + VR + IA) intitulé Museum Quiz VR, développé pour Meta Quest 3S. Le rapport doit être chronologique et couvrir 7 semaines (chapitre par semaine), avec un focus sur : itérations, pivots, difficultés, solutions, résultats.
+
+Contraintes attendues :
+
+1 chapitre par semaine :
+
+“Travail réalisé en séance (groupe)”
+
+“Travail réalisé entre les séances (individuel / sous-groupes)”
+
+“Problèmes / blocages et résolution”
+
+“Résultat de la semaine + décisions”
+
+Le ton doit être académique, clair, pas trop technique (sauf mini encadrés).
+
+Insérer des figures (Kanban, Game loop, roles, screenshots Unity, test IA du début, scène musée finale).
+
+Ajouter des légendes et renvois dans le texte : Figure X — …
+
+Description projet (à respecter) :
+
+Au départ, l’équipe (dominante spé IA) cherchait un use-case IA.
+
+S1 : idéation et exploration : détection d’objets via caméra + LLM + Google Vision (POC OK).
+
+S2–S3 : tentative d’intégration sur Meta Quest 3S (caméra/passthrough) → nombreux bugs et temps perdu ; difficulté majeure car un seul casque (Louis Lenouvel) pour tester.
+
+S4 : tentative “détection immersive type Street View” → infeasible techniquement → pivot.
+
+S5 : pivot vers un concept réalisable : quiz sur monuments/œuvres, d’abord sur interface simple.
+
+S6 : intégration Unity + logique quiz + IA qui valide la réponse (bonne/mauvaise).
+
+S7 : polish : scène de musée interactive, UI VR ergonomique, stabilisation, préparation livrables.
+
+Architecture finale (résumer sans sur-détail, mais exact) :
+
+GameManager : états (MainMenu / Playing / Paused / GameOver), score, timer, win conditions, spawn UI.
+
+APIManager : appels à Google Gemini pour générer un quiz (question + 1 bonne réponse + 3 fausses).
+
+PaintingController + PlayerInteraction : interaction VR raycast avec tableaux, envoi du contexte à l’API.
+
+UI : HUD (poignet), Quiz panel (4 réponses), GameOver, MainMenu (sliders). 
+
+DOCUMENTATION_PROJET
+
+Rôles à mentionner (simples) :
+
+Louis Lenouvel + Louis Grignola + Gabriel Esteves : IA & API
+
+Gabriel Benhamou + Raphael Lifergan : Game Loop & user flow/diagrams
+
+Lisa + Nina : UI/UX VR
+
+Louis Lenouvel : intégration Unity + coordination technique + GitHub
+
+Insertion des visuels (mettre des placeholders) :
+
+S1 : Purpose/Mission + Success Criteria (image) + “Kanban week 1” (image) + screenshot test IA (PC camera)
+
+S4/S5 : Game Loop diagram (image) + roles diagram (image)
+
+S6/S7 : Kanban last week (image) + screenshot musée final (image)
+
+Format des placeholders :
+
+[[FIGURE S1_KANBAN_START: insert image here]]
+
+[[FIGURE S6_KANBAN_END: insert image here]]
+
+[[FIGURE GAME_LOOP: insert image here]]
+
+[[FIGURE ROLES: insert image here]]
+
+[[FIGURE MUSEUM_FINAL: insert image here]]
+
+[[FIGURE EARLY_AI_TEST: insert image here]]
+
+Conclusion : inclure apprentissages, ce qui a été difficile (Unity lourd/nouveau, VR headset unique, bugs), ce qui aurait pu être mieux (accès matériel, scope, architecture), et pistes futures (leaderboard, sons, plus d’œuvres, sauvegarde, etc.). 
+
+DOCUMENTATION_PROJET
+
+Important : ne pas inventer de fonctionnalités non réalisées. Mettre en valeur les pivots et la gestion des risques.
+
+2) Guideline “7 semaines” + où insérer Kanban / Game loop / images
+Semaine 1 — Vision & idéation (IA-first)
+
+Séance : brainstorming use-cases IA + VR ; sélection “object detection via camera + LLM” ; cadrage mission & success criteria.
+
+Hors séance : POC vision sur PC (Google Vision) + tests de prompts LLM.
+
+À insérer :
+
+[[FIGURE PURPOSE_SUCCESS: Purpose of project + Success criteria]]
+
+[[FIGURE S1_KANBAN_START: Kanban first week]]
+
+[[FIGURE EARLY_AI_TEST: test camera PC + Gemini/Vision]]
+
+Semaine 2 — POC IA validé, début contraintes VR
+
+Séance : démo POC ; discussion intégration Quest 3S ; répartition rôles.
+
+Hors séance : essais d’intégration, premières difficultés (SDK/bugs).
+
+Visuels optionnels : mini schéma architecture IA (si dispo).
+
+Semaine 3 — Tentative Quest 3S (blocages)
+
+Séance : intégration VR ralentie, debugging casque ; contraintes “1 seul casque” = goulot.
+
+Hors séance : essais d’outils / alternatives ; documentation des bugs.
+
+À écrire : section “risque matériel / dépendance”.
+
+Semaine 4 — Pivot : streetview infeasible → nouveau concept
+
+Séance : tentative “détection immersive Street View” ; décision d’abandon (faisabilité).
+
+Hors séance : redéfinition du concept vers quiz culturel (monuments/œuvres).
+
+À insérer :
+
+[[FIGURE GAME_LOOP: game loop simple]] (ici ou S5)
+
+début du user flow (si vous avez)
+
+Semaine 5 — Prototype quiz (hors VR) + UI/UX
+
+Séance : prototype front quiz ; règles (score/time/objectif) ; début UI VR guidelines.
+
+Hors séance : préparation Unity scene / assets ; stabilisation logique quiz & réponses.
+
+À insérer :
+
+[[FIGURE ROLES: roles & people]] (S5 idéal)
+
+game loop (si pas en S4)
+
+Semaine 6 — Intégration Unity + IA + boucle jouable
+
+Séance : intégration scène musée, interaction tableaux, quiz UI, feedback correct/incorrect.
+
+Hors séance : debug/perf ; HUD ; itérations ergonomie.
+
+À insérer : (si tu veux, une capture Unity intermédiaire)
+
+Semaine 7 — Finalisation & livraison
+
+Séance : polish, cohérence UX, stabilisation, préparation build + supports.
+
+Hors séance : dernière passe UI VR ergonomique, tests finaux.
+
+À insérer :
+
+[[FIGURE S6_KANBAN_END: Kanban last week]]
+
+[[FIGURE MUSEUM_FINAL: screenshot musée final + interaction]]
+
+Ça colle bien aux attentes du cours : Miro/kanban/diagrammes recommandés 
+
+Course 7 Group Project Presenta…
+
+ et rapport “1 chapitre par semaine + images/diagrams + problèmes/solutions”. 
+
+2025 Project Delivery Specifica…
+
+3) Ce que tu dois fournir à Claude (assets) — checklist rapide
+
+Tu as déjà quasiment tout. Pour que Claude puisse rédiger sans trous :
+
+Toutes les images (PNG/JPG) en fichiers séparés :
+
+Kanban first week
+
+Kanban last week
+
+Game loop
+
+Roles diagram
+
+Purpose + Success criteria
+
+Screenshot musée final (interaction VR)
+
+Screenshot test IA initial (PC camera + Gemini/Vision)
+
+(Optionnel mais utile) :
+
+2–3 screenshots UI (HUD/Quiz/GameOver) si vous en avez
+
+Le texte de contexte (tu l’as déjà) + la doc technique (déjà)

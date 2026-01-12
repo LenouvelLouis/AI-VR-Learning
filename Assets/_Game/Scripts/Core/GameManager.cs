@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using MuseumAI.API;
 using MuseumAI.Gameplay;
@@ -65,7 +66,7 @@ namespace MuseumAI.Core
         [SerializeField] private GameObject mainMenuPrefab;
 
         [Tooltip("Distance du menu devant le joueur (en metres)")]
-        [SerializeField] private float mainMenuDistance = 0.8f;
+        [SerializeField] private float mainMenuDistance = 6f;
 
         [Header("Demarrage Automatique")]
         [Tooltip("Demarre automatiquement le jeu au lancement de la scene (sans menu)")]
@@ -112,6 +113,11 @@ namespace MuseumAI.Core
         public int PaintingsCompleted { get; private set; }
 
         /// <summary>
+        /// Liste des noms des monuments visites avec succes
+        /// </summary>
+        public List<string> CompletedMonumentNames { get; private set; } = new List<string>();
+
+        /// <summary>
         /// Score cible pour gagner
         /// </summary>
         public int TargetScore => targetScore;
@@ -156,6 +162,11 @@ namespace MuseumAI.Core
         public event Action<bool, int> OnQuizCompleted;
 
         /// <summary>
+        /// Declenche quand le nombre de tableaux completes change
+        /// </summary>
+        public event Action<int> OnPaintingsProgressUpdated;
+
+        /// <summary>
         /// Declenche en cas d'erreur API. Parametre: message d'erreur
         /// </summary>
         public event Action<string> OnQuizError;
@@ -168,6 +179,8 @@ namespace MuseumAI.Core
         private PaintingController currentPainting;
         private GameObject gameOverInstance;
         private GameObject mainMenuInstance;
+        private GameObject currentQuizPanelInstance;
+        private QuizUIController currentQuizUIController;
 
         #endregion
 
@@ -190,9 +203,19 @@ namespace MuseumAI.Core
             }
             else
             {
-                // Afficher le menu principal
-                SpawnMainMenu();
+                // Afficher le menu principal avec un delai pour laisser le VR s'initialiser
+                StartCoroutine(SpawnMainMenuDelayed());
             }
+        }
+
+        private System.Collections.IEnumerator SpawnMainMenuDelayed()
+        {
+            // Attendre que le tracking VR soit initialise (plus long sur Quest)
+            yield return new WaitForSeconds(1.0f);
+
+            Debug.Log($"[GameManager] VR init complete - Camera.main pos: {Camera.main?.transform.position}");
+
+            SpawnMainMenu();
         }
 
         private void Update()
@@ -222,6 +245,7 @@ namespace MuseumAI.Core
         {
             Score = 0;
             PaintingsCompleted = 0;
+            CompletedMonumentNames.Clear();
             TimeRemaining = gameDuration;
             isTimerRunning = true;
 
@@ -375,10 +399,17 @@ namespace MuseumAI.Core
                 AddScore(pointsEarned);
                 PaintingsCompleted++;
 
+                // Enregistrer le nom du monument complete
                 if (currentPainting != null)
                 {
+                    CompletedMonumentNames.Add(currentPainting.PaintingTitle);
                     currentPainting.MarkAsCompleted();
+                    Debug.Log($"[GameManager] Monument complete: {currentPainting.PaintingTitle}");
                 }
+
+                // Notifier la mise a jour de la progression
+                OnPaintingsProgressUpdated?.Invoke(PaintingsCompleted);
+                Debug.Log($"[GameManager] Progression: {PaintingsCompleted}/{targetPaintings} tableaux");
             }
 
             OnQuizCompleted?.Invoke(isCorrect, pointsEarned);
@@ -422,17 +453,41 @@ namespace MuseumAI.Core
         public void ReturnToMainMenu()
         {
             isTimerRunning = false;
+
+            // Reinitialiser toutes les stats (comme un nouveau lancement)
             Score = 0;
+            PaintingsCompleted = 0;
+            CompletedMonumentNames.Clear();
             TimeRemaining = gameDuration;
+            currentPainting = null;
+
+            // Cacher explicitement le HUD
+            if (sceneHUD != null)
+            {
+                sceneHUD.Hide();
+            }
+
+            // Detruire le quiz panel s'il existe
+            if (currentQuizPanelInstance != null)
+            {
+                Destroy(currentQuizPanelInstance);
+                currentQuizPanelInstance = null;
+                currentQuizUIController = null;
+            }
+
+            // Changer l'etat (cela notifie aussi le HUD via l'evenement)
             SetGameState(GameState.MainMenu);
 
             // Bloquer le mouvement
             SetPlayerControlsEnabled(false);
 
+            // Reinitialiser tous les tableaux
+            ResetAllPaintings();
+
             // Afficher le menu
             SpawnMainMenu();
 
-            Debug.Log("[GameManager] Retour au menu principal");
+            Debug.Log("[GameManager] Retour au menu principal - tout reinitialise");
         }
 
         /// <summary>
@@ -471,6 +526,7 @@ namespace MuseumAI.Core
             // Reinitialiser les stats
             Score = 0;
             PaintingsCompleted = 0;
+            CompletedMonumentNames.Clear();
             TimeRemaining = gameDuration;
             currentPainting = null;
 
@@ -541,7 +597,7 @@ namespace MuseumAI.Core
                 Destroy(mainMenuInstance);
             }
 
-            // Position devant la camera
+            // Position devant la camera (meme logique que QuizPanel)
             Camera playerCamera = Camera.main;
             if (playerCamera == null)
             {
@@ -552,14 +608,26 @@ namespace MuseumAI.Core
 
             Transform camTransform = playerCamera.transform;
 
-            // Position: devant la camera a la distance specifiee, a hauteur des yeux
-            Vector3 spawnPosition = camTransform.position + camTransform.forward * mainMenuDistance;
-            spawnPosition.y = camTransform.position.y;
+            // Direction horizontale seulement (ignorer le pitch de la tete)
+            Vector3 forwardFlat = camTransform.forward;
+            forwardFlat.y = 0;
+            forwardFlat.Normalize();
+
+            // Si le joueur regarde droit en haut/bas, utiliser forward par defaut
+            if (forwardFlat.sqrMagnitude < 0.01f)
+            {
+                forwardFlat = Vector3.forward;
+            }
+
+            // Position devant le joueur, a hauteur des yeux
+            Vector3 spawnPosition = camTransform.position + forwardFlat * mainMenuDistance;
+            spawnPosition.y = camTransform.position.y; // Garder a hauteur des yeux
+
+            // Verifier si la position est dans un mur (raycast)
+            spawnPosition = GetSafeSpawnPosition(camTransform.position, spawnPosition, 0.5f);
 
             // Rotation: face au joueur
-            Vector3 lookDirection = spawnPosition - camTransform.position;
-            lookDirection.y = 0;
-            Quaternion spawnRotation = Quaternion.LookRotation(lookDirection);
+            Quaternion spawnRotation = Quaternion.LookRotation(forwardFlat);
 
             mainMenuInstance = Instantiate(mainMenuPrefab, spawnPosition, spawnRotation);
             mainMenuInstance.name = "MainMenu_Instance";
@@ -569,7 +637,7 @@ namespace MuseumAI.Core
 
             SetGameState(GameState.MainMenu);
 
-            Debug.Log("[GameManager] Menu principal affiche");
+            Debug.Log($"[GameManager] Menu principal affiche - pos:{spawnPosition}, cam:{camTransform.position}, fwd:{forwardFlat}");
         }
 
         private void SpawnGameOverUI()
@@ -599,6 +667,9 @@ namespace MuseumAI.Core
             Vector3 spawnPosition = camTransform.position + camTransform.forward * spawnDistance;
             spawnPosition.y = camTransform.position.y; // A hauteur des yeux
 
+            // Verifier si la position est dans un mur (raycast)
+            spawnPosition = GetSafeSpawnPosition(camTransform.position, spawnPosition, 0.3f);
+
             Vector3 lookDirection = spawnPosition - camTransform.position;
             lookDirection.y = 0;
             Quaternion spawnRotation = Quaternion.LookRotation(lookDirection);
@@ -607,6 +678,31 @@ namespace MuseumAI.Core
             gameOverInstance.name = "GameOver_Instance";
 
             Debug.Log("[GameManager] Ecran Game Over affiche");
+        }
+
+        /// <summary>
+        /// Verifie si la position cible est bloquee par un mur et retourne une position securisee
+        /// </summary>
+        /// <param name="origin">Position de depart (camera)</param>
+        /// <param name="targetPosition">Position cible souhaitee</param>
+        /// <param name="offsetFromWall">Distance de securite par rapport au mur</param>
+        /// <returns>Position securisee (devant le mur si obstacle, sinon position cible)</returns>
+        private Vector3 GetSafeSpawnPosition(Vector3 origin, Vector3 targetPosition, float offsetFromWall)
+        {
+            Vector3 direction = targetPosition - origin;
+            float distance = direction.magnitude;
+
+            // Raycast pour detecter les murs
+            if (Physics.Raycast(origin, direction.normalized, out RaycastHit hit, distance))
+            {
+                // Un obstacle a ete detecte - placer le panel devant le mur
+                Vector3 safePosition = hit.point - direction.normalized * offsetFromWall;
+                Debug.Log($"[GameManager] Mur detecte! Position ajustee de {targetPosition} a {safePosition}");
+                return safePosition;
+            }
+
+            // Pas d'obstacle, utiliser la position cible
+            return targetPosition;
         }
 
         private void SetPlayerControlsEnabled(bool enabled)
@@ -653,20 +749,25 @@ namespace MuseumAI.Core
 
         private void RequestQuizFromAPI(PaintingController painting)
         {
+            // === SPAWN LE PANEL QUIZ IMMEDIATEMENT AVEC LOADING ===
+            SpawnQuizPanelWithLoading(painting);
+
             // Verifier que l'APIManager est disponible
             if (APIManager.Instance == null)
             {
                 string error = "APIManager non disponible!";
                 Debug.LogError($"[GameManager] {error}");
                 OnQuizError?.Invoke(error);
+                ShowQuizError(error);
                 return;
             }
 
             if (!APIManager.Instance.IsConfigured)
             {
-                string error = "APIManager non configure. Verifiez la cle API.";
+                string error = "APIManager non configure. Verifiez la cle API dans Resources/ApiConfig.";
                 Debug.LogError($"[GameManager] {error}");
                 OnQuizError?.Invoke(error);
+                ShowQuizError(error);
                 return;
             }
 
@@ -683,6 +784,66 @@ namespace MuseumAI.Core
             );
         }
 
+        /// <summary>
+        /// Spawn le panel quiz immediatement et affiche l'etat de chargement
+        /// </summary>
+        private void SpawnQuizPanelWithLoading(PaintingController painting)
+        {
+            if (quizPanelPrefab == null)
+            {
+                Debug.LogWarning("[GameManager] QuizPanelPrefab non assigne!");
+                return;
+            }
+
+            // Detruire l'ancien panel s'il existe
+            if (currentQuizPanelInstance != null)
+            {
+                Destroy(currentQuizPanelInstance);
+            }
+
+            // Position devant la camera
+            Camera playerCamera = Camera.main;
+            if (playerCamera == null)
+            {
+                Debug.LogError("[GameManager] Camera.main introuvable!");
+                return;
+            }
+
+            Transform camTransform = playerCamera.transform;
+            float spawnDistance = 2f; // 2 metres devant le joueur
+            Vector3 spawnPosition = camTransform.position + camTransform.forward * spawnDistance;
+
+            // Verifier si la position est dans un mur (raycast)
+            spawnPosition = GetSafeSpawnPosition(camTransform.position, spawnPosition, 0.3f);
+
+            Vector3 directionAwayFromCamera = spawnPosition - camTransform.position;
+            directionAwayFromCamera.y = 0;
+            Quaternion spawnRotation = Quaternion.LookRotation(directionAwayFromCamera);
+
+            // Instancier le panel
+            currentQuizPanelInstance = Instantiate(quizPanelPrefab, spawnPosition, spawnRotation);
+            currentQuizPanelInstance.name = "QuizPanel_Instance";
+
+            // Configurer et afficher le chargement
+            currentQuizUIController = currentQuizPanelInstance.GetComponent<QuizUIController>();
+            if (currentQuizUIController != null)
+            {
+                currentQuizUIController.ShowLoading();
+                Debug.Log($"[GameManager] Quiz panel spawn avec loading pour: {painting.PaintingTitle}");
+            }
+        }
+
+        /// <summary>
+        /// Affiche une erreur sur le panel quiz existant
+        /// </summary>
+        private void ShowQuizError(string error)
+        {
+            if (currentQuizUIController != null)
+            {
+                currentQuizUIController.ShowError(error);
+            }
+        }
+
         private void OnQuizGenerated(QuizData quizData, PaintingController painting)
         {
             Debug.Log($"[GameManager] Quiz recu: {quizData.question}");
@@ -690,14 +851,26 @@ namespace MuseumAI.Core
             // Notifier les listeners (UI, etc.)
             OnQuizDataReady?.Invoke(quizData, painting);
 
-            // Afficher le quiz
-            DisplayQuizUI(quizData, painting);
+            // Afficher le quiz sur le panel existant
+            if (currentQuizUIController != null)
+            {
+                currentQuizUIController.ShowQuiz(quizData, painting);
+                Debug.Log($"[GameManager] Quiz affiche pour: {painting.PaintingTitle}");
+            }
+            else
+            {
+                // Fallback: creer un nouveau panel
+                DisplayQuizUI(quizData, painting);
+            }
         }
 
         private void OnQuizGenerationFailed(string error)
         {
             Debug.LogError($"[GameManager] Echec generation quiz: {error}");
             OnQuizError?.Invoke(error);
+
+            // Afficher l'erreur sur le panel existant
+            ShowQuizError(error);
 
             // Liberer le painting actuel pour permettre une nouvelle tentative
             currentPainting = null;
@@ -721,8 +894,8 @@ namespace MuseumAI.Core
 
             Transform camTransform = playerCamera.transform;
 
-            // Position: 0.8m devant la camera, a hauteur des yeux
-            float spawnDistance = 0.8f;
+            // Position: 2m devant la camera, a hauteur des yeux
+            float spawnDistance = 2f;
             Vector3 spawnPosition = camTransform.position + camTransform.forward * spawnDistance;
 
             // Rotation: L'UI doit FAIRE FACE au joueur

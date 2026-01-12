@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using MuseumAI.Core;
 
 namespace MuseumAI.Gameplay
@@ -14,7 +15,7 @@ namespace MuseumAI.Gameplay
 
         [Header("Configuration du Raycast")]
         [SerializeField] private Transform rayOrigin;
-        [SerializeField] private float rayDistance = 10f;
+        [SerializeField] private float rayDistance = 3f; // 3 metres - distance realiste pour interagir
         [SerializeField] private LayerMask interactableLayers;
 
         [Header("Input VR (Meta XR / Casque)")]
@@ -101,7 +102,34 @@ namespace MuseumAI.Gameplay
             // Abonnement aux evenements
             SubscribeToEvents();
 
+            // Desactiver l'InputModule standard pour eviter les clics automatiques sur hover
+            DisableStandardUIInputModule();
+
             Debug.Log($"[PlayerInteraction] === INITIALISATION COMPLETE ===");
+        }
+
+        /// <summary>
+        /// Desactive le module d'input UI standard pour eviter les clics automatiques
+        /// quand le pointeur VR survole un bouton. Notre PlayerInteraction gere tout.
+        /// </summary>
+        private void DisableStandardUIInputModule()
+        {
+            EventSystem eventSystem = FindFirstObjectByType<EventSystem>();
+            if (eventSystem == null)
+            {
+                Debug.Log("[PlayerInteraction] Pas d'EventSystem trouve");
+                return;
+            }
+
+            // Desactiver tous les modules d'input UI (StandaloneInputModule, InputSystemUIInputModule, etc.)
+            BaseInputModule[] inputModules = eventSystem.GetComponents<BaseInputModule>();
+            foreach (var module in inputModules)
+            {
+                module.enabled = false;
+                Debug.Log($"[PlayerInteraction] Module UI desactive: {module.GetType().Name}");
+            }
+
+            Debug.Log("[PlayerInteraction] Modules UI desactives - seul PlayerInteraction gere les clics");
         }
 
         private void Update()
@@ -113,18 +141,10 @@ namespace MuseumAI.Gameplay
                 Debug.Log($"[PlayerInteraction] Update() ACTIF - Frame #{frameCount}");
             }
 
-            // === DIAGNOSTIC: Test Input.anyKeyDown ===
-            if (Input.anyKeyDown)
-            {
-                Debug.Log($">>> [INPUT] anyKeyDown DETECTE! Cible: {(currentTarget != null ? currentTarget.PaintingTitle : "AUCUNE")} <<<");
-            }
-
             // === RAYCAST ===
             PerformRaycast();
 
-            // === INTERACTION (SANS condition isInteractionBlocked pour debug) ===
-            // ANCIENNE VERSION: if (!isInteractionBlocked) CheckInput();
-            // NOUVELLE VERSION: Appel direct pour diagnostic
+            // === INTERACTION ===
             CheckInputDirect();
         }
 
@@ -145,10 +165,11 @@ namespace MuseumAI.Gameplay
             Debug.DrawRay(origin, direction * rayDistance, Color.red);
 
             // === RAYCAST 1: Detection UI (tous les layers) ===
-            // On cherche d'abord les boutons UI car ils ont priorite
+            // On cherche d'abord les elements UI car ils ont priorite
             RaycastHit uiHit;
             if (Physics.Raycast(origin, direction, out uiHit, rayDistance))
             {
+                // Chercher un Button
                 Button button = uiHit.collider.GetComponent<Button>();
                 if (button == null)
                 {
@@ -199,8 +220,12 @@ namespace MuseumAI.Gameplay
 
                 if (enableHapticFeedback && useOVRInput)
                 {
-                    OVRInput.SetControllerVibration(0.05f, 0.05f, vrController);
-                    Invoke(nameof(StopHaptic), 0.05f);
+                    try
+                    {
+                        OVRInput.SetControllerVibration(0.05f, 0.05f, vrController);
+                        Invoke(nameof(StopHaptic), 0.05f);
+                    }
+                    catch (System.Exception) { /* Ignore in simulator */ }
                 }
             }
         }
@@ -221,8 +246,12 @@ namespace MuseumAI.Gameplay
 
                     if (enableHapticFeedback && useOVRInput)
                     {
-                        OVRInput.SetControllerVibration(0.1f, 0.1f, vrController);
-                        Invoke(nameof(StopHaptic), 0.1f);
+                        try
+                        {
+                            OVRInput.SetControllerVibration(0.1f, 0.1f, vrController);
+                            Invoke(nameof(StopHaptic), 0.1f);
+                        }
+                        catch (System.Exception) { /* Ignore in simulator */ }
                     }
                 }
             }
@@ -241,22 +270,14 @@ namespace MuseumAI.Gameplay
         #region Input Detection
 
         /// <summary>
-        /// Detection universelle - accepte TOUT input (clavier, souris, manette)
+        /// Detection des inputs VR et Desktop pour les interactions
         /// </summary>
         private void CheckInputDirect()
         {
             bool interactionTriggered = false;
             string inputSource = "Unknown";
 
-            // === METHODE UNIVERSELLE: Input.anyKeyDown ===
-            // Detecte: toutes les touches clavier + tous les boutons souris + boutons manette
-            if (Input.anyKeyDown)
-            {
-                inputSource = "anyKeyDown (universel)";
-                interactionTriggered = true;
-            }
-
-            // === INPUT VR (en parallele) ===
+            // === INPUT VR: Gachettes index uniquement ===
             if (useOVRInput)
             {
                 if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch))
@@ -264,9 +285,19 @@ namespace MuseumAI.Gameplay
                     inputSource = "VR Gachette Droite";
                     interactionTriggered = true;
                 }
-                if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.LTouch))
+                else if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.LTouch))
                 {
                     inputSource = "VR Gachette Gauche";
+                    interactionTriggered = true;
+                }
+            }
+
+            // === INPUT Desktop: Clic souris ou Espace ===
+            if (allowDesktopInput && !interactionTriggered)
+            {
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputSource = "Desktop (souris/espace)";
                     interactionTriggered = true;
                 }
             }
@@ -287,8 +318,12 @@ namespace MuseumAI.Gameplay
                     // Feedback haptique pour le clic
                     if (enableHapticFeedback && useOVRInput)
                     {
-                        OVRInput.SetControllerVibration(0.2f, 0.3f, vrController);
-                        Invoke(nameof(StopHaptic), 0.15f);
+                        try
+                        {
+                            OVRInput.SetControllerVibration(0.2f, 0.3f, vrController);
+                            Invoke(nameof(StopHaptic), 0.15f);
+                        }
+                        catch (System.Exception) { /* Ignore in simulator */ }
                     }
                     return;
                 }
@@ -351,11 +386,30 @@ namespace MuseumAI.Gameplay
         private void CreateDefaultLineRenderer()
         {
             lineRenderer = gameObject.AddComponent<LineRenderer>();
-            lineRenderer.startWidth = 0.005f;
-            lineRenderer.endWidth = 0.002f;
+            lineRenderer.startWidth = 0.015f;  // Plus epais pour meilleure visibilite
+            lineRenderer.endWidth = 0.005f;
             lineRenderer.positionCount = 2;
             lineRenderer.useWorldSpace = true;
-            lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+
+            // Creer un material qui s'affiche par-dessus TOUT (ignore le Z-buffer)
+            Shader unlitShader = Shader.Find("UI/Default");
+            if (unlitShader == null)
+            {
+                unlitShader = Shader.Find("Sprites/Default");
+            }
+            Material laserMat = new Material(unlitShader);
+            laserMat.renderQueue = 5000; // Rendre tout a la fin (apres overlay UI)
+
+            // Forcer le rendu par-dessus tout
+            laserMat.SetInt("_ZWrite", 0);
+            laserMat.SetInt("_ZTest", 0); // Always pass
+
+            lineRenderer.material = laserMat;
+
+            // Configurer le sorting pour etre au-dessus
+            lineRenderer.sortingLayerName = "Overlay";
+            lineRenderer.sortingOrder = 32767; // Max sorting order
+
             lineRenderer.startColor = rayColorIdle;
             lineRenderer.endColor = rayColorIdle;
 
@@ -363,11 +417,23 @@ namespace MuseumAI.Gameplay
             Vector3 startPos = rayOrigin != null ? rayOrigin.position : transform.position;
             lineRenderer.SetPosition(0, startPos);
             lineRenderer.SetPosition(1, startPos + (rayOrigin != null ? rayOrigin.forward : transform.forward) * 0.1f);
+
+            Debug.Log("[PlayerInteraction] LineRenderer cree avec ZTest=Always pour visibilite maximale sur UI");
         }
 
         private void StopHaptic()
         {
-            OVRInput.SetControllerVibration(0, 0, vrController);
+            if (enableHapticFeedback && useOVRInput)
+            {
+                try
+                {
+                    OVRInput.SetControllerVibration(0, 0, vrController);
+                }
+                catch (System.Exception)
+                {
+                    // Ignore haptic errors in simulator mode
+                }
+            }
         }
 
         #endregion

@@ -74,6 +74,12 @@ namespace MuseumAI.UI
         [Tooltip("Texte optionnel pour le temps joue")]
         [SerializeField] private TMP_Text timePlayedText;
 
+        [Tooltip("Texte affichant la liste des monuments visites")]
+        [SerializeField] private TMP_Text monumentsListText;
+
+        [Tooltip("Texte affichant le detail du score (base + bonus)")]
+        [SerializeField] private TMP_Text scoreBreakdownText;
+
         [Header("Boutons")]
         [SerializeField] private Button retryButton;
         [SerializeField] private Button quitButton;
@@ -128,6 +134,9 @@ namespace MuseumAI.UI
 
         private void Start()
         {
+            // Creer le texte pour la liste des monuments s'il n'existe pas
+            CreateMonumentsListTextIfNeeded();
+
             // Recuperer les stats du GameManager
             if (GameManager.Instance != null)
             {
@@ -143,6 +152,44 @@ namespace MuseumAI.UI
 
             // Animation d'entree
             StartCoroutine(FadeInAnimation());
+        }
+
+        /// <summary>
+        /// Cree automatiquement le texte pour la liste des monuments s'il n'existe pas
+        /// </summary>
+        private void CreateMonumentsListTextIfNeeded()
+        {
+            // Chercher d'abord si un texte existe deja
+            TMP_Text[] texts = GetComponentsInChildren<TMP_Text>(true);
+            foreach (var text in texts)
+            {
+                string nameLower = text.name.ToLower();
+                if (nameLower.Contains("monument") || nameLower.Contains("list") || nameLower.Contains("visite"))
+                {
+                    monumentsListText = text;
+                    return;
+                }
+            }
+
+            // Creer un nouveau texte pour la liste des monuments
+            GameObject monumentsTextGO = new GameObject("MonumentsListText");
+            monumentsTextGO.transform.SetParent(transform, false);
+
+            monumentsListText = monumentsTextGO.AddComponent<TextMeshProUGUI>();
+            monumentsListText.fontSize = 18;
+            monumentsListText.alignment = TextAlignmentOptions.Left;
+            monumentsListText.color = Color.white;
+            monumentsListText.enableWordWrapping = true;
+            monumentsListText.richText = true;
+
+            // Positionner en bas du panel (sous les boutons)
+            RectTransform rect = monumentsListText.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.1f, 0.05f);
+            rect.anchorMax = new Vector2(0.9f, 0.28f);
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+
+            Debug.Log("[GameOverUI] MonumentsListText cree automatiquement");
         }
 
         #endregion
@@ -188,7 +235,68 @@ namespace MuseumAI.UI
                 paintingsCountText.text = paintingsCompleted.ToString();
             }
 
+            // Afficher le detail du score (base + bonus temps)
+            DisplayScoreBreakdown(finalScore, paintingsCompleted, timeUp);
+
+            // Liste des monuments visites
+            DisplayMonumentsList();
+
             Debug.Log($"[GameOverUI] Resultats affiches - Score: {finalScore}, Tableaux: {paintingsCompleted}");
+        }
+
+        /// <summary>
+        /// Affiche le detail du score (points de base + bonus temps)
+        /// </summary>
+        private void DisplayScoreBreakdown(int finalScore, int paintingsCompleted, bool timeUp)
+        {
+            // Creer le texte automatiquement s'il n'existe pas
+            if (scoreBreakdownText == null)
+            {
+                CreateScoreBreakdownText();
+            }
+
+            if (scoreBreakdownText == null) return;
+
+            // Calculer le score de base (100 points par tableau)
+            int baseScore = paintingsCompleted * 100;
+            int timeBonus = finalScore - baseScore;
+
+            // Si le temps est ecoule, pas de bonus
+            if (timeUp || timeBonus <= 0)
+            {
+                scoreBreakdownText.text = $"<color=#AAAAAA>Quiz: {baseScore} pts</color>";
+            }
+            else
+            {
+                scoreBreakdownText.text = $"<color=#AAAAAA>Quiz: {baseScore} pts</color>\n<color=#00FF88>+ Bonus temps: {timeBonus} pts</color>";
+            }
+
+            scoreBreakdownText.gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// Cree automatiquement le texte pour le detail du score
+        /// </summary>
+        private void CreateScoreBreakdownText()
+        {
+            GameObject breakdownTextGO = new GameObject("ScoreBreakdownText");
+            breakdownTextGO.transform.SetParent(transform, false);
+
+            scoreBreakdownText = breakdownTextGO.AddComponent<TextMeshProUGUI>();
+            scoreBreakdownText.fontSize = 20;
+            scoreBreakdownText.alignment = TextAlignmentOptions.Center;
+            scoreBreakdownText.color = Color.white;
+            scoreBreakdownText.enableWordWrapping = true;
+            scoreBreakdownText.richText = true;
+
+            // Positionner juste en dessous du score final
+            RectTransform rect = scoreBreakdownText.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.1f, 0.55f);
+            rect.anchorMax = new Vector2(0.9f, 0.65f);
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+
+            Debug.Log("[GameOverUI] ScoreBreakdownText cree automatiquement");
         }
 
         /// <summary>
@@ -239,17 +347,97 @@ namespace MuseumAI.UI
         }
 
         /// <summary>
-        /// Appele quand le joueur clique sur Quitter
+        /// Appele quand le joueur clique sur Quitter - retourne au menu principal
         /// </summary>
         public void OnQuitClicked()
         {
-            Debug.Log("[GameOverUI] Quit clique");
+            Debug.Log("[GameOverUI] Quit clique - retour au menu principal");
 
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
+            // Desactiver les boutons pour eviter les double-clics
+            if (retryButton != null) retryButton.interactable = false;
+            if (quitButton != null) quitButton.interactable = false;
+
+            // Retourner au menu principal
+            StartCoroutine(ReturnToMenuWithTransition());
+        }
+
+        private System.Collections.IEnumerator ReturnToMenuWithTransition()
+        {
+            // Fade out
+            float fadeDuration = 0.4f;
+            float elapsed = 0f;
+
+            while (elapsed < fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                if (canvasGroup != null)
+                {
+                    canvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
+                }
+                yield return null;
+            }
+
+            // Retourner au menu principal via GameManager
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.ReturnToMainMenu();
+            }
+
+            // Detruire ce panel
+            Destroy(gameObject);
+        }
+
+        /// <summary>
+        /// Affiche la liste des monuments visites
+        /// </summary>
+        private void DisplayMonumentsList()
+        {
+            // Chercher automatiquement le texte si non assigne
+            if (monumentsListText == null)
+            {
+                TMP_Text[] texts = GetComponentsInChildren<TMP_Text>(true);
+                foreach (var text in texts)
+                {
+                    string nameLower = text.name.ToLower();
+                    if (nameLower.Contains("monument") || nameLower.Contains("list") || nameLower.Contains("visite"))
+                    {
+                        monumentsListText = text;
+                        Debug.Log($"[GameOverUI] monumentsListText AUTO-ASSIGNE: {text.name}");
+                        break;
+                    }
+                }
+            }
+
+            if (monumentsListText == null)
+            {
+                Debug.Log("[GameOverUI] Pas de texte pour la liste des monuments (normal si non configure)");
+                return;
+            }
+
+            if (GameManager.Instance == null || GameManager.Instance.CompletedMonumentNames.Count == 0)
+            {
+                monumentsListText.text = "Aucun monument visite";
+                monumentsListText.color = new Color(0.7f, 0.7f, 0.7f, 1f);
+                return;
+            }
+
+            // Construire la liste des monuments
+            var monuments = GameManager.Instance.CompletedMonumentNames;
+            string listText = "<color=#00E5FF>Monuments decouverts:</color>\n";
+
+            for (int i = 0; i < monuments.Count; i++)
+            {
+                listText += $"<color=#00FF88>✓</color> {monuments[i]}";
+                if (i < monuments.Count - 1)
+                {
+                    listText += "\n";
+                }
+            }
+
+            monumentsListText.text = listText;
+            monumentsListText.color = Color.white;
+
+            Debug.Log($"[GameOverUI] {monuments.Count} monument(s) affiches");
         }
 
         #endregion

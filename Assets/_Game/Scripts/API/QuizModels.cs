@@ -17,6 +17,7 @@ namespace MuseumAI.API
         public string question;
         public string trueAnswer;
         public string[] falseAnswers;
+        public string historicalFact; // Fait historique interessant sur le monument
 
         /// <summary>
         /// Genere une liste de choix melanges avec indication de la bonne reponse
@@ -45,6 +46,9 @@ namespace MuseumAI.API
                 }
             }
 
+            // Seed avec une valeur unique pour chaque quiz
+            UnityEngine.Random.InitState((int)(System.DateTime.Now.Ticks % int.MaxValue));
+
             // Melanger avec Fisher-Yates
             for (int i = choices.Count - 1; i > 0; i--)
             {
@@ -53,6 +57,8 @@ namespace MuseumAI.API
                 choices[i] = choices[randomIndex];
                 choices[randomIndex] = temp;
             }
+
+            Debug.Log($"[QuizData] Reponses melangees - Position reponse correcte: {choices.FindIndex(c => c.isCorrect)}");
 
             return choices;
         }

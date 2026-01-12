@@ -129,6 +129,9 @@ namespace MuseumAI.UI
         [Tooltip("Texte de feedback apres reponse (+100 pts! ou Rate...)")]
         [SerializeField] private TMP_Text feedbackText;
 
+        [Tooltip("Texte affichant le fait historique apres la reponse")]
+        [SerializeField] private TMP_Text historicalFactText;
+
         [Header("Boutons de Reponse")]
         [Tooltip("Les 4 boutons de reponse (dans l'ordre)")]
         [SerializeField] private Button[] answerButtons = new Button[4];
@@ -151,7 +154,7 @@ namespace MuseumAI.UI
 
         [Header("Timing")]
         [Tooltip("Duree d'affichage du feedback avant fermeture (secondes)")]
-        [SerializeField] private float feedbackDuration = 2.5f;
+        [SerializeField] private float feedbackDuration = 5f; // Plus long pour lire le fait historique
 
         [Tooltip("Duree de l'animation de fade (secondes)")]
         [SerializeField] private float fadeDuration = 0.3f;
@@ -692,20 +695,125 @@ namespace MuseumAI.UI
             }
             ShowFeedbackText(isCorrect, pointsEarned);
 
-            // 4. Feedback audio/haptique (a implementer selon le SDK)
+            // 4. Afficher le fait historique
+            ShowHistoricalFact();
+
+            // 5. Feedback audio/haptique (a implementer selon le SDK)
             PlayFeedback(isCorrect);
 
-            // 5. Attendre la duree configuree
+            // 6. Attendre la duree configuree
             yield return new WaitForSeconds(feedbackDuration);
 
-            // 6. Notifier le GameManager
+            // 7. Notifier le GameManager
             NotifyGameManager(isCorrect);
 
-            // 7. Declencher l'evenement local
+            // 8. Declencher l'evenement local
             OnAnswerSelected?.Invoke(isCorrect, selectedIndex);
 
-            // 8. Fermer l'UI
+            // 9. Fermer l'UI
             Hide();
+        }
+
+        /// <summary>
+        /// Affiche le fait historique du monument
+        /// </summary>
+        private void ShowHistoricalFact()
+        {
+            // Chercher automatiquement le texte si non assigne
+            if (historicalFactText == null)
+            {
+                TMP_Text[] texts = GetComponentsInChildren<TMP_Text>(true);
+                foreach (var text in texts)
+                {
+                    string nameLower = text.name.ToLower();
+                    if (nameLower.Contains("fact") || nameLower.Contains("historique") || nameLower.Contains("anecdote"))
+                    {
+                        historicalFactText = text;
+                        break;
+                    }
+                }
+            }
+
+            // Creer le texte automatiquement s'il n'existe pas
+            if (historicalFactText == null)
+            {
+                CreateHistoricalFactText();
+            }
+
+            if (historicalFactText == null || currentQuizData == null)
+            {
+                return;
+            }
+
+            // Afficher le fait historique s'il existe
+            if (!string.IsNullOrEmpty(currentQuizData.historicalFact))
+            {
+                historicalFactText.gameObject.SetActive(true);
+                historicalFactText.text = $"<color=#00E5FF>Le saviez-vous?</color>\n{currentQuizData.historicalFact}";
+                Debug.Log($"[QuizUI] Fait historique affiche: {currentQuizData.historicalFact}");
+
+                // Animation de fade in
+                StartCoroutine(AnimateHistoricalFact());
+            }
+            else
+            {
+                historicalFactText.gameObject.SetActive(false);
+                Debug.Log("[QuizUI] Pas de fait historique disponible");
+            }
+        }
+
+        /// <summary>
+        /// Cree automatiquement le texte pour le fait historique
+        /// </summary>
+        private void CreateHistoricalFactText()
+        {
+            if (quizPanel == null) return;
+
+            GameObject factTextGO = new GameObject("HistoricalFactText");
+            factTextGO.transform.SetParent(quizPanel.transform, false);
+
+            historicalFactText = factTextGO.AddComponent<TextMeshProUGUI>();
+            historicalFactText.fontSize = 24;
+            historicalFactText.alignment = TextAlignmentOptions.Center;
+            historicalFactText.color = Color.white;
+            historicalFactText.enableWordWrapping = true;
+            historicalFactText.richText = true;
+
+            // Positionner en bas du panel quiz
+            RectTransform rect = historicalFactText.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.05f, 0.02f);
+            rect.anchorMax = new Vector2(0.95f, 0.25f);
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+
+            Debug.Log("[QuizUI] HistoricalFactText cree automatiquement");
+        }
+
+        private IEnumerator AnimateHistoricalFact()
+        {
+            if (historicalFactText == null) yield break;
+
+            // Fade in du texte
+            Color startColor = historicalFactText.color;
+            startColor.a = 0f;
+            historicalFactText.color = startColor;
+
+            float duration = 0.5f;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / duration;
+                Color newColor = historicalFactText.color;
+                newColor.a = t;
+                historicalFactText.color = newColor;
+                yield return null;
+            }
+
+            Color finalColor = historicalFactText.color;
+            finalColor.a = 1f;
+            historicalFactText.color = finalColor;
         }
 
         private void ShowFeedbackText(bool isCorrect, int points)
