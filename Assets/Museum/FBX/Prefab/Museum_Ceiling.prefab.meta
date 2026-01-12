@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f0fe22802403c8c41ace1f9d96ac3cc9
+timeCreated: 1525252806
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Prefab/Museum_Ceiling.prefab
+  uploadId: 268236

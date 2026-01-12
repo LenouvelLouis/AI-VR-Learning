@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 43b773eee1f1bad4d8299a9e21c9743d
+timeCreated: 1524859985
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Materials/Museum_Rope_Stand_Baked.mat
+  uploadId: 268236

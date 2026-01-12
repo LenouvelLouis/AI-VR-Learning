@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 414831141e1344a4a8b038d95c7d8d4b
+timeCreated: 1524859981
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 117927
+  packageName: Museum
+  packageVersion: 5.3.4f1
+  assetPath: Assets/Museum/FBX/Materials/Museum_Floor_Cadding_Baked.mat
+  uploadId: 268236

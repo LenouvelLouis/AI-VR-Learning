@@ -11,4 +11,4 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03bc68f14d65e7747a59d5ff74bd199b, type: 3}
   m_Name: OculusLoader
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.XR.Oculus::Unity.XR.Oculus.OculusLoader
