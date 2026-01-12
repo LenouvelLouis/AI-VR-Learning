@@ -9176,6 +9176,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!134 &1007632592
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ' (Instance)'
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1 &1009334315
 GameObject:
   m_ObjectHideFlags: 0
@@ -17860,7 +17873,7 @@ PrefabInstance:
     - target: {fileID: 65224149489693858, guid: eded3844e29c2ec40bc278e2cbd31279, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 1996628762}
+      objectReference: {fileID: 1007632592}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -17894,13 +17907,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a8b25545e9c04469090c8b9c2db972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseumAI.Gameplay.PaintingController
-  paintingTitle: "Ch\xE2teau de Versailles"
-  artistName: "Vue du ch\xE2teau"
-  year: 1668
-  paintingContext: "Le ch\xE2teau de Versailles est un ch\xE2teau et un monument
-    historique fran\xE7ais situ\xE9 \xE0 Versailles. Il fut la r\xE9sidence des rois
-    de France Louis XIV, Louis XV et Louis XVI. Construit \xE0 partir de 1623, il
-    est devenu le symbole de l'absolutisme royal sous Louis XIV."
+  paintingTitle: Tour Eiffel
+  artistName: Gustave Eiffel
+  year: 1889
+  paintingContext: "La Tour Eiffel est une tour de fer puddl\xE9 de 330 m\xE8tres
+    de hauteur situ\xE9e \xE0 Paris, \xE0 l'extr\xE9mit\xE9 nord-ouest du parc du
+    Champ-de-Mars. Construite en deux ans par Gustave Eiffel et ses collaborateurs
+    pour l'Exposition universelle de Paris de 1889, elle est devenue le symbole de
+    la capitale fran\xE7aise et un site touristique de premier plan."
   completedMaterial: {fileID: 0}
   completionEffect: {fileID: 0}
 --- !u!1 &1890293544

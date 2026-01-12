@@ -1,18 +1,45 @@
+# Unity generated
 Temp/
 UserSettings/
 Library/
 Logs/
 obj/
 Build/
+/.utmp
+
+# IDE
 .vs/
-.vsconfig
+.vscode/
+.idea/
+*.vsconfig
 *.csproj
 *.sln
-/.utmp
+*.slnx
+
+# Claude Code / AI assistants
+.claude/
+CLAUDE.md
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.apk
+*.aab
+*.unitypackage
 *.zip
+!NativeSamples.zip
+
+# Unity specific
 RuntimeActionBindings.json
 RuntimeActionBindings.json.meta
-ProjectSettings\Packages\com.unity.testtools.codecoverage\Settings.json
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
 PerformanceTestRun*.*
 StreamingAssets*
-!NativeSamples.zip
+
+# Burst debug info
+*_BurstDebugInformation_DoNotShip/
+
+# Temp files
+tmpclaude-*

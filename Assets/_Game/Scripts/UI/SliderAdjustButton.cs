@@ -28,11 +28,9 @@ namespace MuseumAI.UI
             button = GetComponent<Button>();
             if (button != null)
             {
-                // Ecouter le onClick qui sera invoque par PlayerInteraction
                 button.onClick.AddListener(OnButtonClick);
             }
 
-            // Ajouter BoxCollider pour VR si absent
             if (GetComponent<BoxCollider>() == null)
             {
                 BoxCollider collider = gameObject.AddComponent<BoxCollider>();
@@ -53,16 +51,13 @@ namespace MuseumAI.UI
         /// </summary>
         public void OnButtonClick()
         {
-            // Verifier le cooldown pour eviter les clics multiples
             if (Time.time - lastClickTime < clickCooldown)
             {
-                Debug.Log($"[SliderAdjust] Clic ignore (cooldown)");
                 return;
             }
 
             if (targetSlider == null)
             {
-                Debug.LogWarning("[SliderAdjust] targetSlider est null!");
                 return;
             }
 
@@ -71,12 +66,10 @@ namespace MuseumAI.UI
             float delta = isIncrement ? adjustmentValue : -adjustmentValue;
             float newValue = targetSlider.value + delta;
 
-            // Clamp entre min et max
             newValue = Mathf.Clamp(newValue, targetSlider.minValue, targetSlider.maxValue);
 
             targetSlider.value = newValue;
 
-            Debug.Log($"[SliderAdjust] {targetSlider.name}: {newValue} ({(isIncrement ? "+" : "-")}{adjustmentValue})");
         }
 
         /// <summary>
@@ -88,30 +81,22 @@ namespace MuseumAI.UI
             adjustmentValue = adjustment;
             isIncrement = increment;
             isSetup = true;
-            Debug.Log($"[SliderAdjust] Setup: slider={slider?.name}, step={adjustment}, increment={increment}");
         }
 
         #region Block EventSystem Interactions
 
-        // Ces methodes bloquent les interactions automatiques de l'EventSystem
-        // Seul le PlayerInteraction peut declencher un clic via button.onClick.Invoke()
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            // Ne rien faire - bloquer l'interaction hover de l'EventSystem
-            // Debug.Log($"[SliderAdjust] OnPointerEnter BLOQUE");
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            // Ne rien faire
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             // BLOQUER les clics automatiques de l'EventSystem
-            // Seul PlayerInteraction peut activer ce bouton via onClick.Invoke()
-            Debug.Log($"[SliderAdjust] OnPointerClick EventSystem BLOQUE - utilisez la gachette VR");
         }
 
         #endregion

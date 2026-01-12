@@ -51,24 +51,19 @@ namespace MuseumAI.UI
 
         private void FindReferences()
         {
-            // Background - Panel
             Transform panel = transform.Find("Panel");
             if (panel != null)
                 backgroundImage = panel.GetComponent<Image>();
 
-            // Title
             Transform titleT = transform.Find("TitleText");
             if (titleT != null)
                 titleText = titleT.GetComponent<TMP_Text>();
 
-            // Sliders
             sliders = GetComponentsInChildren<Slider>(true);
 
-            // Labels et ValueTexts
             labels = new TMP_Text[3];
             valueTexts = new TMP_Text[3];
 
-            // Score Row
             Transform scoreRow = FindDeepChild(transform, "ScoreRow");
             if (scoreRow != null)
             {
@@ -78,7 +73,6 @@ namespace MuseumAI.UI
                 if (value != null) valueTexts[0] = value.GetComponent<TMP_Text>();
             }
 
-            // Paintings Row
             Transform paintingsRow = FindDeepChild(transform, "PaintingsRow");
             if (paintingsRow != null)
             {
@@ -88,7 +82,6 @@ namespace MuseumAI.UI
                 if (value != null) valueTexts[1] = value.GetComponent<TMP_Text>();
             }
 
-            // Time Row
             Transform timeRow = FindDeepChild(transform, "TimeRow");
             if (timeRow != null)
             {
@@ -98,7 +91,6 @@ namespace MuseumAI.UI
                 if (value != null) valueTexts[2] = value.GetComponent<TMP_Text>();
             }
 
-            // Start Button
             Transform buttonT = FindDeepChild(transform, "StartButton");
             if (buttonT != null)
                 startButton = buttonT.GetComponent<Button>();
@@ -124,7 +116,6 @@ namespace MuseumAI.UI
             StyleValueTexts();
             StyleButton();
 
-            Debug.Log("[FuturisticMainMenu] Style futuriste applique!");
         }
 
         private void StyleBackground()
@@ -133,14 +124,12 @@ namespace MuseumAI.UI
 
             backgroundImage.color = darkBackground;
 
-            // Bordure glow cyan
             Outline outline = backgroundImage.gameObject.GetComponent<Outline>();
             if (outline == null)
                 outline = backgroundImage.gameObject.AddComponent<Outline>();
             outline.effectColor = primaryCyan;
             outline.effectDistance = new Vector2(outlineWidth, outlineWidth);
 
-            // Glow diffus
             Outline glow = backgroundImage.gameObject.AddComponent<Outline>();
             glow.effectColor = new Color(primaryCyan.r, primaryCyan.g, primaryCyan.b, 0.15f);
             glow.effectDistance = new Vector2(outlineWidth * 2.5f, outlineWidth * 2.5f);
@@ -154,14 +143,12 @@ namespace MuseumAI.UI
             titleText.fontSize = 72;
             titleText.fontStyle = FontStyles.Bold;
 
-            // Glow cyan intense
             Outline glow = titleText.gameObject.GetComponent<Outline>();
             if (glow == null)
                 glow = titleText.gameObject.AddComponent<Outline>();
             glow.effectColor = new Color(primaryCyan.r, primaryCyan.g, primaryCyan.b, 0.6f);
             glow.effectDistance = new Vector2(3, 3);
 
-            // Shadow
             Outline shadow = titleText.gameObject.AddComponent<Outline>();
             shadow.effectColor = new Color(0, 0, 0, 0.8f);
             shadow.effectDistance = new Vector2(2, -2);
@@ -173,14 +160,12 @@ namespace MuseumAI.UI
             {
                 if (slider == null) continue;
 
-                // Background du slider
                 Image background = slider.transform.Find("Background")?.GetComponent<Image>();
                 if (background != null)
                 {
                     background.color = new Color(0.1f, 0.15f, 0.2f, 0.8f);
                 }
 
-                // Fill Area
                 Transform fillArea = slider.transform.Find("Fill Area");
                 if (fillArea != null)
                 {
@@ -191,7 +176,6 @@ namespace MuseumAI.UI
                     }
                 }
 
-                // Handle
                 Transform handleArea = slider.transform.Find("Handle Slide Area");
                 if (handleArea != null)
                 {
@@ -200,7 +184,6 @@ namespace MuseumAI.UI
                     {
                         handle.color = Color.white;
 
-                        // Glow sur le handle
                         Outline glow = handle.gameObject.GetComponent<Outline>();
                         if (glow == null)
                             glow = handle.gameObject.AddComponent<Outline>();
@@ -233,7 +216,6 @@ namespace MuseumAI.UI
                 valueText.fontSize = 36;
                 valueText.fontStyle = FontStyles.Bold;
 
-                // Glow vert
                 Outline glow = valueText.gameObject.GetComponent<Outline>();
                 if (glow == null)
                     glow = valueText.gameObject.AddComponent<Outline>();
@@ -246,26 +228,22 @@ namespace MuseumAI.UI
         {
             if (startButton == null) return;
 
-            // Background du bouton
             Image buttonImage = startButton.GetComponent<Image>();
             if (buttonImage != null)
             {
                 buttonImage.color = new Color(0.05f, 0.15f, 0.2f, 0.95f);
 
-                // Bordure glow
                 Outline outline = buttonImage.gameObject.GetComponent<Outline>();
                 if (outline == null)
                     outline = buttonImage.gameObject.AddComponent<Outline>();
                 outline.effectColor = buttonColor;
                 outline.effectDistance = new Vector2(outlineWidth, outlineWidth);
 
-                // Glow diffus
                 Outline glow = buttonImage.gameObject.AddComponent<Outline>();
                 glow.effectColor = new Color(buttonColor.r, buttonColor.g, buttonColor.b, 0.3f);
                 glow.effectDistance = new Vector2(outlineWidth * 2f, outlineWidth * 2f);
             }
 
-            // Texte du bouton
             TMP_Text buttonText = startButton.GetComponentInChildren<TMP_Text>();
             if (buttonText != null)
             {
@@ -273,7 +251,6 @@ namespace MuseumAI.UI
                 buttonText.fontSize = 42;
                 buttonText.fontStyle = FontStyles.Bold;
 
-                // Glow sur le texte
                 Outline textGlow = buttonText.gameObject.GetComponent<Outline>();
                 if (textGlow == null)
                     textGlow = buttonText.gameObject.AddComponent<Outline>();
@@ -281,7 +258,6 @@ namespace MuseumAI.UI
                 textGlow.effectDistance = new Vector2(2, 2);
             }
 
-            // ColorBlock pour les etats du bouton
             ColorBlock colors = startButton.colors;
             colors.normalColor = Color.white;
             colors.highlightedColor = new Color(1.2f, 1.2f, 1.2f, 1f);

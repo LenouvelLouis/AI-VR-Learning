@@ -188,13 +188,11 @@ namespace MuseumAI.Core
 
         private void Start()
         {
-            // Demarrage automatique si configure
             if (autoStartGame)
             {
                 if (autoStartDelay > 0)
                 {
                     Invoke(nameof(StartGame), autoStartDelay);
-                    Debug.Log($"[GameManager] Demarrage automatique dans {autoStartDelay}s...");
                 }
                 else
                 {
@@ -203,17 +201,14 @@ namespace MuseumAI.Core
             }
             else
             {
-                // Afficher le menu principal avec un delai pour laisser le VR s'initialiser
                 StartCoroutine(SpawnMainMenuDelayed());
             }
         }
 
         private System.Collections.IEnumerator SpawnMainMenuDelayed()
         {
-            // Attendre que le tracking VR soit initialise (plus long sur Quest)
             yield return new WaitForSeconds(1.0f);
 
-            Debug.Log($"[GameManager] VR init complete - Camera.main pos: {Camera.main?.transform.position}");
 
             SpawnMainMenu();
         }
@@ -251,10 +246,8 @@ namespace MuseumAI.Core
 
             SetGameState(GameState.Playing);
 
-            // Activer les controles du joueur
             SetPlayerControlsEnabled(true);
 
-            // Activer le HUD (deja place dans la scene)
             if (sceneHUD != null)
             {
                 sceneHUD.Show();
@@ -264,14 +257,12 @@ namespace MuseumAI.Core
                 Debug.LogError("[GameManager] sceneHUD non assigne! Glissez le WristHUD dans l'Inspector.");
             }
 
-            // Detruire le menu principal s'il existe
             if (mainMenuInstance != null)
             {
                 Destroy(mainMenuInstance);
                 mainMenuInstance = null;
             }
 
-            // Detruire l'ecran Game Over s'il existe
             if (gameOverInstance != null)
             {
                 Destroy(gameOverInstance);
@@ -281,7 +272,6 @@ namespace MuseumAI.Core
             OnScoreUpdated?.Invoke(Score);
             OnTimerUpdated?.Invoke(TimeRemaining);
 
-            Debug.Log("[GameManager] Partie demarree!");
         }
 
         /// <summary>
@@ -292,29 +282,23 @@ namespace MuseumAI.Core
         {
             isTimerRunning = false;
 
-            // Bonus de temps si fin avant le chrono
             if (!timeUp && TimeRemaining > 0)
             {
                 int timeBonus = Mathf.FloorToInt(TimeRemaining) * bonusTimePoints;
                 AddScore(timeBonus);
-                Debug.Log($"[GameManager] Bonus temps: +{timeBonus} points");
             }
 
             SetGameState(GameState.GameOver);
 
-            // Desactiver les controles du joueur
             SetPlayerControlsEnabled(false);
 
-            // Cacher le HUD
             if (sceneHUD != null)
             {
                 sceneHUD.Hide();
             }
 
-            // Afficher l'ecran Game Over
             SpawnGameOverUI();
 
-            Debug.Log($"[GameManager] Partie terminee! Score final: {Score}, Tableaux completes: {PaintingsCompleted}");
         }
 
         /// <summary>
@@ -328,7 +312,6 @@ namespace MuseumAI.Core
             Score += points;
             OnScoreUpdated?.Invoke(Score);
 
-            Debug.Log($"[GameManager] +{points} points! Score total: {Score}");
         }
 
         /// <summary>
@@ -339,7 +322,6 @@ namespace MuseumAI.Core
         {
             if (CurrentState != GameState.Playing)
             {
-                Debug.LogWarning("[GameManager] Impossible de demarrer un quiz hors du mode Playing");
                 return;
             }
 
@@ -352,10 +334,8 @@ namespace MuseumAI.Core
             currentPainting = painting;
             OnQuizStarted?.Invoke(painting);
 
-            Debug.Log($"[GameManager] Quiz demarre pour: {painting.gameObject.name}");
 
             // L'APIManager sera appele ici pour generer le quiz
-            // Pour l'instant, on log l'intention
             RequestQuizFromAPI(painting);
         }
 
@@ -368,7 +348,6 @@ namespace MuseumAI.Core
             {
                 isTimerRunning = false;
                 SetGameState(GameState.Paused);
-                Debug.Log("[GameManager] Jeu en pause");
             }
         }
 
@@ -381,7 +360,6 @@ namespace MuseumAI.Core
             {
                 isTimerRunning = true;
                 SetGameState(GameState.Playing);
-                Debug.Log("[GameManager] Jeu repris");
             }
         }
 
@@ -399,28 +377,21 @@ namespace MuseumAI.Core
                 AddScore(pointsEarned);
                 PaintingsCompleted++;
 
-                // Enregistrer le nom du monument complete
                 if (currentPainting != null)
                 {
                     CompletedMonumentNames.Add(currentPainting.PaintingTitle);
                     currentPainting.MarkAsCompleted();
-                    Debug.Log($"[GameManager] Monument complete: {currentPainting.PaintingTitle}");
                 }
 
-                // Notifier la mise a jour de la progression
                 OnPaintingsProgressUpdated?.Invoke(PaintingsCompleted);
-                Debug.Log($"[GameManager] Progression: {PaintingsCompleted}/{targetPaintings} tableaux");
             }
 
             OnQuizCompleted?.Invoke(isCorrect, pointsEarned);
             currentPainting = null;
 
-            Debug.Log($"[GameManager] Quiz termine - Correct: {isCorrect}, Points: {pointsEarned}");
 
-            // Verifier les conditions de victoire apres une bonne reponse
             if (isCorrect && CheckVictoryConditions())
             {
-                Debug.Log("[GameManager] CONDITIONS DE VICTOIRE ATTEINTES!");
                 EndGame(timeUp: false);
             }
         }
@@ -435,12 +406,10 @@ namespace MuseumAI.Core
 
             if (eitherConditionWins)
             {
-                // Mode "OU": l'une ou l'autre condition suffit
                 return scoreReached || paintingsReached;
             }
             else
             {
-                // Mode "ET": les deux conditions doivent etre remplies
                 bool scoreOk = targetScore <= 0 || scoreReached;
                 bool paintingsOk = targetPaintings <= 0 || paintingsReached;
                 return scoreOk && paintingsOk;
@@ -454,20 +423,17 @@ namespace MuseumAI.Core
         {
             isTimerRunning = false;
 
-            // Reinitialiser toutes les stats (comme un nouveau lancement)
             Score = 0;
             PaintingsCompleted = 0;
             CompletedMonumentNames.Clear();
             TimeRemaining = gameDuration;
             currentPainting = null;
 
-            // Cacher explicitement le HUD
             if (sceneHUD != null)
             {
                 sceneHUD.Hide();
             }
 
-            // Detruire le quiz panel s'il existe
             if (currentQuizPanelInstance != null)
             {
                 Destroy(currentQuizPanelInstance);
@@ -475,19 +441,14 @@ namespace MuseumAI.Core
                 currentQuizUIController = null;
             }
 
-            // Changer l'etat (cela notifie aussi le HUD via l'evenement)
             SetGameState(GameState.MainMenu);
 
-            // Bloquer le mouvement
             SetPlayerControlsEnabled(false);
 
-            // Reinitialiser tous les tableaux
             ResetAllPaintings();
 
-            // Afficher le menu
             SpawnMainMenu();
 
-            Debug.Log("[GameManager] Retour au menu principal - tout reinitialise");
         }
 
         /// <summary>
@@ -503,7 +464,6 @@ namespace MuseumAI.Core
             gameDuration = newDuration;
             TimeRemaining = gameDuration;
 
-            Debug.Log($"[GameManager] Parametres mis a jour - Score: {targetScore}, Tableaux: {targetPaintings}, Duree: {gameDuration}s");
         }
 
         /// <summary>
@@ -511,45 +471,35 @@ namespace MuseumAI.Core
         /// </summary>
         public void RestartGame()
         {
-            Debug.Log("[GameManager] Redemarrage rapide...");
 
-            // Detruire l'ecran Game Over
             if (gameOverInstance != null)
             {
                 Destroy(gameOverInstance);
                 gameOverInstance = null;
             }
 
-            // Reinitialiser tous les tableaux
             ResetAllPaintings();
 
-            // Reinitialiser les stats
             Score = 0;
             PaintingsCompleted = 0;
             CompletedMonumentNames.Clear();
             TimeRemaining = gameDuration;
             currentPainting = null;
 
-            // Redemarrer le timer
             isTimerRunning = true;
 
-            // Reactiver les controles joueur
             SetPlayerControlsEnabled(true);
 
-            // Afficher le HUD
             if (sceneHUD != null)
             {
                 sceneHUD.Show();
             }
 
-            // Changer l'etat
             SetGameState(GameState.Playing);
 
-            // Notifier les listeners
             OnScoreUpdated?.Invoke(Score);
             OnTimerUpdated?.Invoke(TimeRemaining);
 
-            Debug.Log("[GameManager] Partie redemarree!");
         }
 
         /// <summary>
@@ -562,7 +512,6 @@ namespace MuseumAI.Core
             {
                 painting.ResetState();
             }
-            Debug.Log($"[GameManager] {allPaintings.Length} tableau(x) reinitialise(s)");
         }
 
         #endregion
@@ -576,28 +525,23 @@ namespace MuseumAI.Core
             TimeRemaining = gameDuration;
             isTimerRunning = false;
 
-            // Bloquer le mouvement au demarrage (en MainMenu)
             SetPlayerControlsEnabled(false);
 
-            Debug.Log("[GameManager] Initialise");
         }
 
         private void SpawnMainMenu()
         {
             if (mainMenuPrefab == null)
             {
-                Debug.LogWarning("[GameManager] MainMenu Prefab non assigne! Le jeu va demarrer directement.");
                 StartGame();
                 return;
             }
 
-            // Detruire l'ancien menu s'il existe
             if (mainMenuInstance != null)
             {
                 Destroy(mainMenuInstance);
             }
 
-            // Position devant la camera (meme logique que QuizPanel)
             Camera playerCamera = Camera.main;
             if (playerCamera == null)
             {
@@ -608,25 +552,20 @@ namespace MuseumAI.Core
 
             Transform camTransform = playerCamera.transform;
 
-            // Direction horizontale seulement (ignorer le pitch de la tete)
             Vector3 forwardFlat = camTransform.forward;
             forwardFlat.y = 0;
             forwardFlat.Normalize();
 
-            // Si le joueur regarde droit en haut/bas, utiliser forward par defaut
             if (forwardFlat.sqrMagnitude < 0.01f)
             {
                 forwardFlat = Vector3.forward;
             }
 
-            // Position devant le joueur, a hauteur des yeux
             Vector3 spawnPosition = camTransform.position + forwardFlat * mainMenuDistance;
             spawnPosition.y = camTransform.position.y; // Garder a hauteur des yeux
 
-            // Verifier si la position est dans un mur (raycast)
             spawnPosition = GetSafeSpawnPosition(camTransform.position, spawnPosition, 0.5f);
 
-            // Rotation: face au joueur
             Quaternion spawnRotation = Quaternion.LookRotation(forwardFlat);
 
             mainMenuInstance = Instantiate(mainMenuPrefab, spawnPosition, spawnRotation);
@@ -637,24 +576,20 @@ namespace MuseumAI.Core
 
             SetGameState(GameState.MainMenu);
 
-            Debug.Log($"[GameManager] Menu principal affiche - pos:{spawnPosition}, cam:{camTransform.position}, fwd:{forwardFlat}");
         }
 
         private void SpawnGameOverUI()
         {
             if (gameOverPrefab == null)
             {
-                Debug.LogWarning("[GameManager] GameOver Prefab non assigne!");
                 return;
             }
 
-            // Detruire l'ancien s'il existe
             if (gameOverInstance != null)
             {
                 Destroy(gameOverInstance);
             }
 
-            // Position devant la camera
             Camera playerCamera = Camera.main;
             if (playerCamera == null)
             {
@@ -667,7 +602,6 @@ namespace MuseumAI.Core
             Vector3 spawnPosition = camTransform.position + camTransform.forward * spawnDistance;
             spawnPosition.y = camTransform.position.y; // A hauteur des yeux
 
-            // Verifier si la position est dans un mur (raycast)
             spawnPosition = GetSafeSpawnPosition(camTransform.position, spawnPosition, 0.3f);
 
             Vector3 lookDirection = spawnPosition - camTransform.position;
@@ -677,7 +611,6 @@ namespace MuseumAI.Core
             gameOverInstance = Instantiate(gameOverPrefab, spawnPosition, spawnRotation);
             gameOverInstance.name = "GameOver_Instance";
 
-            Debug.Log("[GameManager] Ecran Game Over affiche");
         }
 
         /// <summary>
@@ -692,34 +625,25 @@ namespace MuseumAI.Core
             Vector3 direction = targetPosition - origin;
             float distance = direction.magnitude;
 
-            // Raycast pour detecter les murs
             if (Physics.Raycast(origin, direction.normalized, out RaycastHit hit, distance))
             {
-                // Un obstacle a ete detecte - placer le panel devant le mur
                 Vector3 safePosition = hit.point - direction.normalized * offsetFromWall;
-                Debug.Log($"[GameManager] Mur detecte! Position ajustee de {targetPosition} a {safePosition}");
                 return safePosition;
             }
 
-            // Pas d'obstacle, utiliser la position cible
             return targetPosition;
         }
 
         private void SetPlayerControlsEnabled(bool enabled)
         {
             // NOTE: On ne desactive PAS PlayerInteraction!
-            // Le joueur doit garder son laser pour interagir avec l'UI (Game Over, etc.)
-            // Seul le deplacement est desactive.
 
-            // Desactiver/activer UNIQUEMENT le mouvement (CharacterController, OVRPlayerController, etc.)
             if (playerMovement != null)
             {
                 playerMovement.enabled = enabled;
-                Debug.Log($"[GameManager] PlayerMovement: {(enabled ? "active" : "desactive")}");
             }
             else
             {
-                Debug.LogWarning("[GameManager] playerMovement non assigne - le joueur peut toujours se deplacer!");
             }
         }
 
@@ -732,7 +656,6 @@ namespace MuseumAI.Core
 
             OnGameStateChanged?.Invoke(newState);
 
-            Debug.Log($"[GameManager] Etat: {previousState} -> {newState}");
         }
 
         private void UpdateTimer()
@@ -749,10 +672,8 @@ namespace MuseumAI.Core
 
         private void RequestQuizFromAPI(PaintingController painting)
         {
-            // === SPAWN LE PANEL QUIZ IMMEDIATEMENT AVEC LOADING ===
             SpawnQuizPanelWithLoading(painting);
 
-            // Verifier que l'APIManager est disponible
             if (APIManager.Instance == null)
             {
                 string error = "APIManager non disponible!";
@@ -773,9 +694,7 @@ namespace MuseumAI.Core
 
             string monumentName = painting.PaintingTitle;
             string context = painting.GetFullContext();
-            Debug.Log($"[GameManager] Demande de quiz a l'API pour: {monumentName}");
 
-            // Appeler l'APIManager avec callbacks (nom du monument + contexte)
             APIManager.Instance.GenerateQuiz(
                 monumentName,
                 context,
@@ -791,17 +710,14 @@ namespace MuseumAI.Core
         {
             if (quizPanelPrefab == null)
             {
-                Debug.LogWarning("[GameManager] QuizPanelPrefab non assigne!");
                 return;
             }
 
-            // Detruire l'ancien panel s'il existe
             if (currentQuizPanelInstance != null)
             {
                 Destroy(currentQuizPanelInstance);
             }
 
-            // Position devant la camera
             Camera playerCamera = Camera.main;
             if (playerCamera == null)
             {
@@ -813,23 +729,19 @@ namespace MuseumAI.Core
             float spawnDistance = 2f; // 2 metres devant le joueur
             Vector3 spawnPosition = camTransform.position + camTransform.forward * spawnDistance;
 
-            // Verifier si la position est dans un mur (raycast)
             spawnPosition = GetSafeSpawnPosition(camTransform.position, spawnPosition, 0.3f);
 
             Vector3 directionAwayFromCamera = spawnPosition - camTransform.position;
             directionAwayFromCamera.y = 0;
             Quaternion spawnRotation = Quaternion.LookRotation(directionAwayFromCamera);
 
-            // Instancier le panel
             currentQuizPanelInstance = Instantiate(quizPanelPrefab, spawnPosition, spawnRotation);
             currentQuizPanelInstance.name = "QuizPanel_Instance";
 
-            // Configurer et afficher le chargement
             currentQuizUIController = currentQuizPanelInstance.GetComponent<QuizUIController>();
             if (currentQuizUIController != null)
             {
                 currentQuizUIController.ShowLoading();
-                Debug.Log($"[GameManager] Quiz panel spawn avec loading pour: {painting.PaintingTitle}");
             }
         }
 
@@ -846,20 +758,15 @@ namespace MuseumAI.Core
 
         private void OnQuizGenerated(QuizData quizData, PaintingController painting)
         {
-            Debug.Log($"[GameManager] Quiz recu: {quizData.question}");
 
-            // Notifier les listeners (UI, etc.)
             OnQuizDataReady?.Invoke(quizData, painting);
 
-            // Afficher le quiz sur le panel existant
             if (currentQuizUIController != null)
             {
                 currentQuizUIController.ShowQuiz(quizData, painting);
-                Debug.Log($"[GameManager] Quiz affiche pour: {painting.PaintingTitle}");
             }
             else
             {
-                // Fallback: creer un nouveau panel
                 DisplayQuizUI(quizData, painting);
             }
         }
@@ -869,10 +776,8 @@ namespace MuseumAI.Core
             Debug.LogError($"[GameManager] Echec generation quiz: {error}");
             OnQuizError?.Invoke(error);
 
-            // Afficher l'erreur sur le panel existant
             ShowQuizError(error);
 
-            // Liberer le painting actuel pour permettre une nouvelle tentative
             currentPainting = null;
         }
 
@@ -880,11 +785,9 @@ namespace MuseumAI.Core
         {
             if (quizPanelPrefab == null)
             {
-                Debug.LogWarning("[GameManager] QuizPanelPrefab non assigne!");
                 return;
             }
 
-            // === POSITIONNEMENT DEVANT LA CAMERA ===
             Camera playerCamera = Camera.main;
             if (playerCamera == null)
             {
@@ -894,28 +797,21 @@ namespace MuseumAI.Core
 
             Transform camTransform = playerCamera.transform;
 
-            // Position: 2m devant la camera, a hauteur des yeux
             float spawnDistance = 2f;
             Vector3 spawnPosition = camTransform.position + camTransform.forward * spawnDistance;
 
-            // Rotation: L'UI doit FAIRE FACE au joueur
-            // Un Canvas World Space affiche son contenu sur sa face AVANT (Z-)
-            // Donc le forward du Canvas doit pointer VERS le joueur pour que le texte soit lisible
             // => LookRotation(direction VERS camera) mais on inverse pour que la face avant soit visible
             Vector3 directionAwayFromCamera = spawnPosition - camTransform.position;
             directionAwayFromCamera.y = 0; // Garder l'UI verticale
             Quaternion spawnRotation = Quaternion.LookRotation(directionAwayFromCamera);
 
-            Debug.Log($"[GameManager] Quiz UI spawn: pos={spawnPosition}, dist={spawnDistance}m devant camera");
 
             GameObject quizPanelInstance = Instantiate(quizPanelPrefab, spawnPosition, spawnRotation);
 
-            // Configurer le QuizUIController
             QuizUIController uiController = quizPanelInstance.GetComponent<QuizUIController>();
             if (uiController != null)
             {
                 uiController.ShowQuiz(quizData, painting);
-                Debug.Log($"[GameManager] Quiz UI affiche pour: {painting.PaintingTitle}");
             }
             else
             {

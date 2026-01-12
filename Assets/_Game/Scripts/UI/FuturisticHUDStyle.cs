@@ -48,22 +48,18 @@ namespace MuseumAI.UI
 
         private void FindReferences()
         {
-            // Background - Panel
             Transform panel = transform.Find("Panel");
             if (panel != null)
                 backgroundImage = panel.GetComponent<Image>();
 
-            // Timer
             Transform timerT = transform.Find("TimerText");
             if (timerT != null)
                 timerText = timerT.GetComponent<TMP_Text>();
 
-            // Score
             Transform scoreT = transform.Find("ScoreText");
             if (scoreT != null)
                 scoreText = scoreT.GetComponent<TMP_Text>();
 
-            // Progress Text
             Transform progressT = transform.Find("ProgressText");
             if (progressT != null)
                 progressText = progressT.GetComponent<TMP_Text>();
@@ -76,7 +72,6 @@ namespace MuseumAI.UI
             StyleScore();
             StyleProgress();
 
-            Debug.Log("[FuturisticHUD] Style futuriste applique!");
         }
 
         private void StyleBackground()
@@ -85,14 +80,12 @@ namespace MuseumAI.UI
 
             backgroundImage.color = darkBackground;
 
-            // Bordure glow cyan
             Outline outline = backgroundImage.gameObject.GetComponent<Outline>();
             if (outline == null)
                 outline = backgroundImage.gameObject.AddComponent<Outline>();
             outline.effectColor = primaryCyan;
             outline.effectDistance = new Vector2(outlineWidth, outlineWidth);
 
-            // Glow diffus
             Outline glow = backgroundImage.gameObject.AddComponent<Outline>();
             glow.effectColor = new Color(primaryCyan.r, primaryCyan.g, primaryCyan.b, 0.2f);
             glow.effectDistance = new Vector2(outlineWidth * 2f, outlineWidth * 2f);
@@ -106,14 +99,12 @@ namespace MuseumAI.UI
             timerText.fontSize = 48;
             timerText.fontStyle = FontStyles.Bold;
 
-            // Glow subtil
             Outline glow = timerText.gameObject.GetComponent<Outline>();
             if (glow == null)
                 glow = timerText.gameObject.AddComponent<Outline>();
             glow.effectColor = new Color(primaryCyan.r, primaryCyan.g, primaryCyan.b, 0.3f);
             glow.effectDistance = new Vector2(2, 2);
 
-            // Shadow
             Outline shadow = timerText.gameObject.AddComponent<Outline>();
             shadow.effectColor = new Color(0, 0, 0, 0.7f);
             shadow.effectDistance = new Vector2(1, -1);
@@ -127,14 +118,12 @@ namespace MuseumAI.UI
             scoreText.fontSize = 36;
             scoreText.fontStyle = FontStyles.Bold;
 
-            // Glow vert
             Outline glow = scoreText.gameObject.GetComponent<Outline>();
             if (glow == null)
                 glow = scoreText.gameObject.AddComponent<Outline>();
             glow.effectColor = new Color(scoreColor.r, scoreColor.g, scoreColor.b, 0.4f);
             glow.effectDistance = new Vector2(2, 2);
 
-            // Shadow
             Outline shadow = scoreText.gameObject.AddComponent<Outline>();
             shadow.effectColor = new Color(0, 0, 0, 0.6f);
             shadow.effectDistance = new Vector2(1, -1);
@@ -148,14 +137,12 @@ namespace MuseumAI.UI
             progressText.fontSize = 32;
             progressText.fontStyle = FontStyles.Bold;
 
-            // Glow cyan
             Outline glow = progressText.gameObject.GetComponent<Outline>();
             if (glow == null)
                 glow = progressText.gameObject.AddComponent<Outline>();
             glow.effectColor = new Color(primaryCyan.r, primaryCyan.g, primaryCyan.b, 0.3f);
             glow.effectDistance = new Vector2(2, 2);
 
-            // Shadow
             Outline shadow = progressText.gameObject.AddComponent<Outline>();
             shadow.effectColor = new Color(0, 0, 0, 0.6f);
             shadow.effectDistance = new Vector2(1, -1);
@@ -196,7 +183,6 @@ namespace MuseumAI.UI
             float duration = 0.2f;
             float elapsed = 0f;
 
-            // Scale up
             while (elapsed < duration / 2f)
             {
                 elapsed += Time.deltaTime;
@@ -205,7 +191,6 @@ namespace MuseumAI.UI
                 yield return null;
             }
 
-            // Scale down
             elapsed = 0f;
             while (elapsed < duration / 2f)
             {

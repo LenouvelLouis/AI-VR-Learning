@@ -52,40 +52,23 @@ namespace MuseumAI.Gameplay
 
         private void OnEnable()
         {
-            Debug.Log($"[PlayerInteraction] === OnEnable === GameObject: {gameObject.name}");
         }
 
         private void OnDisable()
         {
-            Debug.Log($"[PlayerInteraction] === OnDisable === GameObject: {gameObject.name}");
         }
 
         private void Start()
         {
-            // === DIAGNOSTIC: Afficher les valeurs AVANT modification ===
-            Debug.Log($"[PlayerInteraction] START DIAGNOSTIC - AVANT modification:");
-            Debug.Log($"    desktopInteractKey = {desktopInteractKey} (int: {(int)desktopInteractKey})");
-            Debug.Log($"    allowDesktopInput = {allowDesktopInput}");
-            Debug.Log($"    useOVRInput = {useOVRInput}");
-            Debug.Log($"    GameObject actif: {gameObject.activeInHierarchy}");
-            Debug.Log($"    Script enabled: {enabled}");
 
-            // === FORCE INPUT DESKTOP ===
             allowDesktopInput = true;
 
-            // === DIAGNOSTIC: Afficher les valeurs APRES modification ===
-            Debug.Log($"[PlayerInteraction] START DIAGNOSTIC - APRES modification:");
-            Debug.Log($"    desktopInteractKey = {desktopInteractKey} (int: {(int)desktopInteractKey})");
-            Debug.Log($"    allowDesktopInput = {allowDesktopInput}");
 
-            // Configuration du ray origin
             if (rayOrigin == null)
             {
                 rayOrigin = transform;
-                Debug.Log("[PlayerInteraction] rayOrigin = ce transform");
             }
 
-            // Configuration du LineRenderer
             if (showRayVisual)
             {
                 if (lineRenderer == null)
@@ -95,17 +78,13 @@ namespace MuseumAI.Gameplay
                 if (lineRenderer == null)
                 {
                     CreateDefaultLineRenderer();
-                    Debug.Log("[PlayerInteraction] LineRenderer cree automatiquement");
                 }
             }
 
-            // Abonnement aux evenements
             SubscribeToEvents();
 
-            // Desactiver l'InputModule standard pour eviter les clics automatiques sur hover
             DisableStandardUIInputModule();
 
-            Debug.Log($"[PlayerInteraction] === INITIALISATION COMPLETE ===");
         }
 
         /// <summary>
@@ -117,34 +96,26 @@ namespace MuseumAI.Gameplay
             EventSystem eventSystem = FindFirstObjectByType<EventSystem>();
             if (eventSystem == null)
             {
-                Debug.Log("[PlayerInteraction] Pas d'EventSystem trouve");
                 return;
             }
 
-            // Desactiver tous les modules d'input UI (StandaloneInputModule, InputSystemUIInputModule, etc.)
             BaseInputModule[] inputModules = eventSystem.GetComponents<BaseInputModule>();
             foreach (var module in inputModules)
             {
                 module.enabled = false;
-                Debug.Log($"[PlayerInteraction] Module UI desactive: {module.GetType().Name}");
             }
 
-            Debug.Log("[PlayerInteraction] Modules UI desactives - seul PlayerInteraction gere les clics");
         }
 
         private void Update()
         {
-            // === DIAGNOSTIC #1: Confirmer que Update() tourne ===
             frameCount++;
             if (frameCount % 300 == 1) // Log toutes les 5 secondes environ (60fps * 5)
             {
-                Debug.Log($"[PlayerInteraction] Update() ACTIF - Frame #{frameCount}");
             }
 
-            // === RAYCAST ===
             PerformRaycast();
 
-            // === INTERACTION ===
             CheckInputDirect();
         }
 
@@ -164,12 +135,9 @@ namespace MuseumAI.Gameplay
 
             Debug.DrawRay(origin, direction * rayDistance, Color.red);
 
-            // === RAYCAST 1: Detection UI (tous les layers) ===
-            // On cherche d'abord les elements UI car ils ont priorite
             RaycastHit uiHit;
             if (Physics.Raycast(origin, direction, out uiHit, rayDistance))
             {
-                // Chercher un Button
                 Button button = uiHit.collider.GetComponent<Button>();
                 if (button == null)
                 {
@@ -186,7 +154,6 @@ namespace MuseumAI.Gameplay
                 }
             }
 
-            // === RAYCAST 2: Detection tableaux (layers specifiques) ===
             RaycastHit hit;
             if (Physics.Raycast(origin, direction, out hit, rayDistance, interactableLayers))
             {
@@ -216,7 +183,6 @@ namespace MuseumAI.Gameplay
 
             if (currentButtonTarget != null)
             {
-                Debug.Log($"[CIBLE UI] >> Bouton: {currentButtonTarget.gameObject.name} <<");
 
                 if (enableHapticFeedback && useOVRInput)
                 {
@@ -241,7 +207,6 @@ namespace MuseumAI.Gameplay
                 string targetName = currentTarget.PaintingTitle;
                 if (targetName != lastLoggedTargetName)
                 {
-                    Debug.Log($"[CIBLE] >> {targetName} <<");
                     lastLoggedTargetName = targetName;
 
                     if (enableHapticFeedback && useOVRInput)
@@ -259,7 +224,6 @@ namespace MuseumAI.Gameplay
             {
                 if (lastLoggedTargetName != "")
                 {
-                    Debug.Log("[CIBLE] Perdue");
                     lastLoggedTargetName = "";
                 }
             }
@@ -277,7 +241,6 @@ namespace MuseumAI.Gameplay
             bool interactionTriggered = false;
             string inputSource = "Unknown";
 
-            // === INPUT VR: Gachettes index uniquement ===
             if (useOVRInput)
             {
                 if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch))
@@ -292,7 +255,6 @@ namespace MuseumAI.Gameplay
                 }
             }
 
-            // === INPUT Desktop: Clic souris ou Espace ===
             if (allowDesktopInput && !interactionTriggered)
             {
                 if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
@@ -302,20 +264,14 @@ namespace MuseumAI.Gameplay
                 }
             }
 
-            // === EXECUTER L'INTERACTION ===
             if (interactionTriggered)
             {
-                Debug.Log($"[INTERACTION] Input detecte: {inputSource}");
 
-                // Priorite 1: Bouton UI (Quiz)
                 if (currentButtonTarget != null)
                 {
-                    Debug.Log($"[ACTION] === CLIC sur bouton UI: {currentButtonTarget.gameObject.name} ===");
 
-                    // Invoquer le onClick du bouton
                     currentButtonTarget.onClick.Invoke();
 
-                    // Feedback haptique pour le clic
                     if (enableHapticFeedback && useOVRInput)
                     {
                         try
@@ -328,26 +284,19 @@ namespace MuseumAI.Gameplay
                     return;
                 }
 
-                // Priorite 2: Tableau
                 if (currentTarget != null)
                 {
-                    Debug.Log($"[ACTION] === INTERACTION avec: {currentTarget.PaintingTitle} ===");
 
-                    // Verifier les conditions de blocage
                     if (isInteractionBlocked)
                     {
-                        Debug.LogWarning("[ACTION] BLOQUE: Quiz en cours");
                         return;
                     }
 
                     if (GameManager.Instance != null && GameManager.Instance.CurrentState != GameState.Playing)
                     {
-                        Debug.LogWarning($"[ACTION] BLOQUE: GameState = {GameManager.Instance.CurrentState}");
                         return;
                     }
 
-                    // Tout est OK, executer l'interaction
-                    Debug.Log("[ACTION] >>> OnPaintingSelected() <<<");
                     currentTarget.OnPaintingSelected();
                 }
             }
@@ -364,7 +313,6 @@ namespace MuseumAI.Gameplay
             lineRenderer.SetPosition(0, rayOrigin.position);
             lineRenderer.SetPosition(1, endPoint);
 
-            // Couleur selon la cible: UI (bleu) > Tableau (vert) > Rien (blanc)
             Color color;
             if (currentButtonTarget != null)
             {
@@ -391,7 +339,6 @@ namespace MuseumAI.Gameplay
             lineRenderer.positionCount = 2;
             lineRenderer.useWorldSpace = true;
 
-            // Creer un material qui s'affiche par-dessus TOUT (ignore le Z-buffer)
             Shader unlitShader = Shader.Find("UI/Default");
             if (unlitShader == null)
             {
@@ -400,25 +347,21 @@ namespace MuseumAI.Gameplay
             Material laserMat = new Material(unlitShader);
             laserMat.renderQueue = 5000; // Rendre tout a la fin (apres overlay UI)
 
-            // Forcer le rendu par-dessus tout
             laserMat.SetInt("_ZWrite", 0);
             laserMat.SetInt("_ZTest", 0); // Always pass
 
             lineRenderer.material = laserMat;
 
-            // Configurer le sorting pour etre au-dessus
             lineRenderer.sortingLayerName = "Overlay";
             lineRenderer.sortingOrder = 32767; // Max sorting order
 
             lineRenderer.startColor = rayColorIdle;
             lineRenderer.endColor = rayColorIdle;
 
-            // Initialiser les positions pour eviter le point noir a (0,0,0)
             Vector3 startPos = rayOrigin != null ? rayOrigin.position : transform.position;
             lineRenderer.SetPosition(0, startPos);
             lineRenderer.SetPosition(1, startPos + (rayOrigin != null ? rayOrigin.forward : transform.forward) * 0.1f);
 
-            Debug.Log("[PlayerInteraction] LineRenderer cree avec ZTest=Always pour visibilite maximale sur UI");
         }
 
         private void StopHaptic()
@@ -431,7 +374,6 @@ namespace MuseumAI.Gameplay
                 }
                 catch (System.Exception)
                 {
-                    // Ignore haptic errors in simulator mode
                 }
             }
         }
@@ -447,11 +389,9 @@ namespace MuseumAI.Gameplay
                 GameManager.Instance.OnQuizStarted += OnQuizStarted;
                 GameManager.Instance.OnQuizCompleted += OnQuizCompleted;
                 GameManager.Instance.OnQuizError += OnQuizError;
-                Debug.Log("[PlayerInteraction] Abonne aux evenements GameManager");
             }
             else
             {
-                Debug.LogWarning("[PlayerInteraction] GameManager.Instance est NULL - Mode test sans GameManager");
             }
         }
 
@@ -468,19 +408,16 @@ namespace MuseumAI.Gameplay
         private void OnQuizStarted(PaintingController painting)
         {
             isInteractionBlocked = true;
-            Debug.Log("[EVENT] Quiz demarre - Interactions BLOQUEES");
         }
 
         private void OnQuizCompleted(bool success, int points)
         {
             isInteractionBlocked = false;
-            Debug.Log("[EVENT] Quiz termine - Interactions DEBLOQUEES");
         }
 
         private void OnQuizError(string error)
         {
             isInteractionBlocked = false;
-            Debug.Log("[EVENT] Erreur quiz - Interactions DEBLOQUEES");
         }
 
         #endregion
