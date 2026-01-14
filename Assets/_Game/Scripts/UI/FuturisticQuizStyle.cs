@@ -4,32 +4,22 @@ using TMPro;
 
 namespace MuseumAI.UI
 {
-    /// <summary>
-    /// Applique un style futuriste VR holographique au QuizUI.
-    /// Couleurs cyan/bleu avec effets glow.
-    /// </summary>
     public class FuturisticQuizStyle : MonoBehaviour
     {
-        #region Color Palette
-        
         [Header("Palette Futuriste")]
-        [SerializeField] private Color primaryCyan = new Color(0f, 0.9f, 1f, 1f);           // #00E5FF
-        [SerializeField] private Color secondaryCyan = new Color(0f, 0.7f, 0.85f, 1f);      // #00B3D9
-        [SerializeField] private Color darkBackground = new Color(0.02f, 0.05f, 0.1f, 0.92f); // Fond sombre transparent
-        [SerializeField] private Color buttonNormal = new Color(0.05f, 0.12f, 0.18f, 0.95f);  // Bouton normal
-        [SerializeField] private Color buttonHighlight = new Color(0f, 0.25f, 0.35f, 1f);     // Bouton survol
-        [SerializeField] private Color buttonPressed = new Color(0f, 0.4f, 0.5f, 1f);         // Bouton presse
-        [SerializeField] private Color correctGreen = new Color(0f, 1f, 0.5f, 1f);           // Vert neon
-        [SerializeField] private Color wrongRed = new Color(1f, 0.2f, 0.3f, 1f);             // Rouge neon
-        
+        [SerializeField] private Color primaryCyan = new Color(0f, 0.9f, 1f, 1f);
+        [SerializeField] private Color secondaryCyan = new Color(0f, 0.7f, 0.85f, 1f);
+        [SerializeField] private Color darkBackground = new Color(0.02f, 0.05f, 0.1f, 0.92f);
+        [SerializeField] private Color buttonNormal = new Color(0.05f, 0.12f, 0.18f, 0.95f);
+        [SerializeField] private Color buttonHighlight = new Color(0f, 0.25f, 0.35f, 1f);
+        [SerializeField] private Color buttonPressed = new Color(0f, 0.4f, 0.5f, 1f);
+        [SerializeField] private Color correctGreen = new Color(0f, 1f, 0.5f, 1f);
+        [SerializeField] private Color wrongRed = new Color(1f, 0.2f, 0.3f, 1f);
+
         [Header("Glow Settings")]
         [SerializeField] private float glowIntensity = 0.5f;
         [SerializeField] private float outlineWidth = 3f;
-        
-        #endregion
-        
-        #region References (Auto-detected)
-        
+
         private Image backgroundImage;
         private Image[] buttonImages;
         private Button[] answerButtons;
@@ -37,41 +27,33 @@ namespace MuseumAI.UI
         private TMP_Text feedbackText;
         private TMP_Text[] buttonTexts;
         private Outline[] outlines;
-        
-        #endregion
-        
-        #region Unity Lifecycle
-        
+
         private void Awake()
         {
             FindReferences();
             ApplyFuturisticStyle();
         }
-        
-        #endregion
-        
-        #region Style Application
-        
+
         private void FindReferences()
         {
             Transform quizPanel = transform.Find("QuizPanel");
             if (quizPanel != null)
             {
                 backgroundImage = quizPanel.GetComponent<Image>();
-                
+
                 Transform questionT = quizPanel.Find("QuestionText");
                 if (questionT != null)
                     questionText = questionT.GetComponent<TMP_Text>();
-                
+
                 Transform feedbackT = quizPanel.Find("FeedbackText");
                 if (feedbackT != null)
                     feedbackText = feedbackT.GetComponent<TMP_Text>();
             }
-            
+
             answerButtons = new Button[4];
             buttonImages = new Image[4];
             buttonTexts = new TMP_Text[4];
-            
+
             for (int i = 0; i < 4; i++)
             {
                 string buttonName = $"AnswerButton{i}";
@@ -84,25 +66,21 @@ namespace MuseumAI.UI
                 }
             }
         }
-        
+
         private void ApplyFuturisticStyle()
         {
             StyleBackground();
-            
             StyleQuestionText();
-            
             StyleAnswerButtons();
-            
             StyleFeedbackText();
-            
         }
-        
+
         private void StyleBackground()
         {
             if (backgroundImage == null) return;
-            
+
             backgroundImage.color = darkBackground;
-            
+
             Outline outline = backgroundImage.gameObject.GetComponent<Outline>();
             if (outline == null)
             {
@@ -110,20 +88,20 @@ namespace MuseumAI.UI
             }
             outline.effectColor = primaryCyan;
             outline.effectDistance = new Vector2(outlineWidth, outlineWidth);
-            
+
             Outline glowOutline = backgroundImage.gameObject.AddComponent<Outline>();
             glowOutline.effectColor = new Color(primaryCyan.r, primaryCyan.g, primaryCyan.b, 0.3f);
             glowOutline.effectDistance = new Vector2(outlineWidth * 2, outlineWidth * 2);
         }
-        
+
         private void StyleQuestionText()
         {
             if (questionText == null) return;
-            
+
             questionText.color = primaryCyan;
             questionText.fontSize = 42;
             questionText.fontStyle = FontStyles.Bold;
-            
+
             if (questionText.fontSharedMaterial != null)
             {
                 Material glowMat = new Material(questionText.fontSharedMaterial);
@@ -135,7 +113,7 @@ namespace MuseumAI.UI
                 glowMat.SetFloat("_GlowPower", 1f);
                 questionText.fontMaterial = glowMat;
             }
-            
+
             Outline textOutline = questionText.gameObject.GetComponent<Outline>();
             if (textOutline == null)
             {
@@ -144,17 +122,17 @@ namespace MuseumAI.UI
             textOutline.effectColor = new Color(0, 0, 0, 0.8f);
             textOutline.effectDistance = new Vector2(1, -1);
         }
-        
+
         private void StyleAnswerButtons()
         {
             for (int i = 0; i < answerButtons.Length; i++)
             {
                 if (answerButtons[i] == null) continue;
-                
+
                 if (buttonImages[i] != null)
                 {
                     buttonImages[i].color = buttonNormal;
-                    
+
                     Outline btnOutline = buttonImages[i].gameObject.GetComponent<Outline>();
                     if (btnOutline == null)
                     {
@@ -163,7 +141,7 @@ namespace MuseumAI.UI
                     btnOutline.effectColor = secondaryCyan;
                     btnOutline.effectDistance = new Vector2(2, 2);
                 }
-                
+
                 ColorBlock colors = answerButtons[i].colors;
                 colors.normalColor = buttonNormal;
                 colors.highlightedColor = buttonHighlight;
@@ -173,12 +151,12 @@ namespace MuseumAI.UI
                 colors.colorMultiplier = 1f;
                 colors.fadeDuration = 0.15f;
                 answerButtons[i].colors = colors;
-                
+
                 if (buttonTexts[i] != null)
                 {
                     buttonTexts[i].color = Color.white;
                     buttonTexts[i].fontSize = 32;
-                    
+
                     Outline txtOutline = buttonTexts[i].gameObject.GetComponent<Outline>();
                     if (txtOutline == null)
                     {
@@ -189,14 +167,14 @@ namespace MuseumAI.UI
                 }
             }
         }
-        
+
         private void StyleFeedbackText()
         {
             if (feedbackText == null) return;
-            
+
             feedbackText.fontSize = 48;
             feedbackText.fontStyle = FontStyles.Bold;
-            
+
             Outline fbOutline = feedbackText.gameObject.GetComponent<Outline>();
             if (fbOutline == null)
             {
@@ -205,43 +183,25 @@ namespace MuseumAI.UI
             fbOutline.effectColor = new Color(0, 0, 0, 0.9f);
             fbOutline.effectDistance = new Vector2(2, -2);
         }
-        
-        #endregion
-        
-        #region Public Methods - Pour QuizUIController
-        
-        /// <summary>
-        /// Retourne la couleur pour une bonne reponse (vert neon)
-        /// </summary>
+
         public Color GetCorrectColor() => correctGreen;
-        
-        /// <summary>
-        /// Retourne la couleur pour une mauvaise reponse (rouge neon)
-        /// </summary>
         public Color GetWrongColor() => wrongRed;
-        
-        /// <summary>
-        /// Retourne la couleur primaire cyan
-        /// </summary>
         public Color GetPrimaryColor() => primaryCyan;
-        
-        /// <summary>
-        /// Applique un effet pulse glow sur un element
-        /// </summary>
+
         public void ApplyPulseGlow(Image target, float duration = 1f)
         {
             if (target == null) return;
             StartCoroutine(PulseGlowCoroutine(target, duration));
         }
-        
+
         private System.Collections.IEnumerator PulseGlowCoroutine(Image target, float duration)
         {
             Outline outline = target.GetComponent<Outline>();
             if (outline == null) yield break;
-            
+
             Color originalColor = outline.effectColor;
             float elapsed = 0f;
-            
+
             while (elapsed < duration)
             {
                 elapsed += Time.deltaTime;
@@ -250,10 +210,8 @@ namespace MuseumAI.UI
                 outline.effectColor = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
                 yield return null;
             }
-            
+
             outline.effectColor = originalColor;
         }
-        
-        #endregion
     }
 }

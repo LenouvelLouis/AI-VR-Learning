@@ -55,9 +55,11 @@ Museum Quiz VR is an immersive virtual reality educational game for Meta Quest h
 
 2. Open the project in Unity
 
-3. Configure the API key
-   - Create an `ApiConfig` asset: `Create > Museum AI > Api Config`
-   - Enter your Google Gemini API key
+3. Configure the Google Gemini API key
+   - Open the existing `Assets/_Game/MyApiConfig.asset` in the Unity Inspector
+   - Enter your Google Gemini API key in the "Api Key" field
+   - Get your API key from: https://aistudio.google.com/app/apikey
+   - ⚠️ **Important**: Do not commit this file with your API key
 
 4. Build and deploy to Meta Quest
 

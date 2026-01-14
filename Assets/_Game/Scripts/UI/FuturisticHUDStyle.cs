@@ -4,14 +4,8 @@ using TMPro;
 
 namespace MuseumAI.UI
 {
-    /// <summary>
-    /// Applique un style futuriste VR holographique au HUD (montre connectee).
-    /// Couleurs cyan/bleu avec effets glow, coherent avec QuizUI et GameOverUI.
-    /// </summary>
     public class FuturisticHUDStyle : MonoBehaviour
     {
-        #region Color Palette
-
         [Header("Palette Futuriste")]
         [SerializeField] private Color primaryCyan = new Color(0f, 0.9f, 1f, 1f);
         [SerializeField] private Color secondaryCyan = new Color(0f, 0.7f, 0.85f, 1f);
@@ -23,28 +17,16 @@ namespace MuseumAI.UI
         [Header("Glow Settings")]
         [SerializeField] private float outlineWidth = 2f;
 
-        #endregion
-
-        #region References
-
         private Image backgroundImage;
         private TMP_Text timerText;
         private TMP_Text scoreText;
         private TMP_Text progressText;
-
-        #endregion
-
-        #region Unity Lifecycle
 
         private void Awake()
         {
             FindReferences();
             ApplyFuturisticStyle();
         }
-
-        #endregion
-
-        #region Style Application
 
         private void FindReferences()
         {
@@ -71,7 +53,6 @@ namespace MuseumAI.UI
             StyleTimer();
             StyleScore();
             StyleProgress();
-
         }
 
         private void StyleBackground()
@@ -148,26 +129,16 @@ namespace MuseumAI.UI
             shadow.effectDistance = new Vector2(1, -1);
         }
 
-        #endregion
-
-        #region Public Methods
-
         public Color GetPrimaryColor() => primaryCyan;
         public Color GetScoreColor() => scoreColor;
         public Color GetTimerLowColor() => timerLow;
 
-        /// <summary>
-        /// Met a jour la couleur du timer (normal ou bas)
-        /// </summary>
         public void SetTimerLowMode(bool isLow)
         {
             if (timerText == null) return;
             timerText.color = isLow ? timerLow : timerNormal;
         }
 
-        /// <summary>
-        /// Animation de pulse sur un element
-        /// </summary>
         public void PulseElement(TMP_Text element)
         {
             if (element != null)
@@ -202,7 +173,5 @@ namespace MuseumAI.UI
 
             rect.localScale = originalScale;
         }
-
-        #endregion
     }
 }
