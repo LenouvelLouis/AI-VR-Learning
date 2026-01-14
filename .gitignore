@@ -43,3 +43,7 @@ StreamingAssets*
 
 # Temp files
 tmpclaude-*
+
+# API Config avec cle
+**/MyApiConfig.asset
+**/MyApiConfig.asset.meta

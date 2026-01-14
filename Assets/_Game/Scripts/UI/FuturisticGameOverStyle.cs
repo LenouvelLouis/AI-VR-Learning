@@ -4,14 +4,8 @@ using TMPro;
 
 namespace MuseumAI.UI
 {
-    /// <summary>
-    /// Applique un style futuriste VR holographique au GameOver UI.
-    /// Couleurs cyan/bleu avec effets glow, coherent avec QuizUI.
-    /// </summary>
     public class FuturisticGameOverStyle : MonoBehaviour
     {
-        #region Color Palette
-
         [Header("Palette Futuriste")]
         [SerializeField] private Color primaryCyan = new Color(0f, 0.9f, 1f, 1f);
         [SerializeField] private Color secondaryCyan = new Color(0f, 0.7f, 0.85f, 1f);
@@ -26,10 +20,6 @@ namespace MuseumAI.UI
         [Header("Glow Settings")]
         [SerializeField] private float outlineWidth = 4f;
 
-        #endregion
-
-        #region References
-
         private Image backgroundImage;
         private TMP_Text titleText;
         private TMP_Text finalScoreText;
@@ -38,19 +28,11 @@ namespace MuseumAI.UI
         private Button retryButton;
         private Button quitButton;
 
-        #endregion
-
-        #region Unity Lifecycle
-
         private void Awake()
         {
             FindReferences();
             ApplyFuturisticStyle();
         }
-
-        #endregion
-
-        #region Style Application
 
         private void FindReferences()
         {
@@ -98,7 +80,6 @@ namespace MuseumAI.UI
             StyleScoreDisplay();
             StyleButtons();
             StyleLabels();
-
         }
 
         private void StyleBackground()
@@ -222,7 +203,6 @@ namespace MuseumAI.UI
                 if (label == null) continue;
                 if (label == titleText || label == finalScoreText || label == paintingsCountText) continue;
 
-                // C'est un label (Score Final, Tableaux Completes, etc.)
                 string text = label.text.ToLower();
                 if (text.Contains("score") || text.Contains("tableau") || text.Contains("temps"))
                 {
@@ -238,18 +218,11 @@ namespace MuseumAI.UI
             }
         }
 
-        #endregion
-
-        #region Public Methods
-
         public Color GetVictoryColor() => victoryGold;
         public Color GetTimeUpColor() => timeUpRed;
         public Color GetPrimaryColor() => primaryCyan;
         public Color GetScoreColor() => scoreGlow;
 
-        /// <summary>
-        /// Met a jour la couleur du titre selon le resultat
-        /// </summary>
         public void UpdateTitleStyle(bool isVictory)
         {
             if (titleText == null) return;
@@ -260,16 +233,13 @@ namespace MuseumAI.UI
             Outline[] outlines = titleText.GetComponents<Outline>();
             foreach (Outline o in outlines)
             {
-                if (o.effectColor.a < 0.5f) // C'est le glow
+                if (o.effectColor.a < 0.5f)
                 {
                     o.effectColor = new Color(targetColor.r, targetColor.g, targetColor.b, 0.4f);
                 }
             }
         }
 
-        /// <summary>
-        /// Animation de pulse sur le score
-        /// </summary>
         public void PulseScore()
         {
             if (finalScoreText != null)
@@ -304,7 +274,5 @@ namespace MuseumAI.UI
 
             rect.localScale = originalScale;
         }
-
-        #endregion
     }
 }

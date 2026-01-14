@@ -4,14 +4,8 @@ using TMPro;
 
 namespace MuseumAI.UI
 {
-    /// <summary>
-    /// Applique un style futuriste VR holographique au menu principal.
-    /// Couleurs cyan/bleu avec effets glow, coherent avec QuizUI et GameOverUI.
-    /// </summary>
     public class FuturisticMainMenuStyle : MonoBehaviour
     {
-        #region Color Palette
-
         [Header("Palette Futuriste")]
         [SerializeField] private Color primaryCyan = new Color(0f, 0.9f, 1f, 1f);
         [SerializeField] private Color secondaryCyan = new Color(0f, 0.7f, 0.85f, 1f);
@@ -24,10 +18,6 @@ namespace MuseumAI.UI
         [Header("Glow Settings")]
         [SerializeField] private float outlineWidth = 2f;
 
-        #endregion
-
-        #region References
-
         private Image backgroundImage;
         private TMP_Text titleText;
         private Slider[] sliders;
@@ -35,19 +25,11 @@ namespace MuseumAI.UI
         private TMP_Text[] valueTexts;
         private Button startButton;
 
-        #endregion
-
-        #region Unity Lifecycle
-
         private void Awake()
         {
             FindReferences();
             ApplyFuturisticStyle();
         }
-
-        #endregion
-
-        #region Style Application
 
         private void FindReferences()
         {
@@ -115,7 +97,6 @@ namespace MuseumAI.UI
             StyleLabels();
             StyleValueTexts();
             StyleButton();
-
         }
 
         private void StyleBackground()
@@ -266,13 +247,7 @@ namespace MuseumAI.UI
             startButton.colors = colors;
         }
 
-        #endregion
-
-        #region Public Methods
-
         public Color GetPrimaryColor() => primaryCyan;
         public Color GetButtonColor() => buttonColor;
-
-        #endregion
     }
 }
